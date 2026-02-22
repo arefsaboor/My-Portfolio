@@ -1,7 +1,16 @@
 import { useState } from 'react';
 import projectsData from '../data/Projects.json';
+import ArefPortfolio from '../assets/ArefPortfolio.jpg';
+import ReactedTasks from '../assets/ReactedTasks.jpg';
+import NirvanVedic from '../assets/NirvanVedic.jpg';
 
 function ProjectsSection() {
+  // Map project IDs to imported images
+  const imageMap = {
+    1: ArefPortfolio,
+    2: ReactedTasks,
+    3: NirvanVedic
+  };
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
 
@@ -38,7 +47,7 @@ function ProjectsSection() {
                 onClick={() => openModal(project)}
               >
                 <img 
-                  src={project.imageUrl} 
+                  src={imageMap[project.id]} 
                   alt={project.name}
                   className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
                 />
@@ -87,7 +96,7 @@ function ProjectsSection() {
 
             {/* Modal Content */}
             <img 
-              src={selectedProject.imageUrl} 
+              src={imageMap[selectedProject.id]} 
               alt={selectedProject.name}
               className="w-full h-auto"
             />
