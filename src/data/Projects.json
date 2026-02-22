@@ -1,0 +1,25 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "name": "My Portfolio",
+      "subtitle": "Personal Portfolio Website",
+      "description": "A modern and responsive portfolio website showcasing my skills, projects, and experience as a designer and developer. Built with React and Tailwind CSS.",
+      "imageUrl": "/src/assets/ArefPortfolio.jpg"
+    },
+    {
+      "id": 2,
+      "name": "Reacted Tasks",
+      "subtitle": "Task Overview Website",
+      "description": "An intuitive task management application built with React, allowing users to organize, track, and manage their daily tasks efficiently with a clean and user-friendly interface.",
+      "imageUrl": "/src/assets/ReactedTasks.jpg"
+    },
+    {
+      "id": 3,
+      "name": "NIRVAN - Vedic Yoga",
+      "subtitle": "Yoga & Wellness Platform",
+      "description": "A serene and engaging website for NIRVAN Vedic Yoga, offering information about yoga classes, meditation sessions, and wellness programs with a peaceful and calming design.",
+      "imageUrl": "/src/assets/NirvanVedic.jpg"
+    }
+  ]
+}

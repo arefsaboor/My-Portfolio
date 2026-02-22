@@ -1,0 +1,60 @@
+{
+  "skills": [
+    {
+      "id": 1,
+      "title": "Coding"
+    },
+    {
+      "id": 2,
+      "title": "JavaScript"
+    },
+    {
+      "id": 3,
+      "title": "TypeScript"
+    },
+    {
+      "id": 4,
+      "title": "React/Vite"
+    },
+    {
+      "id": 5,
+      "title": "HTML/CSS"
+    },
+    {
+      "id": 6,
+      "title": "Git/Github"
+    },
+    {
+      "id": 7,
+      "title": "Bootstrap"
+    },
+    {
+      "id": 8,
+      "title": "TailwindCSS"
+    },
+    {
+      "id": 9,
+      "title": "VS Code/Figma/Framer"
+    },
+    {
+      "id": 10,
+      "title": "No-Code"
+    },
+    {
+      "id": 11,
+      "title": "Website With Framer"
+    },
+    {
+      "id": 12,
+      "title": "UX/UI Design"
+    },
+    {
+      "id": 13,
+      "title": "Product Designing"
+    },
+    {
+      "id": 14,
+      "title": "Figma Prototypes"
+    }
+  ]
+}
