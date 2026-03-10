@@ -1,283 +1,677 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import projectsData from '../data/Projects.json';
-import Books2ShelfImg from '../assets/ReactedTasks.jpg';
-import ArefPortfolio from '../assets/ArefPortfolio.jpg';
-import NirvanVedic from '../assets/NirvanVedic.jpg';
 
 function ProjectsSection() {
-  const [expandedProject, setExpandedProject] = useState(null);
+  const [previewProject, setPreviewProject] = useState(null);
+  const [loadedIframes, setLoadedIframes] = useState({});
+  const [blockedIframes, setBlockedIframes] = useState({});
 
-  const imageMap = {
-    1: Books2ShelfImg,
-    2: ArefPortfolio,
-    3: NirvanVedic
+  const openPreview = (project) => {
+    if (project.liveUrl) {
+      setPreviewProject(project);
+    }
   };
 
-  const toggleProject = (projectId) => {
-    setExpandedProject(expandedProject === projectId ? null : projectId);
+  const closePreview = () => {
+    setPreviewProject(null);
   };
+
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape' && previewProject) {
+        closePreview();
+      }
+    };
+    
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [previewProject]);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (previewProject) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [previewProject]);
+
+  // Backup timeout detection for iframes that don't trigger onError (CSP blocks)
+  useEffect(() => {
+    const timers = [];
+    
+    projectsData.projects.forEach(project => {
+      if (project.liveUrl && !loadedIframes[project.id] && !blockedIframes[project.id]) {
+        const timer = setTimeout(() => {
+          if (!loadedIframes[project.id]) {
+            setBlockedIframes(prev => ({ ...prev, [project.id]: true }));
+          }
+        }, 20000); // 20 second timeout for slower mobile connections
+        timers.push(timer);
+      }
+    });
+    
+    return () => {
+      timers.forEach(timer => clearTimeout(timer));
+    };
+  }, [loadedIframes, blockedIframes]);
 
   return (
-    <section id="projects" className="py-24 md:py-32 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none opacity-30">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl"></div>
-      </div>
+    <>
+      <style>{`
+        .projects-modern-wrapper {
+          background: linear-gradient(180deg, #ffffff 0%, #f8fffe 25%, #ecfdf5 50%, #f8fffe 75%, #ffffff 100%);
+          position: relative;
+          overflow: hidden;
+        }
 
-      <div className="max-w-[1800px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20 relative z-10">
-        {/* Section Header */}
-        <div className="text-center mb-20">
-          <div className="inline-block px-6 py-2 bg-teal-100 text-teal-700 rounded-full text-sm font-semibold mb-6 uppercase tracking-wider">
-            Portfolio
-          </div>
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-            Featured Projects
+        .projects-modern-wrapper::before {
+          content: '';
+          position: absolute;
+          top: -20%;
+          right: -15%;
+          width: 50%;
+          height: 50%;
+          background: radial-gradient(circle, rgba(94, 234, 212, 0.12) 0%, transparent 70%);
+          pointer-events: none;
+        }
+
+        /* Simple heading */
+        .projects-modern-heading {
+          font-size: clamp(3rem, 6vw, 5rem);
+          font-weight: 900;
+          text-align: center;
+          background: linear-gradient(135deg, #0a3d35 0%, #0d9488 50%, #5eead4 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          line-height: 1.1;
+          margin-bottom: clamp(4rem, 8vh, 6rem);
+        }
+
+        /* Project cards grid - Single column for max width */
+        .projects-modern-grid {
+          display: grid;
+          gap: clamp(3rem, 6vh, 5rem);
+          max-width: 1600px;
+          margin: 0 auto;
+        }
+
+        /* Project card - visual-first with MAXIMUM viewport */
+        .project-modern-card {
+          background: white;
+          border-radius: 2.5rem;
+          overflow: hidden;
+          box-shadow: 0 12px 48px rgba(0, 0, 0, 0.1);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          border: 3px solid rgba(94, 234, 212, 0.15);
+        }
+
+        .project-modern-card:hover {
+          transform: translateY(-12px);
+          box-shadow: 0 32px 80px rgba(13, 148, 136, 0.2);
+          border-color: rgba(94, 234, 212, 0.4);
+        }
+
+        /* Large hero image with preview overlay - MAXIMIZED */
+        .project-image-container {
+          width: 100%;
+          height: clamp(500px, 70vh, 900px);
+          overflow: hidden;
+          position: relative;
+          cursor: pointer;
+          background: #f3f4f6;
+        }
+
+        /* Live website thumbnail iframe - FULL VIEWPORT */
+        .project-thumbnail-iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+          pointer-events: none;
+          transform: scale(1);
+          transform-origin: center top;
+          transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .project-modern-card:hover .project-thumbnail-iframe {
+          transform: scale(1.05);
+        }
+
+        /* Loading state for iframe thumbnails */
+        .thumbnail-loading {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #f8fffe 0%, #ecfdf5 100%);
+          color: #0d9488;
+          font-size: 1rem;
+          font-weight: 600;
+          transition: opacity 0.3s ease;
+          gap: 1rem;
+        }
+
+        .thumbnail-loading-spinner {
+          width: 2.5rem;
+          height: 2.5rem;
+          border: 3px solid rgba(13, 148, 136, 0.2);
+          border-top-color: #0d9488;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+
+        /* Fallback for projects without live URL or blocked iframes */
+        .thumbnail-fallback {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 50%, #5eead4 100%);
+          color: white;
+          padding: 2rem;
+          gap: 1.5rem;
+        }
+
+        .thumbnail-fallback-icon {
+          width: 4rem;
+          height: 4rem;
+          opacity: 0.9;
+        }
+
+        .thumbnail-fallback-title {
+          font-size: clamp(1.5rem, 3vw, 2.25rem);
+          font-weight: 900;
+          text-align: center;
+          line-height: 1.2;
+        }
+
+        .thumbnail-fallback-subtitle {
+          font-size: clamp(0.875rem, 1.5vw, 1rem);
+          opacity: 0.9;
+          text-align: center;
+        }
+
+        /* Preview overlay badge */
+        .preview-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(13, 148, 136, 0) 0%, rgba(13, 148, 136, 0.9) 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+        }
+
+        .project-image-container:hover .preview-overlay {
+          opacity: 1;
+        }
+
+        .preview-badge {
+          padding: 1rem 2rem;
+          background: white;
+          color: #0d9488;
+          border-radius: 9999px;
+          font-size: clamp(1rem, 1.8vw, 1.125rem);
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+          transform: translateY(10px);
+          transition: all 0.3s ease;
+        }
+
+        .project-image-container:hover .preview-badge {
+          transform: translateY(0);
+        }
+
+        /* Live Preview Modal */
+        .preview-modal {
+          position: fixed;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.95);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: clamp(1rem, 2vw, 2rem);
+          animation: fadeIn 0.3s ease;
+          backdrop-filter: blur(8px);
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .preview-modal-content {
+          width: 100%;
+          max-width: 1400px;
+          height: 90vh;
+          background: white;
+          border-radius: 1.5rem;
+          overflow: hidden;
+          box-shadow: 0 24px 96px rgba(0, 0, 0, 0.4);
+          display: flex;
+          flex-direction: column;
+          animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+
+        .preview-modal-header {
+          padding: 1.5rem 2rem;
+          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+          color: white;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-shrink: 0;
+        }
+
+        .preview-modal-title {
+          font-size: clamp(1.125rem, 2vw, 1.5rem);
+          font-weight: 700;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+
+        .preview-close-btn {
+          width: 2.5rem;
+          height: 2.5rem;
+          background: rgba(255, 255, 255, 0.2);
+          border: none;
+          border-radius: 50%;
+          color: white;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+          flex-shrink: 0;
+        }
+
+        .preview-close-btn:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: rotate(90deg);
+        }
+
+        .preview-iframe-container {
+          flex: 1;
+          width: 100%;
+          position: relative;
+          background: #f3f4f6;
+        }
+
+        .preview-iframe {
+          width: 100%;
+          height: 100%;
+          border: none;
+        }
+
+        .preview-loading {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: white;
+          font-size: 1.125rem;
+          color: #6b7280;
+          font-weight: 600;
+        }
+
+        .preview-loading-spinner {
+          width: 2.5rem;
+          height: 2.5rem;
+          border: 3px solid rgba(13, 148, 136, 0.2);
+          border-top-color: #0d9488;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+          margin-right: 1rem;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+
+        /* Responsive adjustments for mobile */
+        @media (max-width: 768px) {
+          .project-image-container {
+            height: clamp(400px, 60vh, 600px);
+          }
+        }
+
+        @media (min-width: 1920px) {
+          .project-image-container {
+            height: clamp(600px, 60vh, 1000px);
+          }
+        }
+
+        /* Project info - minimal */
+        .project-info-minimal {
+          padding: clamp(2rem, 4vw, 3rem);
+        }
+
+        .project-name-minimal {
+          font-size: clamp(2rem, 4vw, 3rem);
+          font-weight: 900;
+          background: linear-gradient(135deg, #0a3d35 0%, #0d9488 70%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          margin-bottom: 0.75rem;
+          line-height: 1.2;
+        }
+
+        .project-subtitle-minimal {
+          font-size: clamp(1.125rem, 2vw, 1.375rem);
+          color: #6b7280;
+          font-weight: 500;
+          margin-bottom: clamp(1.5rem, 3vh, 2rem);
+        }
+
+        /* Tech badges - inline */
+        .tech-badges-inline {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.75rem;
+          margin-bottom: clamp(1.5rem, 3vh, 2rem);
+        }
+
+        .tech-badge-minimal {
+          padding: 0.5rem 1rem;
+          background: rgba(94, 234, 212, 0.1);
+          color: #0d9488;
+          border-radius: 9999px;
+          font-size: clamp(0.875rem, 1.6vw, 0.9375rem);
+          font-weight: 600;
+          transition: all 0.3s ease;
+        }
+
+        .tech-badge-minimal:hover {
+          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+          color: white;
+          transform: translateY(-2px);
+        }
+
+        /* Action buttons */
+        .project-actions-minimal {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .project-btn-minimal {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.875rem 1.75rem;
+          border-radius: 9999px;
+          font-size: clamp(0.9375rem, 1.7vw, 1.0625rem);
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
+        .project-btn-primary {
+          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+          color: white;
+          box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3);
+        }
+
+        .project-btn-primary:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(13, 148, 136, 0.4);
+        }
+
+        .project-btn-secondary {
+          background: white;
+          color: #0d9488;
+          border: 2px solid rgba(13, 148, 136, 0.3);
+        }
+
+        .project-btn-secondary:hover {
+          background: rgba(94, 234, 212, 0.1);
+          border-color: #0d9488;
+          transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+          .project-actions-minimal {
+            flex-direction: column;
+          }
+
+          .project-btn-minimal {
+            width: 100%;
+            justify-content: center;
+          }
+        }
+      `}</style>
+
+      <section id="projects" className="projects-modern-wrapper py-24 md:py-32 relative">
+        <div className="max-w-[1800px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-24 relative z-10">
+          {/* Simple Heading */}
+          <h2 className="projects-modern-heading">
+            Featured Work
           </h2>
-          <div className="w-24 h-1.5 bg-gradient-to-r from-teal-500 to-blue-500 mx-auto mb-8 rounded-full"></div>
-          <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light">
-            Transforming ideas into impactful digital experiences through thoughtful design and clean code
-          </p>
-        </div>
 
-        {/* Projects Grid */}
-        <div className="space-y-12">
-          {projectsData.projects.map((project, index) => (
-            <div 
-              key={project.id}
-              className="group relative"
-            >
-              {/* Project Card */}
-              <div className="bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
-                <div className="grid lg:grid-cols-2 gap-0">
-                  {/* Image Section */}
-                  <div className={`relative overflow-hidden h-full min-h-[400px] ${index % 2 === 0 ? 'lg:order-1' : 'lg:order-2'}`}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-teal-600/10 to-blue-600/10 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <img 
-                      src={imageMap[project.id]} 
-                      alt={project.name}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    />
-                    {/* Overlay Badge */}
-                    <div className="absolute top-6 left-6 z-20">
-                      <span className="px-4 py-2 bg-white/95 backdrop-blur-sm text-gray-900 font-bold rounded-full text-sm shadow-lg">
-                        {project.category}
-                      </span>
+          {/* Projects Grid */}
+          <div className="projects-modern-grid">
+            {projectsData.projects.map((project) => (
+              <article key={project.id} className="project-modern-card">
+                {/* Live Website Thumbnail with Preview */}
+                <div 
+                  className="project-image-container"
+                  onClick={() => openPreview(project)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Preview ${project.name} live website`}
+                  onKeyPress={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      openPreview(project);
+                    }
+                  }}
+                >
+                  {/* Loading State */}
+                  {project.liveUrl && !loadedIframes[project.id] && !blockedIframes[project.id] && (
+                    <div className="thumbnail-loading">
+                      <div className="thumbnail-loading-spinner"></div>
+                      <span>Loading live preview...</span>
                     </div>
-                  </div>
+                  )}
                   
-                  {/* Content Section */}
-                  <div className={`p-8 lg:p-12 flex flex-col justify-between ${index % 2 === 0 ? 'lg:order-2' : 'lg:order-1'}`}>
-                    {/* Header */}
-                    <div>
-                      {/* Project Meta */}
-                      <div className="flex flex-wrap items-center gap-4 mb-4 text-sm text-gray-600">
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                          </svg>
-                          <span className="font-medium">{project.role}</span>
-                        </div>
-                        <span className="text-gray-400">•</span>
-                        <div className="flex items-center gap-2">
-                          <svg className="w-4 h-4 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-                          </svg>
-                          <span>{project.duration}</span>
-                        </div>
-                      </div>
-
-                      {/* Title */}
-                      <h3 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-3 group-hover:text-teal-600 transition-colors">
-                        {project.name}
-                      </h3>
-                      <p className="text-lg text-teal-600 font-semibold mb-6">
-                        {project.subtitle}
-                      </p>
-
-                      {/* Description */}
-                      <p className="text-gray-700 text-lg leading-relaxed mb-6">
-                        {project.description}
-                      </p>
-
-                      {/* Impact Metrics */}
-                      <div className="mb-6">
-                        <button
-                          onClick={() => toggleProject(project.id)}
-                          className="flex items-center gap-2 text-teal-600 font-semibold hover:text-teal-700 transition-colors text-sm uppercase tracking-wider mb-3"
-                        >
-                          <svg 
-                            className={`w-4 h-4 transform transition-transform ${expandedProject === project.id ? 'rotate-180' : ''}`} 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                          >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                          {expandedProject === project.id ? 'Hide Details' : 'View Impact & Details'}
-                        </button>
-
-                        {/* Expandable Impact Section */}
-                        <div className={`overflow-hidden transition-all duration-500 ${expandedProject === project.id ? 'max-h-[800px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                          {/* Challenge-Solution */}
-                          <div className="bg-gray-50 rounded-xl p-6 mb-4 border border-gray-100">
-                            <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
-                              </svg>
-                              Challenge
-                            </h4>
-                            <p className="text-gray-700 text-sm leading-relaxed">{project.challenge}</p>
-                          </div>
-
-                          <div className="bg-teal-50 rounded-xl p-6 mb-4 border border-teal-100">
-                            <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
-                              </svg>
-                              Solution
-                            </h4>
-                            <p className="text-gray-700 text-sm leading-relaxed">{project.solution}</p>
-                          </div>
-
-                          {/* Impact Metrics */}
-                          <div className="bg-blue-50 rounded-xl p-6 mb-4 border border-blue-100">
-                            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
-                              </svg>
-                              Impact & Results
-                            </h4>
-                            <ul className="space-y-2">
-                              {project.impact.map((item, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-gray-700 text-sm">
-                                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                                  </svg>
-                                  <span>{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          {/* Key Highlights */}
-                          <div className="bg-purple-50 rounded-xl p-6 border border-purple-100">
-                            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
-                              <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                              </svg>
-                              Key Highlights
-                            </h4>
-                            <ul className="grid grid-cols-1 gap-2">
-                              {project.highlights.map((highlight, idx) => (
-                                <li key={idx} className="flex items-center gap-2 text-gray-700 text-sm">
-                                  <span className="w-1.5 h-1.5 bg-purple-600 rounded-full flex-shrink-0"></span>
-                                  <span>{highlight}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Technologies */}
-                      <div className="mb-6">
-                        <h4 className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Tech Stack</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {project.technologies.map((tech, idx) => (
-                            <span 
-                              key={idx} 
-                              className="px-3 py-1.5 bg-gradient-to-r from-gray-100 to-gray-50 hover:from-teal-50 hover:to-blue-50 text-gray-700 hover:text-teal-700 text-sm font-medium rounded-lg border border-gray-200 hover:border-teal-300 transition-all duration-300 cursor-default"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
+                  {/* Live Website Thumbnail */}
+                  {project.liveUrl && !blockedIframes[project.id] ? (
+                    <iframe
+                      src={project.liveUrl}
+                      className="project-thumbnail-iframe"
+                      title={`${project.name} thumbnail`}
+                      sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
+                      onLoad={() => setLoadedIframes(prev => ({ ...prev, [project.id]: true }))}
+                      onError={() => setBlockedIframes(prev => ({ ...prev, [project.id]: true }))}
+                      style={{ 
+                        opacity: loadedIframes[project.id] ? 1 : 0,
+                        display: blockedIframes[project.id] ? 'none' : 'block'
+                      }}
+                    />
+                  ) : null}
+                  
+                  {/* Fallback for blocked or unavailable iframes */}
+                  {(!project.liveUrl || blockedIframes[project.id]) && (
+                    <div className="thumbnail-fallback">
+                      <svg className="thumbnail-fallback-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                      </svg>
+                      <div className="thumbnail-fallback-title">{project.name}</div>
+                      <div className="thumbnail-fallback-subtitle">{project.category}</div>
+                    </div>
+                  )}
+                  
+                  {/* Preview Overlay */}
+                  {project.liveUrl && (
+                    <div className="preview-overlay">
+                      <div className="preview-badge">
+                        <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        Live Preview
                       </div>
                     </div>
+                  )}
+                </div>
 
-                    {/* Action Buttons */}
-                    <div className="flex flex-wrap gap-3 pt-6 border-t border-gray-100">
-                      {project.liveUrl && (
-                        <a 
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                          </svg>
-                          View Live
-                        </a>
-                      )}
-                      {project.githubUrl && (
-                        <a 
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border-2 border-gray-900 hover:border-teal-600 hover:text-teal-600 transition-all duration-300 transform hover:scale-105"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
-                          </svg>
-                          Source Code
-                        </a>
-                      )}
-                      {project.figmaUrl && (
-                        <a 
-                          href={project.figmaUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border-2 border-gray-300 hover:border-purple-500 hover:text-purple-600 transition-all duration-300"
-                        >
-                          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M15.852 8.981h-4.588V0h4.588c2.476 0 4.49 2.014 4.49 4.49s-2.014 4.491-4.49 4.491zM12.735 7.51h3.117c1.665 0 3.019-1.355 3.019-3.019s-1.355-3.019-3.019-3.019h-3.117V7.51zm0 1.471H8.148c-2.476 0-4.49-2.014-4.49-4.49S5.672 0 8.148 0h4.588v8.981zm-4.587-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V1.471H8.148zm4.587 15.019H8.148c-2.476 0-4.49-2.014-4.49-4.49s2.014-4.49 4.49-4.49h4.588v8.98zM8.148 8.981c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019h3.117V8.981H8.148zM8.172 24c-2.489 0-4.515-2.014-4.515-4.49s2.014-4.49 4.49-4.49h4.588v4.441c0 2.503-2.047 4.539-4.563 4.539zm-.024-7.51c-1.665 0-3.019 1.355-3.019 3.019s1.355 3.019 3.019 3.019 3.019-1.355 3.019-3.019V16.49H8.148zm7.704 0c-.001-2.476 2.013-4.49 4.489-4.49s4.49 2.014 4.49 4.49-2.014 4.49-4.49 4.49-4.49-2.014-4.489-4.49zm1.471 0c0 1.665 1.355 3.019 3.019 3.019s3.019-1.355 3.019-3.019-1.355-3.019-3.019-3.019-3.019 1.354-3.019 3.019z"/>
-                          </svg>
-                          Prototype
-                        </a>
-                      )}
-                      {project.caseStudyUrl && (
-                        <a 
-                          href={project.caseStudyUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-gray-50 text-gray-900 font-semibold rounded-xl border-2 border-gray-300 hover:border-blue-500 hover:text-blue-600 transition-all duration-300"
-                        >
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                          </svg>
-                          Case Study
-                        </a>
-                      )}
-                    </div>
+                {/* Minimal Info */}
+                <div className="project-info-minimal">
+                  <h3 className="project-name-minimal">{project.name}</h3>
+                  <p className="project-subtitle-minimal">{project.subtitle}</p>
+
+                  {/* Tech Stack - Quick View */}
+                  <div className="tech-badges-inline">
+                    {project.technologies.slice(0, 5).map((tech, index) => (
+                      <span key={index} className="tech-badge-minimal">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 5 && (
+                      <span className="tech-badge-minimal">
+                        +{project.technologies.length - 5} more
+                      </span>
+                    )}
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="project-actions-minimal">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn-minimal project-btn-primary"
+                      >
+                        <span>View Live</span>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn-minimal project-btn-secondary"
+                      >
+                        <span>GitHub</span>
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                        </svg>
+                      </a>
+                    )}
+                    {project.figmaUrl && (
+                      <a
+                        href={project.figmaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn-minimal project-btn-secondary"
+                      >
+                        <span>Design</span>
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 24c2.208 0 4-1.792 4-4v-4H8c-2.208 0-4 1.792-4 4s1.792 4 4 4z" />
+                          <path d="M4 12c0-2.208 1.792-4 4-4h4v8H8c-2.208 0-4-1.792-4-4z" />
+                          <path d="M4 4c0-2.208 1.792-4 4-4h4v8H8C5.792 8 4 6.208 4 4z" />
+                          <path d="M12 0h4c2.208 0 4 1.792 4 4s-1.792 4-4 4h-4V0z" />
+                          <path d="M20 12c0 2.208-1.792 4-4 4s-4-1.792-4-4 1.792-4 4-4 4 1.792 4 4z" />
+                        </svg>
+                      </a>
+                    )}
+                    {project.caseStudyUrl && (
+                      <a
+                        href={project.caseStudyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-btn-minimal project-btn-secondary"
+                      >
+                        <span>Case Study</span>
+                        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                      </a>
+                    )}
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              </article>
+            ))}
+          </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-20 pt-12 border-t border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            Interested in collaborating?
-          </h3>
-          <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
-            I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.
-          </p>
-          <a 
-            href="#contact" 
-            className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-teal-600 to-blue-600 hover:from-teal-700 hover:to-blue-700 text-white font-bold rounded-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+        {/* Live Preview Modal */}
+        {previewProject && (
+          <div 
+            className="preview-modal" 
+            onClick={closePreview}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="preview-modal-title"
           >
-            Let's Talk
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
+            <div 
+              className="preview-modal-content" 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="preview-modal-header">
+                <div className="preview-modal-title" id="preview-modal-title">
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                  </svg>
+                  {previewProject.name} - Live Preview
+                </div>
+                <button 
+                  className="preview-close-btn" 
+                  onClick={closePreview}
+                  aria-label="Close preview"
+                >
+                  <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+              <div className="preview-iframe-container">
+                <iframe
+                  src={previewProject.liveUrl}
+                  className="preview-iframe"
+                  title={`${previewProject.name} live preview`}
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation allow-downloads"
+                  loading="eager"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allow="fullscreen"
+                />
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+    </>
   );
 }
 
