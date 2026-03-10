@@ -2,7 +2,7 @@
   "skills": [
     {
       "id": 1,
-      "title": "Coding"
+      "title": "React"
     },
     {
       "id": 2,
@@ -14,47 +14,71 @@
     },
     {
       "id": 4,
-      "title": "React/Vite"
+      "title": "Node.js"
     },
     {
       "id": 5,
-      "title": "HTML/CSS"
+      "title": "Next.js"
     },
     {
       "id": 6,
-      "title": "Git/Github"
+      "title": "HTML/CSS"
     },
     {
       "id": 7,
-      "title": "Bootstrap"
+      "title": "Tailwind CSS"
     },
     {
       "id": 8,
-      "title": "TailwindCSS"
+      "title": "Bootstrap"
     },
     {
       "id": 9,
-      "title": "VS Code/Figma/Framer"
+      "title": "Git/GitHub"
     },
     {
       "id": 10,
-      "title": "No-Code"
+      "title": "Vite"
     },
     {
       "id": 11,
-      "title": "Website With Framer"
-    },
-    {
-      "id": 12,
       "title": "UX/UI Design"
     },
     {
+      "id": 12,
+      "title": "Figma"
+    },
+    {
       "id": 13,
-      "title": "Product Designing"
+      "title": "Framer"
     },
     {
       "id": 14,
+      "title": "VS Code"
+    },
+    {
+      "id": 15,
       "title": "Figma Prototypes"
+    },
+    {
+      "id": 16,
+      "title": "Product Design"
+    },
+    {
+      "id": 17,
+      "title": "Responsive Design"
+    },
+    {
+      "id": 18,
+      "title": "RESTful APIs"
+    },
+    {
+      "id": 19,
+      "title": "No-Code Development"
+    },
+    {
+      "id": 20,
+      "title": "Framer Websites"
     }
   ]
 }

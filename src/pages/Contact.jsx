@@ -58,7 +58,7 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
             Get In Touch
@@ -85,7 +85,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Email</p>
-                  <p className="text-gray-900 font-medium">youremail@example.com</p>
+                  <a href="mailto:hello@arefsaboor.com" className="text-gray-900 font-medium hover:text-teal-600 transition-colors">hello@arefsaboor.com</a>
                 </div>
               </div>
 

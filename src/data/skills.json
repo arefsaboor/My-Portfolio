@@ -2,105 +2,133 @@
   "categories": [
     {
       "id": 1,
-      "title": "Design",
+      "title": "Design & UX",
+      "icon": "design",
+      "description": "Creating beautiful and intuitive user experiences",
       "skills": [
         {
           "id": 1,
-          "name": "VS Code"
+          "name": "Figma",
+          "level": 90
         },
         {
           "id": 2,
-          "name": "Figma"
+          "name": "Framer",
+          "level": 85
         },
         {
           "id": 3,
-          "name": "Framer"
+          "name": "UX/UI Design",
+          "level": 88
         },
         {
           "id": 4,
-          "name": "No-Code"
+          "name": "Prototyping",
+          "level": 85
         },
         {
           "id": 5,
-          "name": "UX/UI Design"
+          "name": "Design Systems",
+          "level": 80
         }
       ]
     },
     {
       "id": 2,
-      "title": "Frontend",
+      "title": "Frontend Development",
+      "icon": "frontend",
+      "description": "Building responsive and performant web applications",
       "skills": [
         {
           "id": 1,
-          "name": "React"
+          "name": "React",
+          "level": 90
         },
         {
           "id": 2,
-          "name": "JavaScript"
+          "name": "JavaScript/ES6+",
+          "level": 88
         },
         {
           "id": 3,
-          "name": "Tailwind CSS"
+          "name": "Tailwind CSS",
+          "level": 92
         },
         {
           "id": 4,
-          "name": "HTML/CSS"
+          "name": "HTML5/CSS3",
+          "level": 95
         },
         {
           "id": 5,
-          "name": "TypeScript"
+          "name": "TypeScript",
+          "level": 82
         }
       ]
     },
     {
       "id": 3,
-      "title": "Backend",
+      "title": "Backend & APIs",
+      "icon": "backend",
+      "description": "Developing server-side applications and integrations",
       "skills": [
         {
           "id": 1,
-          "name": "Node.js"
+          "name": "Node.js",
+          "level": 80
         },
         {
           "id": 2,
-          "name": "Next.js"
+          "name": "Next.js",
+          "level": 85
         },
         {
           "id": 3,
-          "name": "APIs..."
+          "name": "REST APIs",
+          "level": 82
         },
         {
           "id": 4,
-          "name": "will be added..."
+          "name": "Vercel Functions",
+          "level": 78
         },
         {
           "id": 5,
-          "name": "will be added..."
+          "name": "Database Design",
+          "level": 75
         }
       ]
     },
     {
       "id": 4,
-      "title": "Tools",
+      "title": "Tools & Workflow",
+      "icon": "tools",
+      "description": "Essential tools for modern web development",
       "skills": [
         {
           "id": 1,
-          "name": "Git/GitHub"
+          "name": "Git/GitHub",
+          "level": 88
         },
         {
           "id": 2,
-          "name": "VS Code"
+          "name": "VS Code",
+          "level": 92
         },
         {
           "id": 3,
-          "name": "Vite"
+          "name": "Vite",
+          "level": 85
         },
         {
           "id": 4,
-          "name": "Figma"
+          "name": "Vercel",
+          "level": 86
         },
         {
           "id": 5,
-          "name": "Framer"
+          "name": "Responsive Design",
+          "level": 90
         }
       ]
     }
