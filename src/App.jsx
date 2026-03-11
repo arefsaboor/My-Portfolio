@@ -13,9 +13,9 @@ import Contact from './pages/Contact'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col">
+      <div className="min-h-svh flex flex-col overflow-x-hidden">
         <Navbar />
-        <div className="flex-grow">
+        <div className="flex-grow overflow-x-hidden">
           <Routes>
             <Route path="/" element={
               <>

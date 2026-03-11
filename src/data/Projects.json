@@ -2,90 +2,110 @@
   "projects": [
     {
       "id": 1,
-      "name": "Books2Shelf",
-      "subtitle": "Digital Library Management Platform",
+      "name": "Books |2| Shelf",
+      "subtitle": "A Digital Bookshelf | With Google Books API",
       "category": "Full-Stack Development",
-      "role": "Lead Developer & UX Designer",
-      "duration": "3 Months",
-      "description": "Enterprise-grade digital library management system featuring real-time search, intuitive cataloging, and comprehensive user journey mapping. Architected from concept to deployment with focus on scalability and user experience.",
-      "challenge": "Design an intuitive system for managing large book collections while maintaining fast performance and excellent UX across all devices.",
-      "solution": "Implemented React with optimized state management, created comprehensive Figma prototypes for user testing, and deployed a responsive solution with 95+ Lighthouse performance score.",
+      "role": "Full-Stack Developer",
+      "duration": "2026",
+      "description": "Created a digital Bookshelf (SPA) app with real-time book search and user authentication. Features integration with Google Books API for comprehensive book data, Firebase for authentication and database management, and a clean, intuitive interface for managing personal book collections.",
+      "challenge": "Build a seamless single-page application that handles real-time book searches, user authentication, and persistent data storage while maintaining excellent performance.",
+      "solution": "Developed using React and Vite for fast build times, integrated Firebase for backend services including Auth and Firestore database, connected Google Books API for extensive book data, and styled with Tailwind CSS for a modern, responsive design.",
       "impact": [
-        "Achieved 40% faster search performance through optimized algorithms",
-        "100% responsive across desktop, tablet, and mobile devices",
-        "User testing showed 92% satisfaction rate with interface design"
+        "Real-time book search with Google Books API integration",
+        "Secure user authentication with Firebase Auth",
+        "Cloud-based data storage with Firestore database",
+        "Fully responsive across all devices"
       ],
-      "imageUrl": "/src/assets/ArefPortfolio.jpg",
+      "imageUrl": "/src/assets/books2shelf-screenshot.jpg",
+      "screenshots": {
+        "desktop": "/books2shelf-screenshots/books2shelf-desktop.png",
+        "tablet": "/books2shelf-screenshots/books2shelf-tablet.png",
+        "mobile": "/books2shelf-screenshots/books2shelf-mobile.png"
+      },
       "liveUrl": "https://books2shelf.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/jlU2VAZVQMb3tscWV34pI8/Books2Shelf?page-id=0%3A1&node-id=2-4&p=f&viewport=323%2C292%2C0.04&t=Hr452RwEbnMrb9Uu-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A4",
-      "githubUrl": "https://github.com/arefsaboor/books2shelf",
-      "technologies": ["React", "Tailwind CSS", "Vite", "JavaScript", "Figma", "UX Research"],
+      "githubUrl": "https://github.com/arefsaboor/books2shelf_arefsaboor",
+      "technologies": ["React", "Vite", "Tailwind CSS", "JavaScript", "Firebase", "Firestore", "Google Books API"],
       "highlights": [
-        "Complete design-to-development cycle",
-        "Comprehensive UX research & prototyping",
-        "Optimized search & filtering system",
-        "Mobile-first responsive architecture",
-        "Deployed on Vercel with CI/CD pipeline"
+        "Single Page Application (SPA) architecture",
+        "Google Books API integration for book data",
+        "Firebase Authentication & Firestore database",
+        "Real-time search functionality",
+        "Deployed on Vercel with continuous integration"
       ],
-      "tags": ["Frontend", "UX Design", "React", "Responsive"]
+      "tags": ["Full-Stack", "React", "Firebase", "API Integration"]
     },
     {
       "id": 2,
-      "name": "Professional Portfolio",
-      "subtitle": "Personal Brand & Digital Presence",
-      "category": "Full-Stack Development",
-      "role": "Solo Developer & Designer",
-      "duration": "2 Months",
-      "description": "Modern, performance-optimized portfolio platform with serverless backend integration. Features custom contact API, SEO optimization, and seamless user experience. Built to showcase projects and provide direct client communication channels.",
-      "challenge": "Create a fast, professional portfolio that stands out while maintaining excellent performance and providing seamless contact functionality.",
-      "solution": "Developed a React-based SPA with serverless API integration for contact forms, implemented comprehensive SEO strategies, and designed with a mobile-first approach using Tailwind CSS.",
+      "name": "Portfolio",
+      "subtitle": "Current Personal Domain",
+      "category": "Frontend Development",
+      "role": "Frontend Developer & Designer",
+      "duration": "2025",
+      "description": "Built a responsive Portfolio first in Framer (No-Code Designing) and then developed as SPA (Single Page Application) using React, Vite and Tailwind CSS. Features comprehensive skills & projects showcase with integrated contact functionality. Published on both Framer and Vercel for maximum reach.",
+      "challenge": "Design and develop a modern, performant portfolio that effectively showcases work while being easy to update and maintain across multiple platforms.",
+      "solution": "Started with Framer for rapid prototyping and design iterations, then translated the design into a custom React application with Vite for optimal performance, styled with Tailwind CSS for a polished, responsive interface.",
       "impact": [
-        "Achieved 98/100 Google Lighthouse performance score",
-        "95% reduction in page load time vs. previous version",
-        "Successfully integrated custom domain with SSL encryption"
+        "Dual deployment on Framer and Vercel platforms",
+        "Single Page Application for seamless navigation",
+        "Integrated contact system for client inquiries",
+        "Comprehensive showcase of skills and projects"
       ],
-      "imageUrl": "/src/assets/ArefPortfolio.jpg",
+      "imageUrl": "/src/assets/portfolio-screenshot.jpg",
+      "screenshots": {
+        "desktop": "/Portfolio-Site-Screenshots/Home-Desktop.png",
+        "tablet": "/Portfolio-Site-Screenshots/Home-Tablet.png",
+        "mobile": "/Portfolio-Site-Screenshots/Home-Mobile.png"
+      },
       "liveUrl": "https://www.arefsaboor.com",
+      "framerUrl": "https://arefsaboor.framer.website",
+      "vercelUrl": "https://arefsortfolio.vercel.app",
       "githubUrl": "https://github.com/arefsaboor/My-Portfolio",
-      "technologies": ["React", "Tailwind CSS", "Node.js", "Vercel Functions", "React Router", "SEO"],
+      "technologies": ["React", "Vite", "Tailwind CSS", "JavaScript", "Framer", "Vercel"],
       "highlights": [
-        "Serverless API with Nodemailer integration",
-        "Advanced SEO & Open Graph optimization",
-        "Smooth animations & page transitions",
-        "Custom domain with professional SSL",
-        "Fully responsive across all devices"
+        "No-code design with Framer prototyping",
+        "Single Page Application architecture",
+        "Skills & projects showcase integration",
+        "Contact form with backend integration",
+        "Published on multiple platforms"
       ],
-      "tags": ["Full-Stack", "React", "API", "SEO"]
+      "tags": ["Frontend", "React", "SPA", "Responsive Design"]
     },
     {
       "id": 3,
-      "name": "NIRVAN - Vedic Yoga",
-      "subtitle": "Wellness & Yoga Studio Website",
-      "category": "UX Design & Development",
+      "name": "NIRVAN | First Project",
+      "subtitle": "An Ancient Peace To The Modern World",
+      "category": "Frontend Development",
       "role": "UX Designer & Frontend Developer",
-      "duration": "4 Months",
-      "description": "Comprehensive digital experience for a wellness brand, featuring complete UX design process from user research to final implementation. Documented full case study showcasing research, wireframing, prototyping, and development phases.",
-      "challenge": "Create a calming, accessible digital presence that reflects the studio's values while converting visitors into members and maintaining high performance.",
-      "solution": "Conducted extensive UX research, created high-fidelity Figma prototypes with user testing, and developed a responsive website with focus on accessibility and performance optimization.",
+      "duration": "2024-2025",
+      "description": "Crafted a beautiful High Fidelity Figma prototype (30+ screens) with comprehensive Design System, Reusable Components and Responsive Layout, then implemented from Figma to Code ensuring pixel-perfect UI. Built as a Mobile-First responsive website using HTML, CSS, JavaScript and JSON APIs with complete focus on user experience and accessibility.",
+      "challenge": "Design and develop a comprehensive wellness brand website that balances aesthetic beauty with functionality, ensuring pixel-perfect implementation from design to code while maintaining mobile-first responsiveness.",
+      "solution": "Created an extensive Figma prototype with complete design system including reusable components, then meticulously translated the design into clean, semantic HTML/CSS/JavaScript code with JSON API integration for dynamic content.",
       "impact": [
-        "Published comprehensive UX case study on Behance",
-        "Achieved WCAG 2.1 AA accessibility compliance",
-        "Documented complete design thinking process from research to deployment"
+        "30+ high-fidelity Figma screens with design system",
+        "Pixel-perfect Figma-to-Code implementation",
+        "Mobile-First responsive architecture",
+        "Complete UX case study published on Behance"
       ],
-      "imageUrl": "/src/assets/NirvanVedic.jpg",
+      "imageUrl": "/src/assets/nirvan-screenshot.jpg",
+      "screenshots": {
+        "desktop": "/Nirvan-Screenshots/desktop-hero.png",
+        "tablet": "/Nirvan-Screenshots/tablet-hero.png",
+        "mobile": "/Nirvan-Screenshots/mobile-hero.png"
+      },
       "liveUrl": "https://nirvan-vedic.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/rrjokG2q8eYdcXz6GFcth8/Batch_001_Block_3_Aref_Saboor_UX_Design_and_Produktentwicklung?page-id=2003%3A60&node-id=2731-1520&starting-point-node-id=2731%3A1520&t=lQJPFszJPjypsQhz-1",
       "caseStudyUrl": "https://www.behance.net/gallery/230927521/NIRVAN-Vedic-Yoga",
-      "githubUrl": "https://github.com/arefsaboor/nirvan-vedic",
-      "technologies": ["HTML5", "CSS3", "JavaScript", "Figma", "UX Research", "Accessibility"],
+      "githubUrl": "https://github.com/arefsaboor/Nirvan",
+      "technologies": ["HTML5", "CSS3", "JavaScript", "JSON APIs", "Figma", "Design Systems"],
       "highlights": [
-        "Complete UX design case study",
-        "User research & persona development",
-        "High-fidelity interactive prototypes",
-        "WCAG accessibility standards",
-        "Performance optimization (90+ score)"
+        "High-Fidelity Figma prototype (30+ screens)",
+        "Comprehensive Design System & Components",
+        "Pixel-perfect Figma-to-Code translation",
+        "Mobile-First responsive design",
+        "Published UX case study on Behance"
       ],
-      "tags": ["UX Design", "Frontend", "Accessibility", "Case Study"]
+      "tags": ["UX Design", "Frontend", "Design Systems", "Mobile-First"]
     }
   ]
 }

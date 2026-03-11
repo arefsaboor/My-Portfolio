@@ -7,14 +7,22 @@
     scroll-behavior: smooth;
   }
   
-  html, body {
+  html {
     margin: 0;
     padding: 0;
     width: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
   }
   
   body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    overflow-x: hidden;
+    overflow-y: auto;
     font-family: system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

@@ -48,9 +48,9 @@ function Hero() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-end"
+      className="relative flex items-end"
       aria-label="Hero section"
-      style={{ minHeight: '100vh', minHeight: '100svh' }}
+      style={{ minHeight: '100svh' }}
     >
       {/* SEO: Main heading for search engines */}
       <h1 className="sr-only">Aref Saboor - UX/UI Designer and Full Stack Developer based in Berlin</h1>
@@ -65,7 +65,7 @@ function Hero() {
         <source srcSet="/IMAGE_002.webp" type="image/webp" />
         <source srcSet="/IMAGE_002.jpg" type="image/jpeg" />
         <div 
-          className="hero-background absolute inset-0 z-0"
+          className="hero-background absolute inset-0 z-0 w-full h-full"
           style={{
             backgroundImage: 'url(/IMAGE_002.jpg)',
             backgroundSize: 'cover',
@@ -82,11 +82,12 @@ function Hero() {
         /* Base: Mobile-first approach - content at bottom */
         #home {
           padding-bottom: clamp(4rem, 8vh, 6rem);
+          overflow-x: hidden;
         }
         
         .hero-background {
           background-position: 65% 20% !important;
-          transform: scale(1.15);
+          transform: scale(1.05);
           transform-origin: 65% 20%;
         }
         
@@ -161,10 +162,17 @@ function Hero() {
           justify-content: space-between;
           align-items: flex-end;
           width: 100%;
-          max-width: 1800px;
+          max-width: 100vw;
+          box-sizing: border-box;
           margin: 0 auto;
           padding-left: clamp(1.5rem, 3vw, 5rem);
           padding-right: clamp(1.5rem, 3vw, 5rem);
+        }
+        
+        @media (min-width: 1024px) {
+          .hero-main-container {
+            max-width: 1800px;
+          }
         }
         
         .hero-icon {
@@ -184,19 +192,41 @@ function Hero() {
         .hero-content-box {
           padding-left: clamp(0.75rem, 2vw, 1.5rem);
           padding-right: clamp(0.75rem, 2vw, 1.5rem);
+          max-width: 100%;
+          overflow: hidden;
         }
         
         .hero-animated-box {
-          min-width: clamp(11.25rem, 30vw, 18.75rem);
+          min-width: clamp(9rem, 30vw, 18.75rem);
+          max-width: 100%;
           min-height: clamp(1.5rem, 4vh, 4rem);
+        }
+        
+        @media (max-width: 375px) {
+          .hero-animated-box {
+            min-width: 8rem;
+          }
         }
         
         .hero-animated-text {
           font-size: clamp(0.875rem, 1.5vw, 1.25rem);
+          text-overflow: ellipsis;
+        }
+        
+        @media (max-width: 375px) {
+          .hero-animated-text {
+            font-size: 0.8rem;
+          }
         }
         
         .hero-main-heading {
           font-size: clamp(1.125rem, 4vw, 3rem);
+        }
+        
+        @media (max-width: 375px) {
+          .hero-main-heading {
+            font-size: 1rem;
+          }
         }
         
         .scroll-text {

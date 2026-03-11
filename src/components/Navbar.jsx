@@ -244,10 +244,8 @@ function Navbar() {
       {/* Floating Burger Menu Button */}
       <button
         onClick={toggleMenu}
-        className={`burger-button fixed flex items-center justify-center transition-all duration-300 ease-in-out group z-50 hover:bg-gray-900/70 ${
-          isScrolled || isMobile ? 'scale-100 opacity-100' : 'scale-0 opacity-0 pointer-events-none'
-        } ${
-          isScrolled && !isMobile ? 'rounded-full bg-gray-900/50 backdrop-blur-sm' : ''
+        className={`burger-button fixed flex items-center justify-center rounded-full transition-all duration-300 ease-in-out group z-50 ${
+          isScrolled || isMobile ? 'scale-100 opacity-100 bg-gray-900/50 backdrop-blur-sm hover:bg-gray-900/70' : 'scale-0 opacity-0 pointer-events-none'
         }`}
         style={{ zIndex: zIndex.burgerButton }}
         aria-label="Toggle navigation menu"
