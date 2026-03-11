@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import heroTitles from '../data/HeroTitles.json';
+import bulbIcon from '../bulb.svg';
 
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -8,7 +9,7 @@ function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
-    }, 5000); 
+    }, 3000); // Faster rotation - 3 seconds
 
     return () => clearInterval(interval);
   }, [titles.length]);
@@ -81,7 +82,7 @@ function Hero() {
       <style>{`
         /* Base: Mobile-first approach - content at bottom */
         #home {
-          padding-bottom: clamp(4rem, 8vh, 6rem);
+          padding-bottom: clamp(2.5rem, 5vh, 4rem);
           overflow-x: hidden;
         }
         
@@ -91,12 +92,12 @@ function Hero() {
           transform-origin: 65% 20%;
         }
         
-        /* Desktop: Large screens 1536px+ - content at top */
+        /* Desktop: Large screens 1536px+ - content nearly centered (slightly below) */
         @media (min-width: 1536px) {
           #home {
-            min-height: 140vh !important;
-            align-items: flex-start !important;
-            padding-top: 50vh;
+            min-height: 100vh !important;
+            align-items: center !important;
+            padding-top: 14vh;
             padding-bottom: 0;
           }
           
@@ -107,7 +108,20 @@ function Hero() {
           }
           
           .hero-main-container {
-            margin-top: -18vh;
+            margin-top: 0;
+          }
+        }
+        
+        /* Medium desktop screens - nearly centered */
+        @media (min-width: 1024px) and (max-width: 1535px) {
+          #home {
+            align-items: center !important;
+            padding-top: 12vh;
+            padding-bottom: 0;
+          }
+          
+          .hero-main-container {
+            margin-top: 0;
           }
         }
         
@@ -233,7 +247,8 @@ function Hero() {
           font-size: 0.875rem;
           text-transform: uppercase;
           letter-spacing: 0.05em;
-          color: rgba(255, 255, 255, 0.8);
+          color: #5eead4;
+          text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
         }
         
         .hero-cta-button {
@@ -268,19 +283,25 @@ function Hero() {
         .scroll-border {
           width: 3.5rem;
           height: 5rem;
-          border-width: 2px;
+          border-width: 1px;
+          border-color: #5eead4;
+          box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
         }
         
         .scroll-dot {
           width: 0.25rem;
           height: 0.875rem;
           margin-top: 0.25rem;
+          background-color: #5eead4;
+          box-shadow: 0 0 18px rgba(94, 234, 212, 0.7);
         }
         
         .scroll-arrow {
-          width: 1rem;
-          height: 1rem;
+          width: 1.5rem;
+          height: 1.5rem;
           margin-bottom: 0.25rem;
+          color: #5eead4;
+          filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.6));
         }
         
         .scroll-gap {
@@ -296,21 +317,23 @@ function Hero() {
         }
         
         .scroll-indicator-wrapper:hover .scroll-border {
-          border-color: #5eead4;
-          box-shadow: 0 0 20px rgba(94, 234, 212, 0.6);
+          border-color: #fbbf24;
+          box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 35px rgba(251, 146, 60, 0.3), 0 0 45px rgba(96, 165, 250, 0.2);
         }
         
         .scroll-indicator-wrapper:hover .scroll-text {
-          color: #5eead4;
+          color: #fbbf24;
+          text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.3);
         }
         
         .scroll-indicator-wrapper:hover .scroll-dot {
-          background-color: #5eead4;
-          box-shadow: 0 0 10px rgba(94, 234, 212, 0.8);
+          background-color: #fbbf24;
+          box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.4);
         }
         
         .scroll-indicator-wrapper:hover .scroll-arrow {
-          color: #5eead4;
+          color: #fbbf24;
+          filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 18px rgba(251, 146, 60, 0.4)) drop-shadow(0 0 24px rgba(96, 165, 250, 0.2));
         }
         
         .scroll-indicator-wrapper:active {
@@ -343,7 +366,7 @@ function Hero() {
             {titles.map((item, index) => (
               <p
                 key={item.id}
-                className={`absolute hero-animated-text text-white font-normal transition-all duration-500 ease-in-out text-left whitespace-nowrap ${
+                className={`absolute hero-animated-text text-white font-normal transition-all duration-300 ease-in-out text-left whitespace-nowrap ${
                   index === currentIndex
                     ? 'translate-y-0 opacity-100'
                     : index === (currentIndex - 1 + titles.length) % titles.length
@@ -389,6 +412,18 @@ function Hero() {
           </div>
         </div>
         
+        {/* Tagline - Hidden on mobile */}
+        <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
+          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(80%) sepia(21%) saturate(1095%) hue-rotate(127deg) brightness(95%) contrast(86%)' }} />
+          <div className="hero-content-box bg-gradient-to-r from-gray-900/90 via-teal-950/80 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)' }}>
+            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
+              Crafting designs that visually speak on screens!<br />
+              Giving visual identity to ideas, products and brands<br />
+              in the digital world.
+            </p>
+          </div>
+        </div>
+        
         {/* Call to Action */}
         <button 
           onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
@@ -407,10 +442,10 @@ function Hero() {
           aria-label="Scroll to next section"
         >
           <span className="scroll-text font-light">Scroll</span>
-          <div className="scroll-border border-white/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+          <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
             <div className="scroll-dot bg-teal-400 rounded-full"></div>
             <svg className="scroll-arrow text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </button>
@@ -422,10 +457,10 @@ function Hero() {
           aria-label="Scroll to next section"
         >
           <span className="scroll-text font-light">Scroll</span>
-          <div className="scroll-border border-white/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+          <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
             <div className="scroll-dot bg-teal-400 rounded-full"></div>
             <svg className="scroll-arrow text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </button>

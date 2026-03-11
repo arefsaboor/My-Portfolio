@@ -9,6 +9,7 @@ export default {
       animation: {
         'live-pulse': 'live-pulse 4s ease-in-out infinite',
         'dot-pulse': 'dot-pulse 4s ease-in-out infinite',
+        'fadeIn': 'fadeIn 0.3s ease-in-out',
       },
       keyframes: {
         'live-pulse': {
@@ -57,6 +58,16 @@ export default {
           },
           '100%': { 
             backgroundColor: 'rgb(34 197 94)',
+          },
+        },
+        'fadeIn': {
+          '0%': { 
+            opacity: '0',
+            transform: 'translateY(-10px)',
+          },
+          '100%': { 
+            opacity: '1',
+            transform: 'translateY(0)',
           },
         },
       },

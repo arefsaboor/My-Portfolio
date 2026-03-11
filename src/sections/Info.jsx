@@ -1,206 +1,230 @@
 import { Link } from 'react-router-dom';
 
 function Info() {
-  const stats = [
-    { number: '3+', label: 'Years Experience' },
-    { number: '15+', label: 'Projects Completed' },
-    { number: '98%', label: 'Client Satisfaction' }
+  const values = [
+    {
+      title: 'From Storytelling to Code',
+      description: 'Video journalist background gives me a unique perspective on crafting narratives through digital experiences.'
+    },
+    {
+      title: 'Self-Taught Designer',
+      description: 'Enthusiastically combining visual design skills with interactive and responsive user experiences.'
+    },
+    {
+      title: 'Bundeswehr Experience',
+      description: 'Discipline, precision, and attention to detail—values that define every project I build.'
+    }
   ];
 
   return (
     <>
       <style>{`
         .info-modern-wrapper {
-          background: linear-gradient(180deg, #ffffff 0%, #f8fffe 50%, #ffffff 100%);
+          background: linear-gradient(180deg, #ffffff 0%, #f0fdfa 30%, #ccfbf1 50%, #f0fdfa 70%, #ffffff 100%);
           position: relative;
           overflow: hidden;
         }
 
-        .info-modern-wrapper::before {
+        .info-modern-wrapper::before,
+        .info-modern-wrapper::after {
           content: '';
           position: absolute;
-          top: -30%;
-          right: -20%;
-          width: 60%;
-          height: 60%;
-          background: radial-gradient(circle, rgba(94, 234, 212, 0.1) 0%, transparent 70%);
+          border-radius: 50%;
+          opacity: 0.4;
           pointer-events: none;
         }
 
-        /* Stat cards */
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: clamp(1.5rem, 3vw, 2.5rem);
-          margin-bottom: clamp(4rem, 8vh, 6rem);
+        .info-modern-wrapper::before {
+          top: -20%;
+          right: -15%;
+          width: 600px;
+          height: 600px;
+          background: radial-gradient(circle, rgba(94, 234, 212, 0.15) 0%, transparent 70%);
+          animation: float 20s ease-in-out infinite;
         }
 
-        .stat-card {
-          background: rgba(255, 255, 255, 0.8);
-          backdrop-filter: blur(12px);
-          border: 2px solid rgba(94, 234, 212, 0.15);
-          border-radius: 1.75rem;
-          padding: clamp(2rem, 4vw, 3rem);
-          text-align: center;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
+        .info-modern-wrapper::after {
+          bottom: -15%;
+          left: -10%;
+          width: 500px;
+          height: 500px;
+          background: radial-gradient(circle, rgba(20, 184, 166, 0.12) 0%, transparent 70%);
+          animation: float 25s ease-in-out infinite reverse;
         }
 
-        .stat-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(94, 234, 212, 0.05) 0%, rgba(13, 148, 136, 0.05) 100%);
-          opacity: 0;
-          transition: opacity 0.4s ease;
+        @keyframes float {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          50% { transform: translate(30px, 30px) scale(1.1); }
         }
 
-        .stat-card:hover {
-          transform: translateY(-8px) scale(1.02);
-          border-color: rgba(94, 234, 212, 0.4);
-          box-shadow: 0 20px 60px rgba(13, 148, 136, 0.15);
-        }
-
-        .stat-card:hover::before {
-          opacity: 1;
-        }
-
-        .stat-number {
-          font-size: clamp(3rem, 6vw, 4.5rem);
-          font-weight: 900;
-          background: linear-gradient(135deg, #0d9488 0%, #5eead4 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          line-height: 1;
-          margin-bottom: 1rem;
-          position: relative;
-          z-index: 1;
-        }
-
-        .stat-label {
-          font-size: clamp(1rem, 1.8vw, 1.25rem);
-          font-weight: 600;
-          color: #374151;
-          position: relative;
-          z-index: 1;
-        }
-
-        /* Content section */
-        .info-content-box {
-          background: white;
-          border-radius: 2rem;
-          padding: clamp(3rem, 6vw, 5rem);
-          box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
-          max-width: 900px;
+        /* Main content section */
+        .info-content-section {
+          max-width: 1100px;
           margin: 0 auto;
+        }
+
+        .info-heading-box {
+          text-align: center;
+          margin-bottom: clamp(4rem, 6vh, 5rem);
         }
 
         .info-modern-heading {
           font-size: clamp(2.5rem, 5vw, 4rem);
           font-weight: 900;
-          background: linear-gradient(135deg, #0a3d35 0%, #0d9488 50%, #5eead4 100%);
+          background: linear-gradient(135deg, #0a3d35 0%, #0d9488 40%, #14b8a6 70%, #5eead4 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          line-height: 1.2;
-          margin-bottom: clamp(1.5rem, 3vh, 2rem);
-          text-align: center;
+          line-height: 1.15;
+          margin-bottom: clamp(1rem, 2vh, 1.5rem);
+          letter-spacing: -0.02em;
         }
 
-        .info-modern-text {
-          font-size: clamp(1.125rem, 2vw, 1.375rem);
-          line-height: 1.8;
-          color: #4b5563;
-          margin-bottom: clamp(2rem, 4vh, 3rem);
-          text-align: center;
+        .info-subheading {
+          font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+          line-height: 1.6;
+          color: #475569;
+          max-width: 700px;
+          margin: 0 auto;
+          font-weight: 500;
         }
 
-        /* Expertise pills */
-        .expertise-grid {
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 1rem;
-          margin-bottom: clamp(2.5rem, 5vh, 3.5rem);
+        /* Values grid */
+        .values-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: clamp(1.5rem, 3vw, 2rem);
+          margin-bottom: clamp(4rem, 6vh, 5rem);
         }
 
-        .expertise-pill {
-          padding: 0.875rem 1.75rem;
-          background: linear-gradient(135deg, rgba(94, 234, 212, 0.1) 0%, rgba(13, 148, 136, 0.1) 100%);
-          border: 2px solid rgba(13, 148, 136, 0.2);
-          border-radius: 9999px;
-          font-size: clamp(0.9375rem, 1.7vw, 1.0625rem);
-          font-weight: 600;
-          color: #0d9488;
-          transition: all 0.3s ease;
-          cursor: default;
-        }
-
-        .expertise-pill:hover {
-          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-          color: white;
-          border-color: transparent;
-          transform: translateY(-3px);
-          box-shadow: 0 8px 24px rgba(13, 148, 136, 0.3);
-        }
-
-        /* CTA button */
-        .info-modern-cta {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.75rem;
-          padding: clamp(1.125rem, 2.2vw, 1.5rem) clamp(2.5rem, 5vw, 3.5rem);
-          background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-          color: white;
-          font-size: clamp(1.0625rem, 2vw, 1.25rem);
-          font-weight: 700;
-          border-radius: 9999px;
-          text-decoration: none;
-          transition: all 0.3s ease;
-          box-shadow: 0 6px 28px rgba(13, 148, 136, 0.35);
+        .value-card {
+          background: white;
+          border: 2px solid rgba(20, 184, 166, 0.1);
+          border-radius: 1.5rem;
+          padding: clamp(2rem, 3vw, 2.5rem);
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           overflow: hidden;
-          border: 2px solid transparent;
         }
 
-        .info-modern-cta::before {
+        .value-card::before {
           content: '';
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+          background: linear-gradient(135deg, rgba(94, 234, 212, 0.05) 0%, rgba(13, 148, 136, 0.08) 100%);
           opacity: 0;
-          transition: opacity 0.3s ease;
+          transition: opacity 0.4s ease;
         }
 
-        .info-modern-cta:hover::before {
+        .value-card:hover {
+          transform: translateY(-8px);
+          border-color: rgba(20, 184, 166, 0.3);
+          box-shadow: 0 16px 48px rgba(13, 148, 136, 0.12);
+        }
+
+        .value-card:hover::before {
           opacity: 1;
         }
 
+        .value-title {
+          font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 0.75rem;
+          position: relative;
+          z-index: 1;
+        }
+
+        .value-description {
+          font-size: clamp(1rem, 1.8vw, 1.125rem);
+          line-height: 1.7;
+          color: #6b7280;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Approach section */
+        .approach-box {
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(240, 253, 250, 0.9) 100%);
+          backdrop-filter: blur(20px);
+          border: 2px solid rgba(94, 234, 212, 0.2);
+          border-radius: 2rem;
+          padding: clamp(3rem, 5vw, 4rem);
+          text-align: center;
+          margin-bottom: clamp(3rem, 5vh, 4rem);
+        }
+
+        .approach-label {
+          font-size: clamp(1rem, 1.8vw, 1.125rem);
+          font-weight: 700;
+          color: #0d9488;
+          margin-bottom: 1.5rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+
+        .approach-text {
+          font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+          line-height: 1.8;
+          color: #475569;
+          font-weight: 400;
+          max-width: 850px;
+          margin: 0 auto;
+          position: relative;
+        }
+
+        .quote-icon {
+          font-size: clamp(2rem, 3vw, 2.5rem);
+          color: #0d9488;
+          opacity: 0.3;
+          position: absolute;
+        }
+
+        .quote-icon-left {
+          top: -10px;
+          left: -30px;
+        }
+
+        .quote-icon-right {
+          bottom: -10px;
+          right: -30px;
+        }
+
+        .approach-highlight {
+          background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: 800;
+        }
+
+        /* CTA section */
+        .cta-box {
+          text-align: center;
+        }
+
+        .info-modern-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: clamp(120px, 15vw, 160px);
+          height: clamp(120px, 15vw, 160px);
+          background: #0d9488;
+          color: white;
+          font-size: clamp(0.9rem, 1.6vw, 1rem);
+          font-weight: 600;
+          border-radius: 50%;
+          text-decoration: none;
+          transition: all 0.3s ease;
+        }
+
         .info-modern-cta:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 12px 40px rgba(13, 148, 136, 0.45);
-          border-color: rgba(94, 234, 212, 0.6);
+          background: #0a6b62;
+          transform: translateY(-2px) scale(1.05);
         }
 
-        .info-modern-cta span {
-          position: relative;
-          z-index: 1;
-        }
-
-        .info-modern-cta svg {
-          position: relative;
-          z-index: 1;
-          transition: transform 0.3s ease;
-        }
-
-        .info-modern-cta:hover svg {
-          transform: translateX(5px);
-        }
-
-        @media (max-width: 640px) {
-          .stats-grid {
+        @media (max-width: 768px) {
+          .values-grid {
             grid-template-columns: 1fr;
           }
         }
@@ -208,41 +232,44 @@ function Info() {
 
       <section id="info" className="info-modern-wrapper py-24 md:py-32 relative">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-16 xl:px-20 relative z-10">
-          {/* Stats Cards */}
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="stat-number">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-
           {/* Main Content */}
-          <div className="info-content-box">
-            <h2 className="info-modern-heading">
-              Design Meets Development
-            </h2>
-            <p className="info-modern-text">
-              Bridging creativity and code to build digital experiences that are both beautiful and functional. 
-              Every pixel has purpose, every interaction tells a story.
-            </p>
+          <div className="info-content-section">
+            {/* Heading */}
+            <div className="info-heading-box">
+              <h2 className="info-modern-heading">
+                Full Stack Developer | UX/UI Designer
+              </h2>
+              <p className="info-subheading">
+                I have a passion for keeping balance between the beauty of Design and a friendly User Experience.
+              </p>
+            </div>
 
-            {/* Expertise Pills */}
-            <div className="expertise-grid">
-              <div className="expertise-pill">UX/UI Design</div>
-              <div className="expertise-pill">Frontend Development</div>
-              <div className="expertise-pill">Responsive Design</div>
-              <div className="expertise-pill">Prototyping</div>
+            {/* Values Grid */}
+            <div className="values-grid">
+              {values.map((value, index) => (
+                <div key={index} className="value-card">
+                  <h3 className="value-title">{value.title}</h3>
+                  <p className="value-description">{value.description}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Approach Statement */}
+            <div className="approach-box">
+              <h3 className="approach-label">My Journey</h3>
+              <div style={{ position: 'relative' }}>
+                <span className="quote-icon quote-icon-left">"</span>
+                <p className="approach-text">
+                  After years in video journalism and as a former Bundeswehr employee, I made a bold career change into the competitive world of web design and development. Now, I bring stories to life through code, combining my self-taught graphic design skills with cutting-edge development.
+                </p>
+                <span className="quote-icon quote-icon-right">"</span>
+              </div>
             </div>
 
             {/* CTA */}
-            <div className="text-center">
+            <div className="cta-box">
               <Link to="/about" className="info-modern-cta">
-                <span>Discover My Journey</span>
-                <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                About Me
               </Link>
             </div>
           </div>

@@ -11,6 +11,23 @@ function Navbar() {
   const sidebarRef = useRef(null);
   const closeButtonRef = useRef(null);
 
+  // Handle click on current page - refresh to show loader
+  const handlePageClick = (e, path) => {
+    if (location.pathname === path) {
+      e.preventDefault();
+      // Close sidebar if open
+      if (isOpen) {
+        handleClose();
+        // Reload after sidebar closes
+        setTimeout(() => {
+          window.location.reload();
+        }, 700);
+      } else {
+        window.location.reload();
+      }
+    }
+  };
+
   // Detect mobile screen size
   useEffect(() => {
     const checkMobile = () => {
@@ -197,7 +214,7 @@ function Navbar() {
           <div className="flex justify-start md:justify-between items-center">
             {/* Logo */}
             <div className="flex-shrink-0 logo-wrapper">
-              <Link to="/" className="block">
+              <Link to="/" className="block" onClick={(e) => handlePageClick(e, '/')}>
                 <h1 className="logo-text font-bold text-white tracking-wide drop-shadow-lg m-0">
                   <span className="font-bold">AREF </span>
                   <span className="font-thin">SABOOR</span>
@@ -221,7 +238,8 @@ function Navbar() {
                   <Link
                     key={link.id}
                     to={link.path}
-                    className={`relative text-white hover:text-teal-400 transition-all duration-300 font-medium drop-shadow-lg group transform ${hoverEffect}`}
+                    onClick={(e) => handlePageClick(e, link.path)}
+                    className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect}`}
                     style={{ fontSize: 'clamp(1rem, 1.2vw + 0.3rem, 1.375rem)' }}
                   >
                     {link.name}
@@ -348,7 +366,13 @@ function Navbar() {
                   <Link
                     key={link.id}
                     to={link.path}
-                    onClick={toggleMenu}
+                    onClick={(e) => {
+                      const isCurrentPage = location.pathname === link.path;
+                      if (!isCurrentPage) {
+                        toggleMenu();
+                      }
+                      handlePageClick(e, link.path);
+                    }}
                     className="relative block text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-4 transform group sidebar-link"
                   >
                     {link.name}

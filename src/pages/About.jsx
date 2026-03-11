@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import PageLoader from '../components/PageLoader';
 import SkillsSection from '../sections/SkillsSection';
 import WebImage from '../assets/Web-Image-Full.jpg';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     setIsVisible(true);
@@ -32,7 +34,9 @@ const About = () => {
   };
 
   return (
-    <div className="bg-white">
+    <>
+      {showLoader && <PageLoader pageName="About" onComplete={() => setShowLoader(false)} />}
+      <div className="bg-white">
       {/* Hero Section - Full Screen Immersive */}
       <section 
         id="about-hero"
@@ -255,7 +259,8 @@ const About = () => {
           </div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
