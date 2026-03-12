@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import PageLoader from '../components/PageLoader';
 import SkillsSection from '../sections/SkillsSection';
 import WebImage from '../assets/Web-Image-Full.jpg';
+import CVPreviewModal from '../components/CVPreviewModal';
+import cvPdf from '../assets/Aref_Saboor_CV.pdf';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
   useEffect(() => {
     setIsVisible(true);
@@ -221,16 +224,15 @@ const About = () => {
                   <p className="text-gray-600">Get detailed overview of my skills and experience</p>
                 </div>
               </div>
-              <a 
-                href="/resume.pdf" 
-                download
+              <button 
+                onClick={() => setIsCVModalOpen(true)}
                 className="inline-flex items-center gap-2 px-6 py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-md hover:shadow-lg"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
-                Download CV
-              </a>
+                View CV
+              </button>
             </div>
 
             {/* Contact Card */}
@@ -259,6 +261,13 @@ const About = () => {
           </div>
         </div>
       </section>
+      
+      {/* CV Preview Modal */}
+      <CVPreviewModal 
+        isOpen={isCVModalOpen} 
+        onClose={() => setIsCVModalOpen(false)}
+        pdfUrl={cvPdf}
+      />
       </div>
     </>
   );

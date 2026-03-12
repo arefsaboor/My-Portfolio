@@ -1,10 +1,61 @@
 import { useState, useEffect } from 'react';
 import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
+import CVPreviewModal from '../components/CVPreviewModal';
+import cvPdf from '../assets/Aref_Saboor_CV.pdf';
+
+// Import technology icons from svg-icons folder
+import icon1 from '../assets/svg-icons/1-Node.svg';
+import icon2 from '../assets/svg-icons/2-Next.js.svg';
+import icon3 from '../assets/svg-icons/3-Vite.svg';
+import icon4 from '../assets/svg-icons/4-JS.svg';
+import icon5 from '../assets/svg-icons/5-TS.svg';
+import icon6 from '../assets/svg-icons/6-React.svg';
+import icon7 from '../assets/svg-icons/7-HTML.svg';
+import icon8 from '../assets/svg-icons/8-CSS.svg';
+import icon9 from '../assets/svg-icons/9-Postman.svg';
+import icon10 from '../assets/svg-icons/10-Docker.svg';
+import icon11 from '../assets/svg-icons/11-GitHub.svg';
+import icon12 from '../assets/svg-icons/12-Firebase.svg';
+import icon13 from '../assets/svg-icons/13-Vercel.svg';
+import icon14 from '../assets/svg-icons/14-Tailwind.svg';
+import icon15 from '../assets/svg-icons/15-Figma.svg';
+import icon16 from '../assets/svg-icons/16-Vector.svg';
+import icon17 from '../assets/svg-icons/17-VsCode.svg';
+import icon18 from '../assets/svg-icons/18-Microsoft Office.svg';
+import icon19 from '../assets/svg-icons/19-Premiere.svg';
+import icon20 from '../assets/svg-icons/20-Illustrator.svg';
+import icon21 from '../assets/svg-icons/21-Photoshop.svg';
 
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const titles = heroTitles.skills;
+
+  // Array of 21 technology icons
+  const techIcons = [
+    { src: icon1, alt: 'Node.js', name: 'Node.js' },
+    { src: icon2, alt: 'Next.js', name: 'Next.js' },
+    { src: icon3, alt: 'Vite', name: 'Vite' },
+    { src: icon4, alt: 'JavaScript', name: 'JavaScript' },
+    { src: icon5, alt: 'TypeScript', name: 'TypeScript' },
+    { src: icon6, alt: 'React', name: 'React' },
+    { src: icon7, alt: 'HTML5', name: 'HTML5' },
+    { src: icon8, alt: 'CSS3', name: 'CSS3' },
+    { src: icon9, alt: 'Postman', name: 'Postman' },
+    { src: icon10, alt: 'Docker', name: 'Docker' },
+    { src: icon11, alt: 'GitHub', name: 'GitHub' },
+    { src: icon12, alt: 'Firebase', name: 'Firebase' },
+    { src: icon13, alt: 'Vercel', name: 'Vercel' },
+    { src: icon14, alt: 'Tailwind CSS', name: 'Tailwind' },
+    { src: icon15, alt: 'Figma', name: 'Figma' },
+    { src: icon16, alt: 'Vector', name: 'Vector' },
+    { src: icon17, alt: 'VS Code', name: 'VS Code' },
+    { src: icon18, alt: 'Microsoft Office', name: 'MS Office' },
+    { src: icon19, alt: 'Premiere Pro', name: 'Premiere' },
+    { src: icon20, alt: 'Illustrator', name: 'Illustrator' },
+    { src: icon21, alt: 'Photoshop', name: 'Photoshop' },
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -252,9 +303,8 @@ function Hero() {
         }
         
         .hero-cta-button {
-          margin-top: clamp(1.5rem, 3vh, 2.5rem);
-          margin-left: calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem));
           min-height: clamp(1.5rem, 4vh, 4rem);
+          min-width: 150px;
           padding-left: clamp(1.5rem, 2vw, 1.5rem);
           padding-right: clamp(1.5rem, 2vw, 1.5rem);
           background: #5eead4;
@@ -277,6 +327,37 @@ function Hero() {
         }
         
         .hero-cta-button:active {
+          transform: translateY(0);
+        }
+        
+        .hero-cta-button-secondary {
+          min-height: clamp(1.5rem, 4vh, 4rem);
+          min-width: 150px;
+          padding-top: 0;
+          padding-bottom: 0;
+          padding-left: clamp(1.5rem, 2vw, 1.5rem);
+          padding-right: clamp(1.5rem, 2vw, 1.5rem);
+          background: transparent;
+          color: white;
+          font-size: clamp(0.875rem, 1.5vw, 1.125rem);
+          font-weight: 500;
+          line-height: 1;
+          border-radius: 9999px;
+          border: 2px solid #5eead4;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .hero-cta-button-secondary:hover {
+          background: rgba(5, 46, 44, 0.8);
+          border-color: #14b8a6;
+          transform: translateY(-1px);
+        }
+        
+        .hero-cta-button-secondary:active {
           transform: translateY(0);
         }
         
@@ -349,6 +430,66 @@ function Hero() {
             animation-duration: 0.01ms !important;
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
+          }
+        }
+
+        /* Infinite scrolling icon strip */
+        .icon-scroll-container {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          overflow: hidden;
+          padding-bottom: 1.5rem;
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
+          z-index: 15;
+          display: none;
+        }
+
+        @media (min-width: 768px) {
+          .icon-scroll-container {
+            display: block;
+          }
+        }
+
+        .icon-scroll-track {
+          display: flex;
+          gap: 20px;
+          animation: scroll-left 70s linear 0s infinite;
+          will-change: transform;
+          transform-style: preserve-3d;
+          backface-visibility: hidden;
+        }
+
+        .icon-scroll-item {
+          flex-shrink: 0;
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .icon-scroll-item img {
+          width: 70%;
+          height: 70%;
+          object-fit: contain;
+          filter: brightness(0) invert(1);
+          opacity: 0.09;
+        }
+
+        @keyframes scroll-left {
+          from {
+            transform: translateX(0);
+          }
+          to {
+            transform: translateX(-50%);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .icon-scroll-track {
+            animation: none !important;
           }
         }
       `}</style>
@@ -424,14 +565,24 @@ function Hero() {
           </div>
         </div>
         
-        {/* Call to Action */}
-        <button 
-          onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-          className="hero-cta-button"
-          aria-label="View my projects"
-        >
-          View My Work
-        </button>
+        {/* Call to Action Buttons */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4" style={{ marginTop: 'clamp(1.5rem, 3vh, 2.5rem)', marginLeft: 'calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem))' }}>
+          <button 
+            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            className="hero-cta-button"
+            aria-label="View my projects"
+          >
+            Recent Works
+          </button>
+          
+          <button 
+            onClick={() => setIsCVModalOpen(true)}
+            className="hero-cta-button-secondary"
+            aria-label="Preview CV"
+          >
+            Resume
+          </button>
+        </div>
         </div>
         </div>
 
@@ -465,6 +616,26 @@ function Hero() {
           </div>
         </button>
       </div>
+
+      {/* Infinite Scrolling Tech Icons Strip - 21 icons */}
+      <div className="icon-scroll-container">
+        <div className="icon-scroll-track">
+          {[...Array(4)].flatMap((_, setIndex) =>
+            techIcons.map((icon, iconIndex) => (
+              <div key={`icon-${setIndex}-${iconIndex}`} className="icon-scroll-item">
+                <img src={icon.src} alt={icon.alt} />
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+      
+      {/* CV Preview Modal */}
+      <CVPreviewModal 
+        isOpen={isCVModalOpen} 
+        onClose={() => setIsCVModalOpen(false)}
+        pdfUrl={cvPdf}
+      />
     </section>
   );
 }

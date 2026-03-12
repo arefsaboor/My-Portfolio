@@ -1,18 +1,30 @@
 import { Link } from 'react-router-dom';
+import ReadingIcon from '../assets/interests/Reading.svg';
+import WritingIcon from '../assets/interests/Writing.svg';
+import JoggingIcon from '../assets/interests/Jogging.svg';
+import YogaIcon from '../assets/interests/Yoga.svg';
 
 function Info() {
-  const values = [
+  const interests = [
     {
-      title: 'From Storytelling to Code',
-      description: 'Video journalist background gives me a unique perspective on crafting narratives through digital experiences.'
+      icon: ReadingIcon,
+      name: 'Reading',
+      description: 'Exploring new ideas through books'
     },
     {
-      title: 'Self-Taught Designer',
-      description: 'Enthusiastically combining visual design skills with interactive and responsive user experiences.'
+      icon: WritingIcon,
+      name: 'Writing',
+      description: 'Crafting stories and thoughts'
     },
     {
-      title: 'Bundeswehr Experience',
-      description: 'Discipline, precision, and attention to detail—values that define every project I build.'
+      icon: JoggingIcon,
+      name: 'Jogging',
+      description: 'Staying active and healthy'
+    },
+    {
+      icon: YogaIcon,
+      name: 'Yoga',
+      description: 'Finding balance and mindfulness'
     }
   ];
 
@@ -64,7 +76,7 @@ function Info() {
         }
 
         .info-heading-box {
-          text-align: center;
+          text-align: left;
           margin-bottom: clamp(4rem, 6vh, 5rem);
         }
 
@@ -85,62 +97,8 @@ function Info() {
           line-height: 1.6;
           color: #475569;
           max-width: 700px;
-          margin: 0 auto;
+          margin: 0;
           font-weight: 500;
-        }
-
-        /* Values grid */
-        .values-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: clamp(1.5rem, 3vw, 2rem);
-          margin-bottom: clamp(4rem, 6vh, 5rem);
-        }
-
-        .value-card {
-          background: white;
-          border: 2px solid rgba(20, 184, 166, 0.1);
-          border-radius: 1.5rem;
-          padding: clamp(2rem, 3vw, 2.5rem);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          position: relative;
-          overflow: hidden;
-        }
-
-        .value-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(94, 234, 212, 0.05) 0%, rgba(13, 148, 136, 0.08) 100%);
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-
-        .value-card:hover {
-          transform: translateY(-8px);
-          border-color: rgba(20, 184, 166, 0.3);
-          box-shadow: 0 16px 48px rgba(13, 148, 136, 0.12);
-        }
-
-        .value-card:hover::before {
-          opacity: 1;
-        }
-
-        .value-title {
-          font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-          font-weight: 700;
-          color: #111827;
-          margin-bottom: 0.75rem;
-          position: relative;
-          z-index: 1;
-        }
-
-        .value-description {
-          font-size: clamp(1rem, 1.8vw, 1.125rem);
-          line-height: 1.7;
-          color: #6b7280;
-          position: relative;
-          z-index: 1;
         }
 
         /* Approach section */
@@ -150,17 +108,9 @@ function Info() {
           border: 2px solid rgba(94, 234, 212, 0.2);
           border-radius: 2rem;
           padding: clamp(3rem, 5vw, 4rem);
-          text-align: center;
+          text-align: left;
           margin-bottom: clamp(3rem, 5vh, 4rem);
-        }
-
-        .approach-label {
-          font-size: clamp(1rem, 1.8vw, 1.125rem);
-          font-weight: 700;
-          color: #0d9488;
-          margin-bottom: 1.5rem;
-          letter-spacing: 0.05em;
-          text-transform: uppercase;
+          position: relative;
         }
 
         .approach-text {
@@ -168,34 +118,91 @@ function Info() {
           line-height: 1.8;
           color: #475569;
           font-weight: 400;
-          max-width: 850px;
-          margin: 0 auto;
-          position: relative;
+          margin: 0;
         }
 
         .quote-icon {
-          font-size: clamp(2rem, 3vw, 2.5rem);
+          font-size: clamp(3.5rem, 6vw, 5rem);
           color: #0d9488;
-          opacity: 0.3;
-          position: absolute;
+          opacity: 0.2;
+          display: flex;
+          justify-content: center;
+          margin: 0 auto;
         }
 
-        .quote-icon-left {
-          top: -10px;
-          left: -30px;
+        .quote-icon-top {
+          margin-bottom: clamp(1.5rem, 3vh, 2rem);
         }
 
-        .quote-icon-right {
-          bottom: -10px;
-          right: -30px;
+        .quote-icon-bottom {
+          margin-top: clamp(1.5rem, 3vh, 2rem);
+          transform: rotate(180deg);
         }
 
-        .approach-highlight {
-          background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-          font-weight: 800;
+        /* Interests section */
+        .interests-section {
+          margin-top: clamp(3rem, 5vh, 4rem);
+          margin-bottom: clamp(3rem, 5vh, 4rem);
+        }
+
+        .interests-heading {
+          font-size: clamp(1rem, 1.8vw, 1.125rem);
+          font-weight: 700;
+          color: #0d9488;
+          margin-bottom: 2rem;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          text-align: center;
+        }
+
+        .interests-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+          gap: clamp(1.5rem, 3vw, 2rem);
+          max-width: 800px;
+          margin: 0 auto;
+        }
+
+        .interest-card {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: clamp(1.5rem, 2.5vw, 2rem);
+          background: white;
+          border: 2px solid rgba(20, 184, 166, 0.1);
+          border-radius: 1.25rem;
+          transition: all 0.3s ease;
+        }
+
+        .interest-card:hover {
+          transform: translateY(-4px);
+          border-color: rgba(20, 184, 166, 0.3);
+          box-shadow: 0 8px 24px rgba(13, 148, 136, 0.1);
+        }
+
+        .interest-icon {
+          width: clamp(48px, 8vw, 64px);
+          height: clamp(48px, 8vw, 64px);
+          margin-bottom: 1rem;
+          transition: transform 0.3s ease;
+        }
+
+        .interest-card:hover .interest-icon {
+          transform: scale(1.1);
+        }
+
+        .interest-name {
+          font-size: clamp(1.0625rem, 1.8vw, 1.25rem);
+          font-weight: 700;
+          color: #111827;
+          margin-bottom: 0.375rem;
+        }
+
+        .interest-description {
+          font-size: clamp(0.875rem, 1.6vw, 1rem);
+          color: #6b7280;
+          line-height: 1.5;
         }
 
         /* CTA section */
@@ -224,8 +231,9 @@ function Info() {
         }
 
         @media (max-width: 768px) {
-          .values-grid {
-            grid-template-columns: 1fr;
+          .interests-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
           }
         }
       `}</style>
@@ -237,32 +245,37 @@ function Info() {
             {/* Heading */}
             <div className="info-heading-box">
               <h2 className="info-modern-heading">
-                Full Stack Developer | UX/UI Designer
+                My Journey
               </h2>
               <p className="info-subheading">
-                I have a passion for keeping balance between the beauty of Design and a friendly User Experience.
+                From video journalism to web development — crafting digital experiences with purpose and creativity.
               </p>
-            </div>
-
-            {/* Values Grid */}
-            <div className="values-grid">
-              {values.map((value, index) => (
-                <div key={index} className="value-card">
-                  <h3 className="value-title">{value.title}</h3>
-                  <p className="value-description">{value.description}</p>
-                </div>
-              ))}
             </div>
 
             {/* Approach Statement */}
             <div className="approach-box">
-              <h3 className="approach-label">My Journey</h3>
-              <div style={{ position: 'relative' }}>
-                <span className="quote-icon quote-icon-left">"</span>
-                <p className="approach-text">
-                  After years in video journalism and as a former Bundeswehr employee, I made a bold career change into the competitive world of web design and development. Now, I bring stories to life through code, combining my self-taught graphic design skills with cutting-edge development.
-                </p>
-                <span className="quote-icon quote-icon-right">"</span>
+              <div className="quote-icon quote-icon-top">"</div>
+              <p className="approach-text">
+                After years in video journalism and as a former Bundeswehr employee, I made a bold career change into the competitive world of web design and development. Now, I bring stories to life through code, combining my self-taught graphic design skills with cutting-edge development.
+              </p>
+              <div className="quote-icon quote-icon-bottom">"</div>
+            </div>
+
+            {/* Personal Interests */}
+            <div className="interests-section">
+              <h3 className="interests-heading">Personal Interests</h3>
+              <div className="interests-grid">
+                {interests.map((interest, index) => (
+                  <div key={index} className="interest-card">
+                    <img 
+                      src={interest.icon} 
+                      alt={interest.name} 
+                      className="interest-icon"
+                    />
+                    <h4 className="interest-name">{interest.name}</h4>
+                    <p className="interest-description">{interest.description}</p>
+                  </div>
+                ))}
               </div>
             </div>
 

@@ -2,40 +2,45 @@
   "categories": [
     {
       "id": 1,
-      "title": "Design & UX",
+      "title": "Design",
       "icon": "design",
       "description": "Creating beautiful and intuitive user experiences",
       "skills": [
         {
           "id": 1,
-          "name": "Figma",
-          "level": 90
-        },
-        {
-          "id": 2,
-          "name": "Framer",
-          "level": 85
-        },
-        {
-          "id": 3,
-          "name": "UX/UI Design",
+          "name": "UI / UX",
           "level": 88
         },
         {
-          "id": 4,
+          "id": 2,
           "name": "Prototyping",
           "level": 85
         },
         {
-          "id": 5,
+          "id": 3,
           "name": "Design Systems",
+          "level": 80
+        },
+        {
+          "id": 4,
+          "name": "Responsive Design",
+          "level": 90
+        },
+        {
+          "id": 5,
+          "name": "Prompt Designing",
+          "level": 85
+        },
+        {
+          "id": 6,
+          "name": "No-Code",
           "level": 80
         }
       ]
     },
     {
       "id": 2,
-      "title": "Frontend Development",
+      "title": "Frontend",
       "icon": "frontend",
       "description": "Building responsive and performant web applications",
       "skills": [
@@ -46,29 +51,59 @@
         },
         {
           "id": 2,
-          "name": "JavaScript/ES6+",
+          "name": "JavaScript",
           "level": 88
         },
         {
           "id": 3,
-          "name": "Tailwind CSS",
-          "level": 92
+          "name": "TypeScript",
+          "level": 82
         },
         {
           "id": 4,
-          "name": "HTML5/CSS3",
+          "name": "HTML5",
           "level": 95
         },
         {
           "id": 5,
-          "name": "TypeScript",
-          "level": 82
+          "name": "CSS3",
+          "level": 95
+        },
+        {
+          "id": 6,
+          "name": "Tailwind CSS",
+          "level": 92
+        },
+        {
+          "id": 7,
+          "name": "Vite",
+          "level": 85
+        },
+        {
+          "id": 8,
+          "name": "Bootstrap",
+          "level": 85
+        },
+        {
+          "id": 9,
+          "name": "MUI",
+          "level": 80
+        },
+        {
+          "id": 10,
+          "name": "Chakra",
+          "level": 78
+        },
+        {
+          "id": 11,
+          "name": "Prompt Coding",
+          "level": 85
         }
       ]
     },
     {
       "id": 3,
-      "title": "Backend & APIs",
+      "title": "Backend",
       "icon": "backend",
       "description": "Developing server-side applications and integrations",
       "skills": [
@@ -84,51 +119,136 @@
         },
         {
           "id": 3,
-          "name": "REST APIs",
+          "name": "Express.js",
           "level": 82
         },
         {
           "id": 4,
-          "name": "Vercel Functions",
-          "level": 78
+          "name": "REST APIs",
+          "level": 85
         },
         {
           "id": 5,
-          "name": "Database Design",
+          "name": "MongoDB",
+          "level": 78
+        },
+        {
+          "id": 6,
+          "name": "PostgreSQL",
           "level": 75
+        },
+        {
+          "id": 7,
+          "name": "Prisma",
+          "level": 80
+        },
+        {
+          "id": 8,
+          "name": "Firebase",
+          "level": 80
+        },
+        {
+          "id": 9,
+          "name": "Firestore",
+          "level": 78
+        },
+        {
+          "id": 10,
+          "name": "JSON APIs",
+          "level": 88
+        },
+        {
+          "id": 11,
+          "name": "Google APIs",
+          "level": 75
+        },
+        {
+          "id": 12,
+          "name": "Authentication",
+          "level": 82
         }
       ]
     },
     {
       "id": 4,
-      "title": "Tools & Workflow",
+      "title": "Tools",
       "icon": "tools",
       "description": "Essential tools for modern web development",
       "skills": [
         {
           "id": 1,
-          "name": "Git/GitHub",
-          "level": 88
+          "name": "Figma",
+          "level": 90
         },
         {
           "id": 2,
+          "name": "Framer",
+          "level": 85
+        },
+        {
+          "id": 3,
+          "name": "Adobe Photoshop",
+          "level": 75
+        },
+        {
+          "id": 4,
+          "name": "Adobe Illustrator",
+          "level": 70
+        },
+        {
+          "id": 5,
+          "name": "Git",
+          "level": 88
+        },
+        {
+          "id": 6,
+          "name": "GitHub",
+          "level": 88
+        },
+        {
+          "id": 7,
           "name": "VS Code",
           "level": 92
         },
         {
-          "id": 3,
-          "name": "Vite",
-          "level": 85
+          "id": 8,
+          "name": "Cursor",
+          "level": 88
         },
         {
-          "id": 4,
+          "id": 9,
           "name": "Vercel",
           "level": 86
         },
         {
-          "id": 5,
-          "name": "Responsive Design",
-          "level": 90
+          "id": 10,
+          "name": "npm",
+          "level": 85
+        },
+        {
+          "id": 11,
+          "name": "Chrome DevTools",
+          "level": 85
+        },
+        {
+          "id": 12,
+          "name": "Firebase",
+          "level": 82
+        },
+        {
+          "id": 13,
+          "name": "Strapi",
+          "level": 75
+        },
+        {
+          "id": 14,
+          "name": "Docker",
+          "level": 70
+        },
+        {
+          "id": 15,
+          "name": "Postman",
+          "level": 88
         }
       ]
     }

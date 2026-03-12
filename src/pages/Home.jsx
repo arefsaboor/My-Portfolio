@@ -30,7 +30,7 @@ function Home({ showPageLoader = false, onLoaderComplete }) {
       <Info />
       <SkillsSection />
       <ProjectsSection />
-      <Contact showPageLoader={false} />
+      <Contact showPageLoader={false} showHeroSection={false} />
     </>
   );
 }

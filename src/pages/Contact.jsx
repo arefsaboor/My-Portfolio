@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageLoader from '../components/PageLoader';
 
-const Contact = ({ showPageLoader = true }) => {
+const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [showLoader, setShowLoader] = useState(showPageLoader);
   const [formData, setFormData] = useState({
@@ -89,99 +89,101 @@ const Contact = ({ showPageLoader = true }) => {
     <>
       {showLoader && <PageLoader pageName="Contact" onComplete={() => setShowLoader(false)} />}
       <div className="bg-white">
-      {/* Hero Section - Full Screen Immersive */}
-      <section 
-        id="contact-hero"
-        className="relative w-full flex items-end overflow-hidden contact-hero-section"
-        style={{ minHeight: '100vh' }}
-      >
-        <style>{`
-          .contact-hero-section .hero-bg {
-            background-position: 50% 50%;
-            transform: scale(1.05);
-            transform-origin: 50% 50%;
-          }
-          
-          @media (max-width: 768px) {
+      {/* Hero Section - Only shown on standalone Contact page */}
+      {showHeroSection && (
+        <section 
+          id="contact-hero"
+          className="relative w-full flex items-end overflow-hidden contact-hero-section"
+          style={{ minHeight: '100vh' }}
+        >
+          <style>{`
             .contact-hero-section .hero-bg {
               background-position: 50% 50%;
+              transform: scale(1.05);
               transform-origin: 50% 50%;
-              transform: scale(1.1);
             }
-          }
-          
-          @keyframes blob {
-            0%, 100% {
-              transform: translate(0, 0) scale(1);
-            }
-            25% {
-              transform: translate(20px, -20px) scale(1.1);
-            }
-            50% {
-              transform: translate(-20px, 20px) scale(0.9);
-            }
-            75% {
-              transform: translate(20px, 20px) scale(1.05);
-            }
-          }
-          
-          .animate-blob {
-            animation: blob 7s infinite ease-in-out;
-          }
-          
-          .animation-delay-2000 {
-            animation-delay: 2s;
-          }
-          
-          .animation-delay-4000 {
-            animation-delay: 4s;
-          }
-        `}</style>
-        
-        {/* Background - Gradient Pattern */}
-        <div 
-          className="hero-bg absolute inset-0 z-0 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900"
-        >
-          {/* Animated Background Pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-            <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-            <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
-          </div>
-          
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
-        </div>
-
-        {/* Content - Bottom Left */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 lg:pb-24">
-          <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              LET'S<br />COLLABORATE
-            </h1>
-            <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
-              Whether you have a clear vision or just an idea, I'd love to hear about your project. Let's discuss how we can bring your digital vision to life.
-            </p>
             
-            {/* Scroll Indicator */}
-            <button
-              onClick={scrollToForm}
-              className="group flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300"
-              aria-label="Scroll to contact form"
-            >
-              <span className="text-sm font-medium tracking-wide">Get In Touch</span>
-              <svg 
-                className="w-5 h-5 animate-bounce" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
+            @media (max-width: 768px) {
+              .contact-hero-section .hero-bg {
+                background-position: 50% 50%;
+                transform-origin: 50% 50%;
+                transform: scale(1.1);
+              }
+            }
+            
+            @keyframes blob {
+              0%, 100% {
+                transform: translate(0, 0) scale(1);
+              }
+              25% {
+                transform: translate(20px, -20px) scale(1.1);
+              }
+              50% {
+                transform: translate(-20px, 20px) scale(0.9);
+              }
+              75% {
+                transform: translate(20px, 20px) scale(1.05);
+              }
+            }
+            
+            .animate-blob {
+              animation: blob 7s infinite ease-in-out;
+            }
+            
+            .animation-delay-2000 {
+              animation-delay: 2s;
+            }
+            
+            .animation-delay-4000 {
+              animation-delay: 4s;
+            }
+          `}</style>
+          
+          {/* Background - Gradient Pattern */}
+          <div 
+            className="hero-bg absolute inset-0 z-0 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900"
+          >
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
+              <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
+              <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+            </div>
+            
+            {/* Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
           </div>
-        </div>
-      </section>
+
+          {/* Content - Bottom Left */}
+          <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 lg:pb-24">
+            <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                LET'S<br />COLLABORATE
+              </h1>
+              <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
+                Whether you have a clear vision or just an idea, I'd love to hear about your project. Let's discuss how we can bring your digital vision to life.
+              </p>
+              
+              {/* Scroll Indicator */}
+              <button
+                onClick={scrollToForm}
+                className="group flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300"
+                aria-label="Scroll to contact form"
+              >
+                <span className="text-sm font-medium tracking-wide">Get In Touch</span>
+                <svg 
+                  className="w-5 h-5 animate-bounce" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Contact Form Section */}
       <section id="contact-form-section" className="py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-white via-gray-50 to-white">

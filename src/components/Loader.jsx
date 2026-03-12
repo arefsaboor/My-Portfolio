@@ -25,28 +25,28 @@ function Loader({ onComplete }) {
       }, 200);
       return () => clearTimeout(timer);
     } else if (currentIndex === 0) {
-      // First word (Hello): faster - 1000ms total
+      // First word (Hello): 800ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 1000);
+      }, 800);
       return () => clearTimeout(timer);
     } else if (currentIndex === 1) {
-      // Second word: fade in place very fast - 500ms
+      // Second word (سلام): 800ms - same as first to be visible
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 500);
+      }, 800);
       return () => clearTimeout(timer);
     } else if (currentIndex > 1 && currentIndex < greetings.length - 1) {
-      // Middle words: fade in place super fast - 200ms
+      // Middle words: fade in place fast - 250ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 200);
+      }, 250);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length - 1) {
-      // Last word (Hallo): faster - 1000ms total
+      // Last word (Hallo): 800ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 1000);
+      }, 800);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length) {
       // All text animations complete, last text swiping up (takes 0.6s)

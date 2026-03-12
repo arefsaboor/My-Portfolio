@@ -94,14 +94,33 @@ const ProjectCard = ({ project }) => {
           
           {/* Right Side - Aligned with content sidebar (40%) */}
           <div className="lg:col-span-2 px-6 lg:px-8 py-5 border-t lg:border-t-0 lg:border-l border-gray-100">
-            <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
-              {project.name}
-            </h3>
-            {project.subtitle && (
-              <p className="text-gray-600 mt-1.5 text-sm font-medium">
-                {project.subtitle}
-              </p>
-            )}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1">
+                <h3 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+                  {project.name}
+                </h3>
+                {project.subtitle && (
+                  <p className="text-gray-600 mt-1.5 text-sm font-medium">
+                    {project.subtitle}
+                  </p>
+                )}
+              </div>
+              {/* Year Badge */}
+              {project.duration && (
+                <div className="flex-shrink-0">
+                  <div className={`px-3 py-1.5 rounded-lg font-bold text-sm ${
+                    project.duration === '2026' 
+                      ? 'bg-gradient-to-r from-teal-500 to-cyan-500 text-white shadow-md' 
+                      : 'bg-gray-100 text-gray-700'
+                  }`}>
+                    {project.duration}
+                  </div>
+                  {project.duration === '2026' && (
+                    <span className="block text-xs text-center text-teal-600 font-semibold mt-1">NEW</span>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
