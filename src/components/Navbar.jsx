@@ -537,10 +537,10 @@ function Navbar() {
                         {/* Dropdown Menu in Sidebar */}
                         <div
                           className={`overflow-hidden transition-all duration-300 ${
-                            isDropdownOpen ? 'max-h-32 sm:max-h-56 md:max-h-72 lg:max-h-[28rem] opacity-100 mt-2 sm:mt-3' : 'max-h-0 opacity-0'
+                            isDropdownOpen ? 'max-h-48 sm:max-h-56 md:max-h-72 lg:max-h-[28rem] opacity-100 mt-2 sm:mt-3' : 'max-h-0 opacity-0'
                           }`}
                         >
-                          <div className="flex flex-col gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6 border-l-2 border-teal-400/30 max-h-28 sm:max-h-52 md:max-h-64 lg:max-h-96 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+                          <div className="flex flex-col gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6 border-l-2 border-teal-400/30 max-h-44 sm:max-h-52 md:max-h-64 lg:max-h-96 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
                             <Link
                               to="/projects"
                               onClick={(e) => {
