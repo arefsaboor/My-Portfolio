@@ -320,7 +320,7 @@ function Navbar() {
                               window.location.href = '/projects#books2shelf';
                             } else {
                               const element = document.getElementById('project-1');
-                              element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
                           className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 border-b border-teal-400/10 my-1"
@@ -338,7 +338,7 @@ function Navbar() {
                               window.location.href = '/projects#nirvan';
                             } else {
                               const element = document.getElementById('project-3');
-                              element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
                           className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 mt-1"
@@ -458,7 +458,7 @@ function Navbar() {
             </button>
 
             {/* Menu Content */}
-            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-24 px-7 sm:px-6 md:px-8 lg:px-12">
+            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-24 px-7 sm:px-6 md:px-8 lg:px-12 pb-20 sm:pb-16">
               {/* Top Section: Brand + Navigation */}
               <div>
                 {/* Brand */}
@@ -546,7 +546,7 @@ function Navbar() {
                                   window.location.href = '/projects#books2shelf';
                                 } else {
                                   const element = document.getElementById('project-1');
-                                  element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}
                               className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
@@ -565,7 +565,7 @@ function Navbar() {
                                   window.location.href = '/projects#nirvan';
                                 } else {
                                   const element = document.getElementById('project-3');
-                                  element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}
                               className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
