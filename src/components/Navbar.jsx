@@ -458,12 +458,12 @@ function Navbar() {
             </button>
 
             {/* Menu Content */}
-            <div className="flex flex-col h-full justify-between py-12 sm:py-16 md:py-24 px-5 sm:px-6 md:px-8 lg:px-12">
+            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-24 px-7 sm:px-6 md:px-8 lg:px-12">
               {/* Top Section: Brand + Navigation */}
               <div>
                 {/* Brand */}
                 <div 
-                  className={`transition-opacity duration-500 mb-6 sm:mb-8 md:mb-12 ${
+                  className={`transition-opacity duration-500 mb-4 sm:mb-8 md:mb-12 ${
                     isOpen && !isClosing ? 'opacity-100 delay-[900ms]' : 'opacity-0'
                   }`}
                 >
@@ -476,7 +476,7 @@ function Navbar() {
 
                 {/* Navigation Links */}
                 <nav 
-                  className={`flex flex-col gap-3 sm:gap-4 md:gap-5 transition-opacity duration-700 ${
+                  className={`flex flex-col gap-2.5 sm:gap-4 md:gap-5 transition-opacity duration-700 ${
                     isOpen && !isClosing ? 'opacity-100 delay-[900ms]' : 'opacity-0'
                   }`}
                   aria-label="Main navigation"
@@ -511,7 +511,7 @@ function Navbar() {
                                 ? 'bg-cyan-400 opacity-100' 
                                 : 'bg-teal-400 opacity-0 group-hover:opacity-100'
                             }`}
-                            style={{ marginLeft: '-1rem' }}
+                            style={{ marginLeft: '-0.75rem' }}
                             aria-hidden="true"
                           />
                         </button>
@@ -600,7 +600,7 @@ function Navbar() {
                             ? 'bg-cyan-400 opacity-100' 
                             : 'bg-teal-400 opacity-0 group-hover:opacity-100'
                         }`}
-                        style={{ marginLeft: '-1rem' }}
+                        style={{ marginLeft: '-0.75rem' }}
                         aria-hidden="true"
                       />
                     </Link>
@@ -611,17 +611,17 @@ function Navbar() {
 
               {/* Bottom Section: Footer Info */}
               <div 
-                className={`space-y-4 sm:space-y-6 transition-opacity duration-700 ${
+                className={`space-y-3 sm:space-y-6 transition-opacity duration-700 ${
                   isOpen && !isClosing ? 'opacity-100 delay-[900ms]' : 'opacity-0'
                 }`}
               >
                 {/* About */}
-                <div className="border-t border-white/20 pt-4 sm:pt-6">
+                <div className="border-t border-white/20 pt-3 sm:pt-6">
                   <p className="text-gray-300 text-sm md:text-base leading-relaxed font-medium">
                     UX/UI Designer<br />
                     Full Stack Developer
                   </p>
-                  <p className="text-gray-400 mt-3 text-xs md:text-sm leading-relaxed">
+                  <p className="text-gray-400 mt-2 sm:mt-3 text-xs md:text-sm leading-relaxed">
                     Crafting designs that visually speak on screens!<br />
                     Giving visual identity to ideas, products and brands<br />
                     in the digital world.
@@ -710,7 +710,7 @@ function Navbar() {
                 </div>
                 
                 {/* Copyright */}
-                <div className="border-t border-white/20 pt-4">
+                <div className="border-t border-white/20 pt-3 sm:pt-4">
                   <p className="text-gray-500 text-center text-xs">
                     © {new Date().getFullYear()} Aref Saboor. All rights reserved.
                   </p>
