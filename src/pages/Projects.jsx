@@ -16,6 +16,27 @@ function Projects() {
     setIsVisible(true);
   }, []);
 
+  // Handle hash navigation to specific projects
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      // Wait for page to load and scroll to the hashed element
+      setTimeout(() => {
+        const hashMap = {
+          '#books2shelf': 'project-1',
+          '#nirvan': 'project-3'
+        };
+        const elementId = hashMap[hash];
+        if (elementId) {
+          const element = document.getElementById(elementId);
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }
+      }, 500);
+    }
+  }, []);
+
   // Smooth scroll to projects section
   const scrollToProjects = () => {
     const target = document.getElementById('projects-list');
@@ -172,7 +193,9 @@ function Projects() {
           {/* Projects Grid */}
           <div className="space-y-12 sm:space-y-16 lg:space-y-20">
             {projectsData.projects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <div key={project.id} id={`project-${project.id}`}>
+                <ProjectCard project={project} />
+              </div>
             ))}
           </div>
         </div>

@@ -22,7 +22,8 @@
         "tablet": "/books2shelf-screenshots/books2shelf-tablet.png",
         "mobile": "/books2shelf-screenshots/books2shelf-mobile.png"
       },
-      "liveUrl": "https://books2shelf.vercel.app",
+      "liveUrl": "https://books2shelf.arefsaboor.com",
+      "vercelUrl": "https://books2shelf.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/jlU2VAZVQMb3tscWV34pI8/Books2Shelf?page-id=0%3A1&node-id=2-4&p=f&viewport=323%2C292%2C0.04&t=Hr452RwEbnMrb9Uu-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A4",
       "githubUrl": "https://github.com/arefsaboor/books2shelf_arefsaboor",
       "technologies": ["React", "Vite", "Tailwind CSS", "JavaScript", "Firebase", "Firestore", "Google Books API"],
@@ -38,7 +39,7 @@
     {
       "id": 2,
       "name": "Portfolio",
-      "subtitle": "Current Personal Domain",
+      "subtitle": "Personal Custom Domain",
       "category": "Frontend Development",
       "role": "Frontend Developer & Designer",
       "duration": "2025",
@@ -93,7 +94,8 @@
         "tablet": "/Nirvan-Screenshots/tablet-hero.png",
         "mobile": "/Nirvan-Screenshots/mobile-hero.png"
       },
-      "liveUrl": "https://nirvan-vedic.vercel.app",
+      "liveUrl": "https://nirvan.arefsaboor.com",
+      "vercelUrl": "https://nirvan-vedic.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/rrjokG2q8eYdcXz6GFcth8/Batch_001_Block_3_Aref_Saboor_UX_Design_and_Produktentwicklung?page-id=2003%3A60&node-id=2731-1520&starting-point-node-id=2731%3A1520&t=lQJPFszJPjypsQhz-1",
       "caseStudyUrl": "https://www.behance.net/gallery/230927521/NIRVAN-Vedic-Yoga",
       "githubUrl": "https://github.com/arefsaboor/Nirvan",

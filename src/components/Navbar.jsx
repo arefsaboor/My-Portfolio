@@ -7,10 +7,13 @@ function Navbar() {
   const [isClosing, setIsClosing] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const sidebarRef = useRef(null);
   const closeButtonRef = useRef(null);
   const scrollPositionRef = useRef(0);
+  const dropdownRef = useRef(null);
+  const sidebarDropdownRef = useRef(null);
 
   // Handle click on current page - refresh to show loader
   const handlePageClick = (e, path) => {
@@ -141,6 +144,28 @@ function Navbar() {
     return () => sidebar.removeEventListener('keydown', handleTab);
   }, [isOpen]);
 
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const clickedInsideDesktopDropdown = dropdownRef.current && dropdownRef.current.contains(event.target);
+      const clickedInsideSidebarDropdown = sidebarDropdownRef.current && sidebarDropdownRef.current.contains(event.target);
+      
+      if (!clickedInsideDesktopDropdown && !clickedInsideSidebarDropdown) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [isDropdownOpen]);
+
+  // Close dropdown on route change
+  useEffect(() => {
+    setIsDropdownOpen(false);
+  }, [location.pathname]);
+
   return (
     <>
       <style>{`
@@ -236,13 +261,104 @@ function Navbar() {
                 ];
                 const hoverEffect = hoverEffects[index % hoverEffects.length];
                 
+                // Special handling for Projects link with dropdown
+                if (link.name === 'Projects') {
+                  return (
+                    <div key={link.id} className="relative" ref={dropdownRef}>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsDropdownOpen(!isDropdownOpen);
+                        }}
+                        className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect} flex items-center gap-1`}
+                        style={{ fontSize: 'clamp(0.9375rem, 1vw + 0.25rem, 1.125rem)' }}
+                      >
+                        <span className="pointer-events-none">{link.name}</span>
+                        <svg 
+                          className={`w-4 h-4 transition-transform duration-300 pointer-events-none ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                        <span 
+                          className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full transition-opacity duration-300 pointer-events-none ${
+                            location.pathname === link.path
+                              ? 'bg-cyan-400 opacity-100' 
+                              : 'bg-teal-400 opacity-0 group-hover:opacity-100'
+                          }`}
+                          style={{ bottom: 'clamp(-1.25rem, -1.5vw, -1.5rem)' }}
+                        />
+                      </button>
+                      
+                      {/* Dropdown Menu */}
+                      <div
+                        className={`absolute top-full mt-2 right-0 w-64 bg-gray-900/95 backdrop-blur-md rounded-2xl shadow-2xl border border-teal-400/20 overflow-hidden transition-all duration-300 py-2 ${
+                          isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
+                        }`}
+                        style={{ zIndex: 9999 }}
+                      >
+                        <Link
+                          to="/projects"
+                          onClick={(e) => {
+                            handlePageClick(e, '/projects');
+                            setIsDropdownOpen(false);
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 border-b border-teal-400/10 mb-1"
+                        >
+                          <div className="text-sm font-semibold">All Projects</div>
+                          <div className="text-xs text-gray-400/60 mt-1.5">View All Projects</div>
+                        </Link>
+                        
+                        <Link
+                          to="/projects#books2shelf"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsDropdownOpen(false);
+                            if (location.pathname !== '/projects') {
+                              window.location.href = '/projects#books2shelf';
+                            } else {
+                              const element = document.getElementById('project-1');
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 border-b border-teal-400/10 my-1"
+                        >
+                          <div className="text-sm font-semibold">Books2Shelf</div>
+                          <div className="text-xs text-gray-400/60 mt-1.5">Digital Bookshelf With Google Books API</div>
+                        </Link>
+                        
+                        <Link
+                          to="/projects#nirvan"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsDropdownOpen(false);
+                            if (location.pathname !== '/projects') {
+                              window.location.href = '/projects#nirvan';
+                            } else {
+                              const element = document.getElementById('project-3');
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 mt-1"
+                        >
+                          <div className="text-sm font-semibold">Nirvan - Vedic Yoga</div>
+                          <div className="text-xs text-gray-400/60 mt-1.5">An Ancient Peace To The Modern World</div>
+                        </Link>
+                      </div>
+                    </div>
+                  );
+                }
+                
+                // Regular link for other navigation items
                 return (
                   <Link
                     key={link.id}
                     to={link.path}
                     onClick={(e) => handlePageClick(e, link.path)}
                     className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect}`}
-                    style={{ fontSize: 'clamp(1rem, 1.2vw + 0.3rem, 1.375rem)' }}
+                    style={{ fontSize: 'clamp(0.9375rem, 1vw + 0.25rem, 1.125rem)' }}
                   >
                     {link.name}
                     <span 
@@ -350,7 +466,7 @@ function Navbar() {
                     isOpen && !isClosing ? 'opacity-100 delay-[900ms]' : 'opacity-0'
                   }`}
                 >
-                  <h2 className="font-bold text-white text-3xl md:text-4xl mb-3">
+                  <h2 className="font-bold text-white text-2xl md:text-3xl mb-3">
                     <span className="font-bold">AREF </span>
                     <span className="font-thin">SABOOR</span>
                   </h2>
@@ -359,36 +475,136 @@ function Navbar() {
 
                 {/* Navigation Links */}
                 <nav 
-                  className={`flex flex-col gap-6 transition-opacity duration-700 ${
+                  className={`flex flex-col gap-5 transition-opacity duration-700 ${
                     isOpen && !isClosing ? 'opacity-100 delay-[900ms]' : 'opacity-0'
                   }`}
                   aria-label="Main navigation"
                 >
-                {navigationLinks.map((link) => (
-                  <Link
-                    key={link.id}
-                    to={link.path}
-                    onClick={(e) => {
-                      const isCurrentPage = location.pathname === link.path;
-                      if (!isCurrentPage) {
-                        toggleMenu();
-                      }
-                      handlePageClick(e, link.path);
-                    }}
-                    className="relative block text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-2 transform group text-2xl md:text-3xl"
-                  >
-                    {link.name}
-                    <span 
-                      className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-opacity duration-300 ${
-                        location.pathname === link.path 
-                          ? 'bg-cyan-400 opacity-100' 
-                          : 'bg-teal-400 opacity-0 group-hover:opacity-100'
-                      }`}
-                      style={{ marginLeft: '-1rem' }}
-                      aria-hidden="true"
-                    />
-                  </Link>
-                ))}
+                {navigationLinks.map((link) => {
+                  // Special handling for Projects link with dropdown
+                  if (link.name === 'Projects') {
+                    return (
+                      <div key={link.id} className="relative" ref={sidebarDropdownRef}>
+                        <button
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setIsDropdownOpen(prev => !prev);
+                          }}
+                          className="relative w-full text-left text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-2 transform group text-xl md:text-2xl flex items-center justify-between"
+                        >
+                          <span className="flex items-center gap-3 pointer-events-none">
+                            {link.name}
+                            <svg 
+                              className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                              fill="none" 
+                              stroke="currentColor" 
+                              viewBox="0 0 24 24"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                            </svg>
+                          </span>
+                          <span 
+                            className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-opacity duration-300 pointer-events-none ${
+                              location.pathname === link.path 
+                                ? 'bg-cyan-400 opacity-100' 
+                                : 'bg-teal-400 opacity-0 group-hover:opacity-100'
+                            }`}
+                            style={{ marginLeft: '-1rem' }}
+                            aria-hidden="true"
+                          />
+                        </button>
+                        
+                        {/* Dropdown Menu in Sidebar */}
+                        <div
+                          className={`overflow-hidden transition-all duration-300 ${
+                            isDropdownOpen ? 'max-h-96 opacity-100 mt-4' : 'max-h-0 opacity-0'
+                          }`}
+                        >
+                          <div className="flex flex-col gap-3 pl-6 border-l-2 border-teal-400/30">
+                            <Link
+                              to="/projects"
+                              onClick={(e) => {
+                                handlePageClick(e, '/projects');
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">All Projects</div>
+                              <div className="text-xs text-gray-400/60 mt-1">View All Projects</div>
+                            </Link>
+                            
+                            <Link
+                              to="/projects#books2shelf"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                                if (location.pathname !== '/projects') {
+                                  window.location.href = '/projects#books2shelf';
+                                } else {
+                                  const element = document.getElementById('project-1');
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">Books2Shelf</div>
+                              <div className="text-xs text-gray-400/60 mt-1">Digital Bookshelf With Google Books API</div>
+                            </Link>
+                            
+                            <Link
+                              to="/projects#nirvan"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                                if (location.pathname !== '/projects') {
+                                  window.location.href = '/projects#nirvan';
+                                } else {
+                                  const element = document.getElementById('project-3');
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                }
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">Nirvan - Vedic Yoga</div>
+                              <div className="text-xs text-gray-400/60 mt-1">An Ancient Peace To The Modern World</div>
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  }
+                  
+                  // Regular links for other navigation items
+                  return (
+                    <Link
+                      key={link.id}
+                      to={link.path}
+                      onClick={(e) => {
+                        const isCurrentPage = location.pathname === link.path;
+                        if (!isCurrentPage) {
+                          toggleMenu();
+                        }
+                        handlePageClick(e, link.path);
+                      }}
+                      className="relative block text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-2 transform group text-xl md:text-2xl"
+                    >
+                      {link.name}
+                      <span 
+                        className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-opacity duration-300 ${
+                          location.pathname === link.path 
+                            ? 'bg-cyan-400 opacity-100' 
+                            : 'bg-teal-400 opacity-0 group-hover:opacity-100'
+                        }`}
+                        style={{ marginLeft: '-1rem' }}
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  );
+                })}
                 </nav>
               </div>
 

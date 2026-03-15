@@ -267,19 +267,48 @@ const ProjectCard = ({ project }) => {
 
           {/* Actions */}
           <div className="space-y-3 pt-2">
-            {/* Primary CTA */}
+            {/* Live Demo Section */}
             {project.liveUrl && (
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-4 rounded-lg transition-all duration-300 text-sm"
-              >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                Live Demo
-              </a>
+              <div className="space-y-2">
+                {/* Label with down arrow */}
+                <div className="flex items-center gap-2 text-gray-700 font-semibold text-sm">
+                  <span>Live Demo:</span>
+                  <svg className="w-4 h-4 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+                
+                {/* Two buttons side by side */}
+                <div className="grid grid-cols-2 gap-2">
+                  {/* Vercel Button */}
+                  {project.vercelUrl && (
+                    <a
+                      href={project.vercelUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-3 rounded-lg transition-all duration-300 text-xs"
+                    >
+                      <span>Vercel</span>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </a>
+                  )}
+                  
+                  {/* Subdomain/Custom Domain Button */}
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-700 text-white font-semibold py-2.5 px-3 rounded-lg transition-all duration-300 text-xs"
+                  >
+                    <span>{project.name === "Portfolio" ? "Custom Domain" : "Subdomain"}</span>
+                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
             )}
             
             {/* Secondary Links - Outline Style */}
@@ -323,20 +352,6 @@ const ProjectCard = ({ project }) => {
                     <path d="M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z"/>
                   </svg>
                   Framer
-                </a>
-              )}
-
-              {project.vercelUrl && project.vercelUrl !== project.liveUrl && (
-                <a
-                  href={project.vercelUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-1.5 border-2 border-gray-300 hover:border-gray-400 hover:bg-gray-50 text-gray-700 font-medium py-2 px-3 rounded-lg transition-all duration-300 text-xs"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 0L24 24H0L12 0z"/>
-                  </svg>
-                  Vercel
                 </a>
               )}
 
