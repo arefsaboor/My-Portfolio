@@ -29,9 +29,12 @@
   }
 
   body.no-scroll {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
+    overflow: hidden !important;
+    padding-right: 0px;
+  }
+  
+  html.no-scroll {
+    overflow: hidden !important;
   }
 }
 

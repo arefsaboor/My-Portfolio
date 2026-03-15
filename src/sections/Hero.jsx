@@ -302,6 +302,12 @@ function Hero() {
           text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
         }
         
+        @media (max-width: 768px) {
+          .scroll-text {
+            font-size: 0.625rem;
+          }
+        }
+        
         .hero-cta-button {
           min-height: clamp(1.5rem, 4vh, 4rem);
           min-width: 150px;
@@ -369,12 +375,27 @@ function Hero() {
           box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
         }
         
+        @media (max-width: 768px) {
+          .scroll-border {
+            width: 2.5rem;
+            height: 3.75rem;
+          }
+        }
+        
         .scroll-dot {
           width: 0.25rem;
           height: 0.875rem;
           margin-top: 0.25rem;
           background-color: #5eead4;
           box-shadow: 0 0 18px rgba(94, 234, 212, 0.7);
+        }
+        
+        @media (max-width: 768px) {
+          .scroll-dot {
+            width: 0.2rem;
+            height: 0.625rem;
+            margin-top: 0.2rem;
+          }
         }
         
         .scroll-arrow {
@@ -385,8 +406,22 @@ function Hero() {
           filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.6));
         }
         
+        @media (max-width: 768px) {
+          .scroll-arrow {
+            width: 1rem;
+            height: 1rem;
+            margin-bottom: 0.15rem;
+          }
+        }
+        
         .scroll-gap {
           gap: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+          .scroll-gap {
+            gap: 0.35rem;
+          }
         }
         
         .scroll-indicator-wrapper {
