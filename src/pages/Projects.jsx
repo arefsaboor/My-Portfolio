@@ -131,7 +131,7 @@ function Projects() {
       
       {/* Projects List Section */}
       <section id="projects-list" className="relative bg-gradient-to-b from-white via-gray-50 to-white py-20 sm:py-24 lg:py-32">
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-10">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           {/* Section Header */}
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">

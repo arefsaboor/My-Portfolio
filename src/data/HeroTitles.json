@@ -2,83 +2,75 @@
   "skills": [
     {
       "id": 1,
-      "title": "React"
+      "title": "Visual Storyteller"
     },
     {
       "id": 2,
-      "title": "JavaScript"
+      "title": "Design Meets Code"
     },
     {
       "id": 3,
-      "title": "TypeScript"
+      "title": "Pixel-Perfect Craft"
     },
     {
       "id": 4,
-      "title": "Node.js"
+      "title": "Beautiful Interfaces"
     },
     {
       "id": 5,
-      "title": "Next.js"
+      "title": "Motion & Aesthetics"
     },
     {
       "id": 6,
-      "title": "HTML/CSS"
+      "title": "Creative Developer"
     },
     {
       "id": 7,
-      "title": "Tailwind CSS"
+      "title": "Design-First Code"
     },
     {
       "id": 8,
-      "title": "Bootstrap"
+      "title": "Visual Excellence"
     },
     {
       "id": 9,
-      "title": "Git/GitHub"
+      "title": "Graphic Designer"
     },
     {
       "id": 10,
-      "title": "Vite"
+      "title": "Color & Composition"
     },
     {
       "id": 11,
-      "title": "UX/UI Design"
+      "title": "Digital Storytelling"
     },
     {
       "id": 12,
-      "title": "Figma"
+      "title": "Aesthetic Mastery"
     },
     {
       "id": 13,
-      "title": "Framer"
+      "title": "Video Journalist"
     },
     {
       "id": 14,
-      "title": "VS Code"
+      "title": "UI/UX Specialist"
     },
     {
       "id": 15,
-      "title": "Figma Prototypes"
+      "title": "Visual Impact"
     },
     {
       "id": 16,
-      "title": "Product Design"
+      "title": "Modern Design"
     },
     {
       "id": 17,
-      "title": "Responsive Design"
+      "title": "Brand Storyteller"
     },
     {
       "id": 18,
-      "title": "RESTful APIs"
-    },
-    {
-      "id": 19,
-      "title": "No-Code Development"
-    },
-    {
-      "id": 20,
-      "title": "Framer Websites"
+      "title": "Creative Technologist"
     }
   ]
 }

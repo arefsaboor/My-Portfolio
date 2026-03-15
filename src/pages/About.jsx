@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageLoader from '../components/PageLoader';
 import SkillsSection from '../sections/SkillsSection';
+import AboutSection from '../sections/About';
 import WebImage from '../assets/Web-Image-Full.jpg';
 import CVPreviewModal from '../components/CVPreviewModal';
 import cvPdf from '../assets/Aref_Saboor_CV.pdf';
@@ -116,42 +117,15 @@ const About = () => {
         </div>
       </section>
 
-      {/* Story Section */}
-      <section id="about-story" className="py-16 sm:py-24 lg:py-32 bg-white">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left: Heading */}
-            <div>
-              <div className="inline-block mb-4">
-                <span className="text-teal-600 text-sm font-semibold tracking-widest uppercase">My Journey</span>
-              </div>
-              <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-                From Storytelling to Digital Craft
-              </h2>
-              <div className="w-20 h-1 bg-teal-600 rounded-full"></div>
-            </div>
-
-            {/* Right: Story Card */}
-            <div className="bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 sm:p-10 shadow-xl border border-gray-100">
-              <div className="border-l-4 border-teal-600 pl-6 space-y-4">
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  I am a <span className="font-semibold text-gray-900">Video Journalist</span> and a former <span className="font-semibold text-gray-900">Bundeswehr employee</span>. After a career change, I recently joined the competitive world of Web Designing and Development.
-                </p>
-                <p className="text-lg text-gray-700 leading-relaxed">
-                  As a <span className="font-semibold text-gray-900">self-skilled Graphic Designer</span>, I enthusiastically combine visual designs into interactive and responsive user experiences, bringing stories to life through code.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* Extended About Section (shared with homepage, expanded here) */}
+      <AboutSection />
 
       {/* Skills Section */}
       <SkillsSection />
 
       {/* Values/Approach Section */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
             <div className="inline-block mb-4">
               <span className="text-teal-600 text-sm font-semibold tracking-widest uppercase">How I Work</span>
@@ -209,7 +183,7 @@ const About = () => {
 
       {/* CTA Section - Resume + Contact */}
       <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-6xl mx-auto px-6 sm:px-12">
+        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="grid md:grid-cols-2 gap-8">
             {/* Resume Download Card */}
             <div className="bg-gradient-to-br from-teal-50 to-cyan-50 rounded-2xl p-8 sm:p-10 shadow-lg border border-teal-100">

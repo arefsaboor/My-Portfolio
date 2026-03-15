@@ -3,21 +3,36 @@ import projectsData from '../data/Projects.json';
 
 function ProjectsSection() {
   return (
-    <section id="projects" className="relative py-20 sm:py-24 lg:py-32 overflow-hidden">
+    <section id="projects" className="relative py-20 md:py-28 lg:py-32 overflow-hidden" style={{ background: '#ffffff' }}>
       
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-white"></div>
-      
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-teal-200/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-cyan-200/20 rounded-full blur-3xl"></div>
-      
-      <div className="relative max-w-6xl mx-auto px-6 sm:px-8 lg:px-10">
+      <div className="relative max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
         
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-500 mb-4">
-            Featured Projects
+          <div style={{
+            display: 'inline-block',
+            padding: '0.625rem 1.5rem',
+            background: '#0d9488',
+            color: 'white',
+            fontSize: 'clamp(0.8125rem, 1.3vw, 0.875rem)',
+            fontWeight: '700',
+            letterSpacing: '0.05em',
+            textTransform: 'uppercase',
+            borderRadius: '50px',
+            marginBottom: 'clamp(1.5rem, 3vh, 2rem)',
+            boxShadow: '0 4px 20px rgba(13, 148, 136, 0.25)'
+          }}>
+            Portfolio
+          </div>
+          <h2 style={{
+            fontSize: 'clamp(2.75rem, 5.5vw, 4rem)',
+            fontWeight: '900',
+            color: '#0f172a',
+            lineHeight: '1.1',
+            marginBottom: 'clamp(1.5rem, 3vh, 2rem)',
+            letterSpacing: '-0.03em'
+          }}>
+            Featured <span style={{ color: '#0d9488' }}>Projects</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Explore live demos with device switching — see how each project adapts across desktop, tablet, and mobile
@@ -25,7 +40,7 @@ function ProjectsSection() {
         </div>
         
         {/* Projects Grid */}
-        <div className="space-y-12 sm:space-y-16 lg:space-y-20">
+        <div className="space-y-16 sm:space-y-20 lg:space-y-24">
           {projectsData.projects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

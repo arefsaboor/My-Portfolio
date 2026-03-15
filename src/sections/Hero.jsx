@@ -4,58 +4,11 @@ import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
 import cvPdf from '../assets/Aref_Saboor_CV.pdf';
 
-// Import technology icons from svg-icons folder
-import icon1 from '../assets/svg-icons/1-Node.svg';
-import icon2 from '../assets/svg-icons/2-Next.js.svg';
-import icon3 from '../assets/svg-icons/3-Vite.svg';
-import icon4 from '../assets/svg-icons/4-JS.svg';
-import icon5 from '../assets/svg-icons/5-TS.svg';
-import icon6 from '../assets/svg-icons/6-React.svg';
-import icon7 from '../assets/svg-icons/7-HTML.svg';
-import icon8 from '../assets/svg-icons/8-CSS.svg';
-import icon9 from '../assets/svg-icons/9-Postman.svg';
-import icon10 from '../assets/svg-icons/10-Docker.svg';
-import icon11 from '../assets/svg-icons/11-GitHub.svg';
-import icon12 from '../assets/svg-icons/12-Firebase.svg';
-import icon13 from '../assets/svg-icons/13-Vercel.svg';
-import icon14 from '../assets/svg-icons/14-Tailwind.svg';
-import icon15 from '../assets/svg-icons/15-Figma.svg';
-import icon16 from '../assets/svg-icons/16-Vector.svg';
-import icon17 from '../assets/svg-icons/17-VsCode.svg';
-import icon18 from '../assets/svg-icons/18-Microsoft Office.svg';
-import icon19 from '../assets/svg-icons/19-Premiere.svg';
-import icon20 from '../assets/svg-icons/20-Illustrator.svg';
-import icon21 from '../assets/svg-icons/21-Photoshop.svg';
-
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+  const [parallaxOffset, setParallaxOffset] = useState(0);
   const titles = heroTitles.skills;
-
-  // Array of 21 technology icons
-  const techIcons = [
-    { src: icon1, alt: 'Node.js', name: 'Node.js' },
-    { src: icon2, alt: 'Next.js', name: 'Next.js' },
-    { src: icon3, alt: 'Vite', name: 'Vite' },
-    { src: icon4, alt: 'JavaScript', name: 'JavaScript' },
-    { src: icon5, alt: 'TypeScript', name: 'TypeScript' },
-    { src: icon6, alt: 'React', name: 'React' },
-    { src: icon7, alt: 'HTML5', name: 'HTML5' },
-    { src: icon8, alt: 'CSS3', name: 'CSS3' },
-    { src: icon9, alt: 'Postman', name: 'Postman' },
-    { src: icon10, alt: 'Docker', name: 'Docker' },
-    { src: icon11, alt: 'GitHub', name: 'GitHub' },
-    { src: icon12, alt: 'Firebase', name: 'Firebase' },
-    { src: icon13, alt: 'Vercel', name: 'Vercel' },
-    { src: icon14, alt: 'Tailwind CSS', name: 'Tailwind' },
-    { src: icon15, alt: 'Figma', name: 'Figma' },
-    { src: icon16, alt: 'Vector', name: 'Vector' },
-    { src: icon17, alt: 'VS Code', name: 'VS Code' },
-    { src: icon18, alt: 'Microsoft Office', name: 'MS Office' },
-    { src: icon19, alt: 'Premiere Pro', name: 'Premiere' },
-    { src: icon20, alt: 'Illustrator', name: 'Illustrator' },
-    { src: icon21, alt: 'Photoshop', name: 'Photoshop' },
-  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -64,6 +17,21 @@ function Hero() {
 
     return () => clearInterval(interval);
   }, [titles.length]);
+
+  // Subtle parallax effect for hero background on scroll
+  useEffect(() => {
+    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return undefined;
+
+    const handleScroll = () => {
+      const y = window.scrollY;
+      const clamped = Math.min(y * 0.2, 80); // limit movement
+      setParallaxOffset(clamped);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Smooth scroll with optimized easing
   const smoothScrollTo = (targetId) => {
@@ -97,12 +65,29 @@ function Hero() {
     requestAnimationFrame(animation);
   };
 
+  // Detect if user is on mobile device
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+      || (window.innerWidth <= 768);
+  };
+
+  // Handle CV button click
+  const handleCVClick = () => {
+    if (isMobileDevice()) {
+      // On mobile, open PDF directly in new tab (triggers native viewer/download)
+      window.open(cvPdf, '_blank');
+    } else {
+      // On desktop, show modal preview
+      setIsCVModalOpen(true);
+    }
+  };
+
   return (
     <section
       id="home"
       className="relative flex items-end"
       aria-label="Hero section"
-      style={{ minHeight: '100svh' }}
+      style={{ height: '100svh' }}
     >
       {/* SEO: Main heading for search engines */}
       <h1 className="sr-only">Aref Saboor - UX/UI Designer and Full Stack Developer based in Berlin</h1>
@@ -113,40 +98,35 @@ function Hero() {
       </div>
 
       {/* Background Image with Responsive Positioning - WebP optimized */}
-      <picture className="hero-background absolute inset-0 z-0">
-        <source srcSet="/IMAGE_002.webp" type="image/webp" />
-        <source srcSet="/IMAGE_002.jpg" type="image/jpeg" />
-        <div 
-          className="hero-background absolute inset-0 z-0 w-full h-full"
-          style={{
-            backgroundImage: 'url(/IMAGE_002.jpg)',
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            backgroundAttachment: 'scroll',
-            backgroundPosition: '65% 20%'
-          }}
-          role="img"
-          aria-label="Portfolio hero background"
-        ></div>
-      </picture>
+      <div 
+        className="hero-background absolute inset-0 z-0 w-full h-full"
+        style={{
+          backgroundImage: 'url(/IMAGE_002.webp), url(/IMAGE_002.jpg)',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundAttachment: 'scroll',
+          backgroundPosition: `65% ${20 + parallaxOffset * 0.05}%`,
+          transition: 'background-position 0.05s linear'
+        }}
+        role="img"
+        aria-label="Portfolio hero background"
+      ></div>
       
       <style>{`
         /* Base: Mobile-first approach - content at bottom */
         #home {
           padding-bottom: clamp(2.5rem, 5vh, 4rem);
-          overflow-x: hidden;
+          overflow: hidden;
         }
         
         .hero-background {
           background-position: 65% 20% !important;
-          transform: scale(1.05);
-          transform-origin: 65% 20%;
         }
         
         /* Desktop: Large screens 1536px+ - content nearly centered (slightly below) */
         @media (min-width: 1536px) {
           #home {
-            min-height: 100vh !important;
+            height: 100vh !important;
             align-items: center !important;
             padding-top: 14vh;
             padding-bottom: 0;
@@ -154,8 +134,6 @@ function Hero() {
           
           .hero-background {
             background-position: 75% 18% !important;
-            transform: none;
-            transform-origin: initial;
           }
           
           .hero-main-container {
@@ -468,65 +446,7 @@ function Hero() {
           }
         }
 
-        /* Infinite scrolling icon strip */
-        .icon-scroll-container {
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          overflow: hidden;
-          padding-bottom: 1.5rem;
-          background: linear-gradient(to top, rgba(0, 0, 0, 0.3), transparent);
-          z-index: 15;
-          display: none;
-        }
 
-        @media (min-width: 768px) {
-          .icon-scroll-container {
-            display: block;
-          }
-        }
-
-        .icon-scroll-track {
-          display: flex;
-          gap: 20px;
-          animation: scroll-left 70s linear 0s infinite;
-          will-change: transform;
-          transform-style: preserve-3d;
-          backface-visibility: hidden;
-        }
-
-        .icon-scroll-item {
-          flex-shrink: 0;
-          width: 48px;
-          height: 48px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        }
-
-        .icon-scroll-item img {
-          width: 70%;
-          height: 70%;
-          object-fit: contain;
-          filter: brightness(0) invert(1);
-          opacity: 0.09;
-        }
-
-        @keyframes scroll-left {
-          from {
-            transform: translateX(0);
-          }
-          to {
-            transform: translateX(-50%);
-          }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .icon-scroll-track {
-            animation: none !important;
-          }
-        }
       `}</style>
 
       {/* Main Container with Content and Scroll Indicator */}
@@ -593,9 +513,9 @@ function Hero() {
           <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(80%) sepia(21%) saturate(1095%) hue-rotate(127deg) brightness(95%) contrast(86%)' }} />
           <div className="hero-content-box bg-gradient-to-r from-gray-900/90 via-teal-950/80 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)' }}>
             <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
-              Crafting designs that visually speak on screens!<br />
-              Giving visual identity to ideas, products and brands<br />
-              in the digital world.
+              Writer & Journalist turned Web Developer. :)<br />
+              I don't just build websites — I create visual experiences<br />
+              that tell stories and captivate audiences.
             </p>
           </div>
         </div>
@@ -611,7 +531,7 @@ function Hero() {
           </button>
           
           <button 
-            onClick={() => setIsCVModalOpen(true)}
+            onClick={handleCVClick}
             className="hero-cta-button-secondary"
             aria-label="Preview CV"
           >
@@ -623,7 +543,7 @@ function Hero() {
 
         {/* Scroll Indicator - Mobile */}
         <button 
-          onClick={() => smoothScrollTo('info')}
+          onClick={() => smoothScrollTo('about')}
           className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
         >
@@ -638,7 +558,7 @@ function Hero() {
 
         {/* Scroll Indicator - Desktop */}
         <button 
-          onClick={() => smoothScrollTo('info')}
+          onClick={() => smoothScrollTo('about')}
           className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
         >
@@ -652,19 +572,6 @@ function Hero() {
         </button>
       </div>
 
-      {/* Infinite Scrolling Tech Icons Strip - 21 icons */}
-      <div className="icon-scroll-container">
-        <div className="icon-scroll-track">
-          {[...Array(4)].flatMap((_, setIndex) =>
-            techIcons.map((icon, iconIndex) => (
-              <div key={`icon-${setIndex}-${iconIndex}`} className="icon-scroll-item">
-                <img src={icon.src} alt={icon.alt} />
-              </div>
-            ))
-          )}
-        </div>
-      </div>
-      
       {/* CV Preview Modal */}
       <CVPreviewModal 
         isOpen={isCVModalOpen} 

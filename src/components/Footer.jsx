@@ -1,4 +1,9 @@
 import { Link } from 'react-router-dom';
+import readingSvg from '../assets/interests/Reading.svg';
+import writingSvg from '../assets/interests/Writing.svg';
+import joggingSvg from '../assets/interests/Jogging.svg';
+import yogaSvg from '../assets/interests/Yoga.svg';
+import learningSvg from '../assets/interests/Learning.svg';
 
 function Footer() {
   const socialLinks = [
@@ -174,6 +179,55 @@ function Footer() {
                 />
                 <span className="text-sm">Based in Berlin, Germany</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Interests Section */}
+        <div className="border-t border-gray-800/50 pt-14 pb-10 mb-10">
+          <h4 className="text-base font-semibold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-teal-400 to-gray-300 px-4" style={{ fontSize: 'clamp(1.25rem, 3vw, 1.75rem)', letterSpacing: '0.02em', fontWeight: '200', lineHeight: '1.5' }}>
+            <span className="hidden sm:inline">I don't just design and code, I also do these :)</span>
+            <span className="sm:hidden">I don't just design and code,<br />I also do these :)</span>
+          </h4>
+          <div className="flex flex-wrap justify-center gap-10 md:gap-14 max-w-4xl mx-auto">
+            {/* Reading */}
+            <div className="flex flex-col items-center gap-3 group">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-all duration-300 p-3">
+                <img src={readingSvg} alt="Reading" loading="lazy" className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(72%) sepia(26%) saturate(449%) hue-rotate(131deg) brightness(91%) contrast(89%)' }} />
+              </div>
+              <span className="text-sm text-gray-400 group-hover:text-teal-400 transition-colors duration-300 font-medium">Reading</span>
+            </div>
+
+            {/* Writing */}
+            <div className="flex flex-col items-center gap-3 group">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-all duration-300 p-3">
+                <img src={writingSvg} alt="Writing" loading="lazy" className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(72%) sepia(26%) saturate(449%) hue-rotate(131deg) brightness(91%) contrast(89%)' }} />
+              </div>
+              <span className="text-sm text-gray-400 group-hover:text-teal-400 transition-colors duration-300 font-medium">Writing</span>
+            </div>
+
+            {/* Jogging */}
+            <div className="flex flex-col items-center gap-3 group">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-all duration-300 p-3">
+                <img src={joggingSvg} alt="Jogging" loading="lazy" className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(72%) sepia(26%) saturate(449%) hue-rotate(131deg) brightness(91%) contrast(89%)' }} />
+              </div>
+              <span className="text-sm text-gray-400 group-hover:text-teal-400 transition-colors duration-300 font-medium">Jogging</span>
+            </div>
+
+            {/* Yoga */}
+            <div className="flex flex-col items-center gap-3 group">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-all duration-300 p-3">
+                <img src={yogaSvg} alt="Yoga" loading="lazy" className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(72%) sepia(26%) saturate(449%) hue-rotate(131deg) brightness(91%) contrast(89%)' }} />
+              </div>
+              <span className="text-sm text-gray-400 group-hover:text-teal-400 transition-colors duration-300 font-medium">Yoga</span>
+            </div>
+
+            {/* Learning */}
+            <div className="flex flex-col items-center gap-3 group">
+              <div className="w-20 h-20 flex items-center justify-center group-hover:scale-110 transition-all duration-300 p-3">
+                <img src={learningSvg} alt="Learning" loading="lazy" className="w-full h-full object-contain filter brightness-0 invert opacity-60 group-hover:opacity-100 transition-opacity duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(72%) sepia(26%) saturate(449%) hue-rotate(131deg) brightness(91%) contrast(89%)' }} />
+              </div>
+              <span className="text-sm text-gray-400 group-hover:text-teal-400 transition-colors duration-300 font-medium">Learning</span>
             </div>
           </div>
         </div>

@@ -15,20 +15,24 @@ function Navbar() {
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
 
-  // Handle click on current page - refresh to show loader
+  // Handle click on current page - smooth scroll to top
   const handlePageClick = (e, path) => {
     if (location.pathname === path) {
       e.preventDefault();
       // Close sidebar if open
       if (isOpen) {
         handleClose();
-        // Reload after sidebar closes
-        setTimeout(() => {
-          window.location.reload();
-        }, 700);
-      } else {
-        window.location.reload();
       }
+      // Smooth scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Handle logo click - reload when already on homepage to replay loader
+  const handleLogoClick = (e) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      window.location.reload();
     }
   };
 
@@ -241,7 +245,7 @@ function Navbar() {
           <div className="flex justify-start md:justify-between items-center">
             {/* Logo */}
             <div className="flex-shrink-0 logo-wrapper">
-              <Link to="/" className="block" onClick={(e) => handlePageClick(e, '/')}>
+              <Link to="/" className="block" onClick={handleLogoClick}>
                 <h1 className="logo-text font-bold text-white tracking-wide drop-shadow-lg m-0">
                   <span className="font-bold">AREF </span>
                   <span className="font-thin">SABOOR</span>
