@@ -346,6 +346,24 @@ function Navbar() {
                           <div className="text-sm font-semibold">Nirvan - Vedic Yoga</div>
                           <div className="text-xs text-gray-400/60 mt-1.5">An Ancient Peace To The Modern World</div>
                         </Link>
+                        
+                        <Link
+                          to="/projects#portfolio"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsDropdownOpen(false);
+                            if (location.pathname !== '/projects') {
+                              window.location.href = '/projects#portfolio';
+                            } else {
+                              const element = document.getElementById('project-2');
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 mt-1"
+                        >
+                          <div className="text-sm font-semibold">Portfolio</div>
+                          <div className="text-xs text-gray-400/60 mt-1.5">Personal Portfolio With Custom Domain</div>
+                        </Link>
                       </div>
                     </div>
                   );
@@ -572,6 +590,25 @@ function Navbar() {
                             >
                               <div className="font-semibold">Nirvan - Vedic Yoga</div>
                               <div className="text-xs text-gray-400/60 mt-1">An Ancient Peace To The Modern World</div>
+                            </Link>
+                            
+                            <Link
+                              to="/projects#portfolio"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                                if (location.pathname !== '/projects') {
+                                  window.location.href = '/projects#portfolio';
+                                } else {
+                                  const element = document.getElementById('project-2');
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">Portfolio</div>
+                              <div className="text-xs text-gray-400/60 mt-1">Personal Portfolio With Custom Domain</div>
                             </Link>
                           </div>
                         </div>
