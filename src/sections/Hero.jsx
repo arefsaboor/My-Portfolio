@@ -65,21 +65,9 @@ function Hero() {
     requestAnimationFrame(animation);
   };
 
-  // Detect if user is on mobile device
-  const isMobileDevice = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-      || (window.innerWidth <= 768);
-  };
-
-  // Handle CV button click
+  // Handle CV button click - now shows modal on all devices
   const handleCVClick = () => {
-    if (isMobileDevice()) {
-      // On mobile, open PDF directly in new tab (triggers native viewer/download)
-      window.open(cvPdf, '_blank');
-    } else {
-      // On desktop, show modal preview
-      setIsCVModalOpen(true);
-    }
+    setIsCVModalOpen(true);
   };
 
   return (
