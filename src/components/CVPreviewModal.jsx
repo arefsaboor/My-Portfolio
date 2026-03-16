@@ -1,14 +1,39 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import cvPdf from '../assets/Aref_Saboor_CV.pdf';
+import cvImage from '../assets/Aref_Saboor_CV.jpg'; // High-quality resume image for mobile devices
 
 function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [shouldRender, setShouldRender] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Image zoom/pan states
+  const [scale, setScale] = useState(1);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [lastDistance, setLastDistance] = useState(0);
+  const [lastCenter, setLastCenter] = useState({ x: 0, y: 0 });
+  const imageContainerRef = useRef(null);
+
+  // Detect if device is mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      // Check if it's a real mobile device (not just small screen)
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsMobile(isMobileDevice && isTouchDevice);
+    };
+    
+    checkMobile();
+  }, []);
 
   // Handle modal animation states
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
+      // Reset zoom/pan when opening
+      setScale(1);
+      setPosition({ x: 0, y: 0 });
       // Delay animation to trigger transition
       setTimeout(() => setIsAnimating(true), 10);
     } else {
@@ -34,28 +59,116 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e) => {
+  // Touch event handlers for zoom/pan on mobile
+  const getDistance = (touch1, touch2) => {
+    const dx = touch2.clientX - touch1.clientX;
+    const dy = touch2.clientY - touch1.clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  };
+
+  const getCenter = (touch1, touch2) => {
+    return {
+      x: (touch1.clientX + touch2.clientX) / 2,
+      y: (touch1.clientY + touch2.clientY) / 2,
+    };
+  };
+
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const distance = getDistance(e.touches[0], e.touches[1]);
+      const center = getCenter(e.touches[0], e.touches[1]);
+      setLastDistance(distance);
+      setLastCenter(center);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const distance = getDistance(e.touches[0], e.touches[1]);
+      const center = getCenter(e.touches[0], e.touches[1]);
+
+      if (lastDistance > 0) {
+        // Zoom
+        const scaleChange = distance / lastDistance;
+        const newScale = Math.min(Math.max(scale * scaleChange, 1), 4);
+        setScale(newScale);
+
+        // Pan
+        if (newScale > 1) {
+          const dx = center.x - lastCenter.x;
+          const dy = center.y - lastCenter.y;
+          setPosition({
+            x: position.x + dx,
+            y: position.y + dy,
+          });
+        } else {
+          setPosition({ x: 0, y: 0 });
+        }
+      }
+
+      setLastDistance(distance);
+      setLastCenter(center);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setLastDistance(0);
+  };
+
       if (e.key === 'Escape') {
         onClose();
       }
     };
     
     if (isOpen) {
-      document.addEventListener('keydown', handleEscape);
-    }
-    
-    return () => {
-      document.removeEventListener('keydown', handleEscape);
-    };
-  }, [isOpen, onClose]);
+      documeCV Viewer - Image for mobile, iframe for desktop */}
+        <div className="flex-1 overflow-auto bg-gray-100">
+          {isMobile ? (
+            // Mobile: Show zoomable image
+            <div 
+              ref={imageContainerRef}
+              className="w-full h-full flex items-center justify-center overflow-hidden touch-none"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <img
+                src={cvImage}
+                alt="Resume Preview"
+                className="max-w-full max-h-full object-contain"
+                style={{
+                  transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+                  transformOrigin: 'center',
+                  transition: lastDistance === 0 ? 'transform 0.3s ease-out' : 'none',
+                }}
+                draggable={false}
+              />
+            </div>
+          ) : (
+            // Desktop: Show PDF iframe
+            <iframe
+              src={`${pdfUrl}#view=FitH&toolbar=0`}
+              className="w-full h-full border-0"
+              title="CV Preview"
+              loading="lazy"
+            />
+          )}
+        </div>
 
-  if (!shouldRender) return null;
-
-  const handleDownload = async () => {
-    try {
-      // Fetch the PDF as a blob to force the correct filename
-      const response = await fetch(pdfUrl);
-      const blob = await response.blob();
-      const blobUrl = window.URL.createObjectURL(blob);
+        {/* Footer Hint */}
+        <div className="p-3 bg-gray-50 text-center text-sm text-gray-600 border-t border-gray-200">
+          {isMobile ? (
+            <p className="text-xs">
+              Pinch to zoom • Drag with two fingers to pan
+            </p>
+          ) : (
+            <p className="flex items-center justify-center gap-2">
+              <kbd className="px-2 py-1 bg-white rounded border border-gray-300 text-xs font-mono">Esc</kbd>
+              <span>to close</span>
+            </p>
+          )}obUrl = window.URL.createObjectURL(blob);
       
       // Create a temporary link with the correct filename
       const link = document.createElement('a');
