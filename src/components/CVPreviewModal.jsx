@@ -59,6 +59,22 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+    }
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isOpen, onClose]);
+
+  if (!shouldRender) return null;
+
   // Touch event handlers for zoom/pan on mobile
   const getDistance = (touch1, touch2) => {
     const dx = touch2.clientX - touch1.clientX;
@@ -117,58 +133,12 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     setLastDistance(0);
   };
 
-      if (e.key === 'Escape') {
-        onClose();
-      }
-    };
-    
-    if (isOpen) {
-      documeCV Viewer - Image for mobile, iframe for desktop */}
-        <div className="flex-1 overflow-auto bg-gray-100">
-          {isMobile ? (
-            // Mobile: Show zoomable image
-            <div 
-              ref={imageContainerRef}
-              className="w-full h-full flex items-center justify-center overflow-hidden touch-none"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
-              <img
-                src={cvImage}
-                alt="Resume Preview"
-                className="max-w-full max-h-full object-contain"
-                style={{
-                  transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
-                  transformOrigin: 'center',
-                  transition: lastDistance === 0 ? 'transform 0.3s ease-out' : 'none',
-                }}
-                draggable={false}
-              />
-            </div>
-          ) : (
-            // Desktop: Show PDF iframe
-            <iframe
-              src={`${pdfUrl}#view=FitH&toolbar=0`}
-              className="w-full h-full border-0"
-              title="CV Preview"
-              loading="lazy"
-            />
-          )}
-        </div>
-
-        {/* Footer Hint */}
-        <div className="p-3 bg-gray-50 text-center text-sm text-gray-600 border-t border-gray-200">
-          {isMobile ? (
-            <p className="text-xs">
-              Pinch to zoom • Drag with two fingers to pan
-            </p>
-          ) : (
-            <p className="flex items-center justify-center gap-2">
-              <kbd className="px-2 py-1 bg-white rounded border border-gray-300 text-xs font-mono">Esc</kbd>
-              <span>to close</span>
-            </p>
-          )}obUrl = window.URL.createObjectURL(blob);
+  const handleDownload = async () => {
+    try {
+      // Fetch the PDF as a blob to force the correct filename
+      const response = await fetch(pdfUrl);
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
       
       // Create a temporary link with the correct filename
       const link = document.createElement('a');
@@ -227,22 +197,52 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
           </button>
         </div>
 
-        {/* PDF Viewer */}
+        {/* CV Viewer - Image for mobile, iframe for desktop */}
         <div className="flex-1 overflow-auto bg-gray-100">
-          <iframe
-            src={`${pdfUrl}#view=FitH&toolbar=0`}
-            className="w-full h-full border-0"
-            title="CV Preview"
-            loading="lazy"
-          />
+          {isMobile ? (
+            // Mobile: Show zoomable image
+            <div 
+              ref={imageContainerRef}
+              className="w-full h-full flex items-center justify-center overflow-hidden touch-none"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <img
+                src={cvImage}
+                alt="Resume Preview"
+                className="max-w-full max-h-full object-contain"
+                style={{
+                  transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
+                  transformOrigin: 'center',
+                  transition: lastDistance === 0 ? 'transform 0.3s ease-out' : 'none',
+                }}
+                draggable={false}
+              />
+            </div>
+          ) : (
+            // Desktop: Show PDF iframe
+            <iframe
+              src={`${pdfUrl}#view=FitH&toolbar=0`}
+              className="w-full h-full border-0"
+              title="CV Preview"
+              loading="lazy"
+            />
+          )}
         </div>
 
-        {/* Footer Hint - Desktop Only */}
-        <div className="hidden sm:block p-3 bg-gray-50 text-center text-sm text-gray-600 border-t border-gray-200">
-          <p className="flex items-center justify-center gap-2">
-            <kbd className="px-2 py-1 bg-white rounded border border-gray-300 text-xs font-mono">Esc</kbd>
-            <span>to close</span>
-          </p>
+        {/* Footer Hint */}
+        <div className="p-3 bg-gray-50 text-center text-sm text-gray-600 border-t border-gray-200">
+          {isMobile ? (
+            <p className="text-xs">
+              Pinch to zoom • Drag with two fingers to pan
+            </p>
+          ) : (
+            <p className="flex items-center justify-center gap-2">
+              <kbd className="px-2 py-1 bg-white rounded border border-gray-300 text-xs font-mono">Esc</kbd>
+              <span>to close</span>
+            </p>
+          )}
         </div>
       </div>
     </div>
