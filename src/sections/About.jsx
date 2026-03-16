@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 
-function Info() {
+function Info({ variant = 'home' }) {
   const [statValues, setStatValues] = useState([0, 0, 0, 0]);
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
@@ -138,6 +138,14 @@ function Info() {
           margin: 0 auto;
         }
 
+        .about-subheading-secondary {
+          font-size: clamp(0.95rem, 1.7vw, 1.0625rem);
+          line-height: 1.6;
+          color: #94a3b8;
+          max-width: 720px;
+          margin: 1rem auto 0 auto;
+        }
+
         /* Main Content Layout */
         .about-content {
           display: flex;
@@ -184,6 +192,42 @@ function Info() {
 
         .about-story-text:last-child {
           margin-bottom: 0;
+        }
+
+        /* Timeline (page variant) */
+        .about-timeline {
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 1.5rem;
+          margin-top: 2.5rem;
+        }
+
+        .about-timeline-item {
+          padding: 1.5rem 1.75rem;
+          border-radius: 1rem;
+          border: 1px solid #e2e8f0;
+          background: #f8fafc;
+        }
+
+        .about-timeline-label {
+          font-size: 0.875rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          color: #0f172a;
+          margin-bottom: 0.5rem;
+        }
+
+        .about-timeline-text {
+          font-size: 0.9875rem;
+          line-height: 1.6;
+          color: #64748b;
+        }
+
+        @media (max-width: 900px) {
+          .about-timeline {
+            grid-template-columns: 1fr;
+          }
         }
 
         /* Stats Grid */
@@ -320,9 +364,15 @@ function Info() {
               <span className="highlight">Design-First</span> Developer
             </h2>
             <p className="about-subheading">
-              Where visual storytelling meets technical execution, <br />
+              Where visual storytelling meets technical execution,<br />
               building websites that don't just work, but captivate.
             </p>
+            {variant === 'page' && (
+              <p className="about-subheading-secondary">
+                From Bundeswehr and video journalism to web development –
+                a career change that brings strong visuals, structure and story into every interface.
+              </p>
+            )}
           </div>
 
           {/* Main Content */}
@@ -333,61 +383,100 @@ function Info() {
               <p className="about-story-text">
                 I'm a <strong>professional video journalist</strong> and <strong>graphic designer</strong> who discovered the power of combining visual arts with code. For years, I've mastered visual communication, composition, color theory, and storytelling through media production.
               </p>
-              <p className="about-story-text">
-                After completing an intensive <strong>12-month Weiterbildung</strong> in product design and full-stack development, I'm now seeking my first role where I can leverage this unique background.
-              </p>
+              {variant === 'page' && (
+                <p className="about-story-text">
+                  After completing an intensive <strong>12-month Weiterbildung</strong> in product design and full-stack development, I'm now seeking my first role where I can leverage this unique background.
+                </p>
+              )}
               <p className="about-story-text">
                 <strong>I don't just code — I craft visual experiences.</strong> My websites stand out because design excellence isn't something I learned from tutorials; it's what I bring professionally.
               </p>
+
+              {variant === 'page' && (
+                <div className="about-timeline">
+                  <div className="about-timeline-item">
+                    <div className="about-timeline-label">Before Tech</div>
+                    <p className="about-timeline-text">
+                      Worked in the Bundeswehr and as a video journalist, learning structure, discipline and how to tell stories that keep people watching.
+                    </p>
+                  </div>
+                  <div className="about-timeline-item">
+                    <div className="about-timeline-label">The Transition</div>
+                    <p className="about-timeline-text">
+                      Completed a 12-month product design and full-stack development Weiterbildung, bringing my visual skills into modern web tools and workflows.
+                    </p>
+                  </div>
+                  <div className="about-timeline-item">
+                    <div className="about-timeline-label">Today</div>
+                    <p className="about-timeline-text">
+                      I focus on design-driven front-end development, creating portfolio-level experiences and real projects that connect visuals, content and interaction.
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Stats - Full Width Row */}
             <div className="about-stats">
               <div className="stat-card">
                 <span className="stat-number">{statValues[0]} Year</span>
-                <span className="stat-label">Intensive<br/>Training</span>
+                <span className="stat-label">
+                  Product Design &<br />
+                  Dev Training
+                </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[1]}+</span>
-                <span className="stat-label">Projects<br/>Completed</span>
+                <span className="stat-label">
+                  Web & Design<br />
+                  Projects Shipped
+                </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[2]}+</span>
-                <span className="stat-label">Technologies<br/>Mastered</span>
+                <span className="stat-label">
+                  Tools & Tech<br />
+                  Used In Projects
+                </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[3]}%</span>
-                <span className="stat-label">Design<br/>Excellence</span>
+                <span className="stat-label">
+                  Focus On<br />
+                  Visual Quality
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Strengths */}
-          <div className="about-strengths">
-            <h3 className="strengths-title">What Makes Me <span className="highlight">Different</span></h3>
-            <div className="strengths-grid">
-              <div className="strength-card">
-                <p className="strength-text">
-                  <strong>Years of design experience</strong> shape every interface I build — not theoretical knowledge, real professional work.
-                </p>
-              </div>
-              <div className="strength-card">
-                <p className="strength-text">
-                  <strong>Video journalism background</strong> means I understand visual storytelling, pacing, and audience engagement deeply.
-                </p>
-              </div>
-              <div className="strength-card">
-                <p className="strength-text">
-                  <strong>Natural aesthetic sense</strong> for composition, color harmony, typography, and visual hierarchy from years of practice.
-                </p>
-              </div>
-              <div className="strength-card">
-                <p className="strength-text">
-                  <strong>Design-development bridge</strong> — I speak both languages fluently and can execute entire projects independently.
-                </p>
+          {/* Strengths - shown only on full About page to avoid repeating everything on Home */}
+          {variant === 'page' && (
+            <div className="about-strengths">
+              <h3 className="strengths-title">What Makes Me <span className="highlight">Different</span></h3>
+              <div className="strengths-grid">
+                <div className="strength-card">
+                  <p className="strength-text">
+                    <strong>Years of design experience</strong> shape every interface I build — not theoretical knowledge, real professional work.
+                  </p>
+                </div>
+                <div className="strength-card">
+                  <p className="strength-text">
+                    <strong>Video journalism background</strong> means I understand visual storytelling, pacing, and audience engagement deeply.
+                  </p>
+                </div>
+                <div className="strength-card">
+                  <p className="strength-text">
+                    <strong>Natural aesthetic sense</strong> for composition, color harmony, typography, and visual hierarchy from years of practice.
+                  </p>
+                </div>
+                <div className="strength-card">
+                  <p className="strength-text">
+                    <strong>Design-development bridge</strong> — I speak both languages fluently and can execute entire projects independently.
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
         </div>
       </section>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
@@ -8,6 +8,7 @@ function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const scrollButtonRef = useRef(null);
   const titles = heroTitles.skills;
 
   useEffect(() => {
@@ -17,6 +18,35 @@ function Hero() {
 
     return () => clearInterval(interval);
   }, [titles.length]);
+
+  // Attach native event listener to scroll button
+  useEffect(() => {
+    const button = scrollButtonRef.current;
+    if (!button) return;
+
+    const handleClick = (e) => {
+      console.log('Native click fired!', e);
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const aboutSection = document.getElementById('about');
+      console.log('About section:', aboutSection);
+      
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        console.error('About section not found');
+      }
+    };
+
+    button.addEventListener('click', handleClick, { passive: false });
+    button.addEventListener('touchend', handleClick, { passive: false });
+
+    return () => {
+      button.removeEventListener('click', handleClick);
+      button.removeEventListener('touchend', handleClick);
+    };
+  }, []);
 
   // Subtle parallax effect for hero background on scroll
   useEffect(() => {
@@ -36,7 +66,10 @@ function Hero() {
   // Smooth scroll with optimized easing
   const smoothScrollTo = (targetId) => {
     const target = document.getElementById(targetId);
-    if (!target) return;
+    if (!target) {
+      console.warn(`Target element with id "${targetId}" not found`);
+      return;
+    }
 
     const startPosition = window.pageYOffset;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
@@ -63,6 +96,22 @@ function Hero() {
     };
 
     requestAnimationFrame(animation);
+  };
+
+  // Handle scroll indicator click specifically for mobile
+  const handleScrollClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log('Scroll button clicked');
+    
+    const aboutSection = document.getElementById('about');
+    console.log('About section:', aboutSection);
+    
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      console.error('About section not found');
+    }
   };
 
   // Handle CV button click - now shows modal on all devices
@@ -198,6 +247,8 @@ function Hero() {
           margin: 0 auto;
           padding-left: clamp(1.5rem, 3vw, 5rem);
           padding-right: clamp(1.5rem, 3vw, 5rem);
+          position: relative;
+          z-index: 5;
         }
         
         @media (min-width: 1024px) {
@@ -396,6 +447,25 @@ function Hero() {
           background: none;
           border: none;
           padding: 0;
+          position: relative;
+          z-index: 100;
+          pointer-events: auto;
+          touch-action: manipulation;
+          -webkit-tap-highlight-color: transparent;
+          user-select: none;
+          -webkit-user-select: none;
+        }
+        
+        .scroll-indicator-wrapper * {
+          pointer-events: none;
+        }
+        
+        /* Mobile specific - ensure button is always tappable */
+        @media (max-width: 1535px) {
+          .mobile-scroll-indicator {
+            position: relative;
+            z-index: 999;
+          }
         }
         
         .scroll-indicator-wrapper:hover .scroll-border {
@@ -446,7 +516,7 @@ function Hero() {
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
           </svg>
-          <div className="relative hero-content-box hero-animated-box overflow-hidden bg-gradient-to-r from-gray-900/80 via-teal-950/50 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/50">
+          <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             {titles.map((item, index) => (
               <p
                 key={item.id}
@@ -467,7 +537,7 @@ function Hero() {
           <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
             <path fillRule="evenodd" d="M15.514 3.293a1 1 0 0 0-1.415 0L12.151 5.24a.93.93 0 0 1 .056.052l6.5 6.5a.97.97 0 0 1 .052.056L20.707 9.9a1 1 0 0 0 0-1.415l-5.193-5.193ZM7.004 8.27l3.892-1.46 6.293 6.293-1.46 3.893a1 1 0 0 1-.603.591l-9.494 3.355a1 1 0 0 1-.98-.18l6.452-6.453a1 1 0 0 0-1.414-1.414l-6.453 6.452a1 1 0 0 1-.18-.98l3.355-9.494a1 1 0 0 1 .591-.603Z" clipRule="evenodd" />
           </svg>
-          <div className="hero-content-box bg-gradient-to-r from-gray-900/80 via-teal-950/50 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/50">
+          <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             <h2 className="hero-main-heading text-white animate-fade-in-delay font-medium leading-none" style={{ paddingTop: 'clamp(0.15rem, 1vh, 1.5rem)', paddingBottom: 'clamp(0.15rem, 1vh, 1.5rem)' }}>
               UX/UI Designer
             </h2>
@@ -477,7 +547,7 @@ function Hero() {
           <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg>
-          <div className="hero-content-box bg-gradient-to-r from-gray-900/80 via-teal-950/50 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/50">
+          <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             <h2 className="hero-main-heading text-white animate-fade-in-delay font-medium leading-none" style={{ paddingTop: 'clamp(0.15rem, 1vh, 1.5rem)', paddingBottom: 'clamp(0.15rem, 1vh, 1.5rem)' }}>
               Full Stack Developer
             </h2>
@@ -485,25 +555,25 @@ function Hero() {
         </div>
         </div>
         
-        {/* Based in Berlin */}
-        <div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap">
-          <img src="/globe.svg" alt="Location icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
-          <div className="relative hero-content-box hero-animated-box overflow-hidden bg-gradient-to-r from-gray-900/80 via-teal-950/50 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/50">
-            <p className="hero-animated-text text-white font-normal whitespace-nowrap">
-              Based in Berlin
+        {/* Tagline - Hidden on mobile */}
+        <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
+          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(81%) sepia(55%) saturate(471%) hue-rotate(343deg) brightness(101%) contrast(98%)' }} />
+          <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)' }}>
+            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
+              Writer & Journalist turned Web Developer. :)<br />
+              I don't just build websites, I create visual experiences<br />
+              that tell stories and captivate audiences.
             </p>
           </div>
         </div>
         
-        {/* Tagline - Hidden on mobile */}
-        <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
-          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(80%) sepia(21%) saturate(1095%) hue-rotate(127deg) brightness(95%) contrast(86%)' }} />
-          <div className="hero-content-box bg-gradient-to-r from-gray-900/90 via-teal-950/80 to-transparent backdrop-blur-sm flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)' }}>
-            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
-              Writer & Journalist turned Web Developer. :)<br />
-              I don't just build websites — I create visual experiences<br />
-              that tell stories and captivate audiences.
+        {/* Based in Berlin */}
+        <div>
+        <div className="flex items-center hero-content-gap hero-content-row-gap">
+          <img src="/globe.svg" alt="Location icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
+          <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
+            <p className="hero-animated-text text-white font-normal whitespace-nowrap">
+              Based in Berlin
             </p>
           </div>
         </div>
@@ -531,9 +601,15 @@ function Hero() {
 
         {/* Scroll Indicator - Mobile */}
         <button 
-          onClick={() => smoothScrollTo('about')}
+          ref={scrollButtonRef}
           className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
+          type="button"
+          style={{ 
+            minWidth: '60px', 
+            minHeight: '80px',
+            padding: '8px'
+          }}
         >
           <span className="scroll-text font-light">Scroll</span>
           <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
@@ -546,9 +622,10 @@ function Hero() {
 
         {/* Scroll Indicator - Desktop */}
         <button 
-          onClick={() => smoothScrollTo('about')}
+          onClick={handleScrollClick}
           className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
+          type="button"
         >
           <span className="scroll-text font-light">Scroll</span>
           <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>

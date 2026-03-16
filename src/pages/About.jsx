@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import PageLoader from '../components/PageLoader';
 import SkillsSection from '../sections/SkillsSection';
 import AboutSection from '../sections/About';
+import FeaturedProjectsCompact from '../components/FeaturedProjectsCompact';
 import WebImage from '../assets/Web-Image-Full.jpg';
 import CVPreviewModal from '../components/CVPreviewModal';
 import cvPdf from '../assets/Aref_Saboor_CV.pdf';
+import bulbIcon from '../bulb.svg';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -44,7 +46,7 @@ const About = () => {
       {/* Hero Section - Full Screen Immersive */}
       <section 
         id="about-hero"
-        className="relative w-full flex items-end overflow-hidden about-hero-section"
+        className="relative w-full flex items-end lg:items-center overflow-hidden about-hero-section pt-12 md:pt-16 lg:pt-20"
         style={{ minHeight: '100vh' }}
       >
         <style>{`
@@ -69,6 +71,248 @@ const About = () => {
               transform: scale(1.05);
             }
           }
+
+          /* Scroll Indicator Styles */
+          @keyframes scrollIndicator {
+            0%, 100% {
+              transform: translateY(0);
+            }
+            50% {
+              transform: translateY(12px);
+            }
+          }
+          
+          .scroll-indicator-animate {
+            animation: scrollIndicator 2s ease-in-out infinite;
+          }
+          
+          .scroll-text {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #5eead4;
+            text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-text {
+              font-size: 0.625rem;
+            }
+          }
+          
+          /* About hero heading */
+          .about-hero-heading {
+            line-height: 1.2;
+          }
+          
+          @media (min-width: 1024px) {
+            .about-hero-heading {
+              line-height: 0.8;
+            }
+          }
+          
+          .scroll-border {
+            width: 3.5rem;
+            height: 5rem;
+            border-width: 1px;
+            border-color: #5eead4;
+            box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-border {
+              width: 2.5rem;
+              height: 3.75rem;
+            }
+          }
+          
+          .scroll-dot {
+            width: 0.25rem;
+            height: 0.875rem;
+            margin-top: 0.25rem;
+            background-color: #5eead4;
+            box-shadow: 0 0 18px rgba(94, 234, 212, 0.7);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-dot {
+              width: 0.2rem;
+              height: 0.625rem;
+              margin-top: 0.2rem;
+            }
+          }
+          
+          .scroll-arrow {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #5eead4;
+            filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.6));
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-arrow {
+              width: 1rem;
+              height: 1rem;
+              margin-bottom: 0.15rem;
+            }
+          }
+          
+          .scroll-gap {
+            gap: 0.5rem;
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-gap {
+              gap: 0.35rem;
+            }
+          }
+          
+          .scroll-indicator-wrapper {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+          }
+          
+          .scroll-indicator-wrapper:hover .scroll-border {
+            border-color: #fbbf24;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 35px rgba(251, 146, 60, 0.3), 0 0 45px rgba(96, 165, 250, 0.2);
+          }
+          
+          .scroll-indicator-wrapper:hover .scroll-text {
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.3);
+          }
+          
+          .scroll-indicator-wrapper:hover .scroll-dot {
+            background-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.4);
+          }
+          
+          .scroll-indicator-wrapper:hover .scroll-arrow {
+            color: #fbbf24;
+            filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 18px rgba(251, 146, 60, 0.4)) drop-shadow(0 0 24px rgba(96, 165, 250, 0.2));
+          }
+          
+          .scroll-indicator-wrapper:active {
+            transform: scale(0.95);
+          }
+          
+          @media (prefers-reduced-motion: reduce) {
+            .scroll-indicator-animate {
+              animation: none;
+            }
+          }
+
+          /* Reversed Scroll Indicator Styles */
+          .scroll-indicator-reversed .scroll-text-reversed {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #5eead4;
+            text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-indicator-reversed .scroll-text-reversed {
+              font-size: 0.625rem;
+            }
+          }
+          
+          .scroll-indicator-reversed .scroll-border-reversed {
+            width: 3.5rem;
+            height: 5rem;
+            border-width: 1px;
+            border-color: #5eead4;
+            box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-indicator-reversed .scroll-border-reversed {
+              width: 2.5rem;
+              height: 3.75rem;
+            }
+          }
+          
+          .scroll-indicator-reversed .scroll-dot-reversed {
+            width: 0.25rem;
+            height: 0.875rem;
+            margin-top: 0.25rem;
+            background-color: #5eead4;
+            box-shadow: 0 0 18px rgba(94, 234, 212, 0.7);
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-indicator-reversed .scroll-dot-reversed {
+              width: 0.2rem;
+              height: 0.625rem;
+              margin-top: 0.2rem;
+            }
+          }
+          
+          .scroll-indicator-reversed .scroll-arrow-reversed {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-bottom: 0.25rem;
+            color: #5eead4;
+            filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.6));
+          }
+          
+          @media (max-width: 768px) {
+            .scroll-indicator-reversed .scroll-arrow-reversed {
+              width: 1rem;
+              height: 1rem;
+              margin-bottom: 0.15rem;
+            }
+          }
+          
+          .scroll-indicator-reversed:hover .scroll-border-reversed {
+            border-color: #fbbf24;
+            box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 35px rgba(251, 146, 60, 0.3), 0 0 45px rgba(96, 165, 250, 0.2);
+          }
+          
+          .scroll-indicator-reversed:hover .scroll-text-reversed {
+            color: #fbbf24;
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.3);
+          }
+          
+          .scroll-indicator-reversed:hover .scroll-dot-reversed {
+            background-color: #fbbf24;
+            box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.4);
+          }
+          
+          .scroll-indicator-reversed:hover .scroll-arrow-reversed {
+            color: #fbbf24;
+            filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 18px rgba(251, 146, 60, 0.4)) drop-shadow(0 0 24px rgba(96, 165, 250, 0.2));
+          }
+          
+          .scroll-indicator-reversed:active {
+            transform: scale(0.95);
+          }
+
+          /* Hero content box styles - copied from hero section */
+          .hero-icon {
+            width: clamp(1.25rem, 2vw, 2.5rem);
+            height: clamp(1.25rem, 2vw, 2.5rem);
+            flex-shrink: 0;
+          }
+          
+          .hero-content-gap {
+            gap: clamp(0.75rem, 2vw, 2rem);
+          }
+          
+          .hero-content-row-gap {
+            margin-bottom: clamp(0.5rem, 1vh, 1rem);
+          }
+          
+          .hero-content-box {
+            padding-left: clamp(0.75rem, 2vw, 1.5rem);
+            padding-right: clamp(0.75rem, 2vw, 1.5rem);
+            max-width: 100%;
+            overflow: hidden;
+          }
         `}</style>
         
         {/* Background Image */}
@@ -80,48 +324,78 @@ const About = () => {
             backgroundRepeat: 'no-repeat'
           }}
         >
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent"></div>
+          {/* Gradient Overlay - Limited to bottom content area - Hidden on desktop */}
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/70 to-transparent lg:hidden" style={{ height: '50vh' }}></div>
         </div>
 
-        {/* Content - Bottom Left */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 lg:pb-24">
-          <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div className="inline-block mb-4">
-              <span className="text-teal-400 text-sm font-semibold tracking-widest uppercase">Get to know me</span>
-            </div>
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              About Me
+        {/* Content - Bottom Left on mobile, Right Center on desktop */}
+        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 flex justify-between lg:justify-end items-end gap-4 sm:gap-6">
+          <div className={`flex-1 lg:flex-initial pr-2 sm:pr-0 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ width: 'clamp(320px, 45vw, 700px)' }}>
+            {/* Heading */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white mb-4 sm:mb-6 about-hero-heading">
+              <span className="font-bold lg:block">AREF </span>
+              <span className="font-thin lg:block">SABOOR</span>
             </h1>
-            <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
-              From video journalism to web development — crafting digital experiences with purpose and creativity.
-            </p>
-            
-            {/* Scroll Indicator */}
-            <button
-              onClick={scrollToContent}
-              className="group flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300"
-              aria-label="Scroll to content"
-            >
-              <span className="text-sm font-medium tracking-wide">Scroll to explore</span>
-              <svg 
-                className="w-5 h-5 animate-bounce" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
+
+            {/* Tagline - Mobile Only */}
+            <div className="lg:hidden hero-content-box border-l-2 border-teal-400/70" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)', paddingTop: 'clamp(0.75rem, 1.5vh, 1.25rem)', paddingBottom: 'clamp(0.75rem, 1.5vh, 1.25rem)', paddingLeft: 'clamp(0.75rem, 2vw, 1.5rem)', paddingRight: 'clamp(0.75rem, 2vw, 1.5rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)', boxSizing: 'border-box' }}>
+              <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.7rem, 1.1vw, 0.85rem)' }}>
+                Writer & Journalist turned Web Developer. :)<br />
+                I don't just build websites, I create visual experiences that tell stories and captivate audiences.
+              </p>
+            </div>
+
+            {/* Journey Box - Desktop Only */}
+            <div className="hidden lg:block hero-content-box border-t-2 border-teal-400/70 relative" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)', paddingTop: 'clamp(2.5rem, 4vh, 3.5rem)', paddingBottom: 'clamp(6rem, 9vh, 8rem)', paddingLeft: 'clamp(0.75rem, 2vw, 1.5rem)', paddingRight: 'clamp(0.75rem, 2vw, 1.5rem)', background: 'linear-gradient(to bottom, rgba(17, 24, 39, 0.88) 0%, rgba(17, 24, 39, 0.84) 30%, rgba(17, 24, 39, 0.8) 40%, rgba(17, 24, 39, 0.75) 50%, rgba(17, 24, 39, 0.7) 58%, rgba(17, 24, 39, 0.64) 64%, rgba(17, 24, 39, 0.57) 70%, rgba(17, 24, 39, 0.5) 75%, rgba(17, 24, 39, 0.42) 79%, rgba(17, 24, 39, 0.34) 83%, rgba(17, 24, 39, 0.26) 86%, rgba(17, 24, 39, 0.2) 89%, rgba(17, 24, 39, 0.14) 91%, rgba(17, 24, 39, 0.09) 93%, rgba(17, 24, 39, 0.05) 95%, rgba(17, 24, 39, 0.02) 97%, transparent 100%)', width: '85%', boxSizing: 'border-box', boxShadow: '0 -10px 20px -10px rgba(0, 0, 0, 0.5)' }}>
+              <h3 className="text-teal-400 font-semibold mb-3 relative z-10" style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.2rem)', letterSpacing: '0.1em' }}>MY JOURNEY</h3>
+              <p className="text-white font-light leading-relaxed relative z-10" style={{ fontSize: 'clamp(0.95rem, 1.6vw, 1.15rem)', lineHeight: '1.6' }}>
+                I am a Video Journalist and a former Bundeswehr employee. After a change of career I recently joined the competitive world of Web Designing/Development. As a Self-Skilled Graphic Designer, I enthusiastically combine the visual designs into interactive and responsive user experience.
+              </p>
+            </div>
+
+            {/* Scroll Indicator - Below text box - Hidden on mobile, shown on desktop */}
+            <div className="hidden lg:flex justify-end mt-8">
+              <button 
+                onClick={scrollToContent}
+                className="scroll-indicator-reversed scroll-indicator-wrapper flex flex-col items-center scroll-indicator-animate scroll-gap"
+                aria-label="Scroll to content"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
+                <span className="scroll-text-reversed font-light">Scroll</span>
+                <div className="scroll-border-reversed border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+                  <div className="scroll-dot-reversed bg-teal-400 rounded-full"></div>
+                  <svg className="scroll-arrow-reversed text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </button>
+            </div>
           </div>
+
+          {/* Scroll Indicator - Hidden on desktop */}
+          <button 
+            onClick={scrollToContent}
+            className="scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap lg:hidden"
+            aria-label="Scroll to content"
+          >
+            <span className="scroll-text font-light">Scroll</span>
+            <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
+              <div className="scroll-dot bg-teal-400 rounded-full"></div>
+              <svg className="scroll-arrow text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </button>
         </div>
       </section>
 
-      {/* Extended About Section (shared with homepage, expanded here) */}
-      <AboutSection />
+      {/* Extended About Section (full variant, richer than homepage) */}
+      <AboutSection variant="page" />
 
       {/* Skills Section */}
       <SkillsSection />
+
+      {/* Featured Projects - Compact Version */}
+      <FeaturedProjectsCompact />
 
       {/* Values/Approach Section */}
       <section className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50">

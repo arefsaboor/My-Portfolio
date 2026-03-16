@@ -29,7 +29,7 @@ function Home({ showPageLoader = false, onLoaderComplete }) {
     <>
       {showLoader && <PageLoader pageName="Home" onComplete={handleLoaderComplete} />}
       <Hero />
-      <About />
+      <About variant="home" />
       <SkillsSection />
       <IconsSection />
       <Testimonials />
