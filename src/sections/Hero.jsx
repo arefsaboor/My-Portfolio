@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
@@ -8,7 +8,6 @@ function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
-  const scrollButtonRef = useRef(null);
   const titles = heroTitles.skills;
 
   useEffect(() => {
@@ -18,35 +17,6 @@ function Hero() {
 
     return () => clearInterval(interval);
   }, [titles.length]);
-
-  // Attach native event listener to scroll button
-  useEffect(() => {
-    const button = scrollButtonRef.current;
-    if (!button) return;
-
-    const handleClick = (e) => {
-      console.log('Native click fired!', e);
-      e.preventDefault();
-      e.stopPropagation();
-      
-      const aboutSection = document.getElementById('about');
-      console.log('About section:', aboutSection);
-      
-      if (aboutSection) {
-        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      } else {
-        console.error('About section not found');
-      }
-    };
-
-    button.addEventListener('click', handleClick, { passive: false });
-    button.addEventListener('touchend', handleClick, { passive: false });
-
-    return () => {
-      button.removeEventListener('click', handleClick);
-      button.removeEventListener('touchend', handleClick);
-    };
-  }, []);
 
   // Subtle parallax effect for hero background on scroll
   useEffect(() => {
@@ -63,33 +33,27 @@ function Hero() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll with optimized easing
+  // Smooth scroll helper for consistent behavior
   const smoothScrollTo = (targetId) => {
     const target = document.getElementById(targetId);
-    if (!target) {
-      console.warn(`Target element with id "${targetId}" not found`);
-      return;
-    }
+    if (!target) return;
 
     const startPosition = window.pageYOffset;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
     const distance = targetPosition - startPosition;
-    const duration = 800; // 0.8 seconds - faster and smoother
+    const duration = 900; // slightly slower, smoother
     let start = null;
 
-    // Smoother easing function - less extreme than cubic
-    const easeInOutQuad = (t) => {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-    };
+    const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
 
     const animation = (currentTime) => {
       if (start === null) start = currentTime;
       const timeElapsed = currentTime - start;
       const progress = Math.min(timeElapsed / duration, 1);
       const ease = easeInOutQuad(progress);
-      
+
       window.scrollTo(0, startPosition + distance * ease);
-      
+
       if (progress < 1) {
         requestAnimationFrame(animation);
       }
@@ -98,20 +62,9 @@ function Hero() {
     requestAnimationFrame(animation);
   };
 
-  // Handle scroll indicator click specifically for mobile
-  const handleScrollClick = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('Scroll button clicked');
-    
-    const aboutSection = document.getElementById('about');
-    console.log('About section:', aboutSection);
-    
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-      console.error('About section not found');
-    }
+  // Scroll to About section (used by both scroll indicators)
+  const handleScrollToAbout = () => {
+    smoothScrollTo('about');
   };
 
   // Handle CV button click - now shows modal on all devices
@@ -327,7 +280,7 @@ function Hero() {
         
         .hero-cta-button {
           min-height: clamp(1.5rem, 4vh, 4rem);
-          min-width: 150px;
+          width: 180px;
           padding-left: clamp(1.5rem, 2vw, 1.5rem);
           padding-right: clamp(1.5rem, 2vw, 1.5rem);
           background: #5eead4;
@@ -355,7 +308,7 @@ function Hero() {
         
         .hero-cta-button-secondary {
           min-height: clamp(1.5rem, 4vh, 4rem);
-          min-width: 150px;
+          width: 180px;
           padding-top: 0;
           padding-bottom: 0;
           padding-left: clamp(1.5rem, 2vw, 1.5rem);
@@ -372,6 +325,12 @@ function Hero() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
+        }
+
+        @media (max-width: 640px) {
+          .hero-cta-button-secondary {
+            border-width: 1px;
+          }
         }
         
         .hero-cta-button-secondary:hover {
@@ -449,15 +408,6 @@ function Hero() {
           padding: 0;
           position: relative;
           z-index: 100;
-          pointer-events: auto;
-          touch-action: manipulation;
-          -webkit-tap-highlight-color: transparent;
-          user-select: none;
-          -webkit-user-select: none;
-        }
-        
-        .scroll-indicator-wrapper * {
-          pointer-events: none;
         }
         
         /* Mobile specific - ensure button is always tappable */
@@ -601,7 +551,7 @@ function Hero() {
 
         {/* Scroll Indicator - Mobile */}
         <button 
-          ref={scrollButtonRef}
+          onClick={handleScrollToAbout}
           className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
           type="button"
@@ -622,7 +572,7 @@ function Hero() {
 
         {/* Scroll Indicator - Desktop */}
         <button 
-          onClick={handleScrollClick}
+          onClick={handleScrollToAbout}
           className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
           type="button"

@@ -66,9 +66,14 @@ function Projects() {
       <section 
         id="projects-hero"
         className="relative w-full flex items-end overflow-hidden projects-hero-section"
-        style={{ minHeight: '100vh' }}
+        style={{ height: '100svh' }}
       >
         <style>{`
+          #projects-hero {
+            padding-bottom: clamp(2.5rem, 5vh, 4rem);
+            overflow: hidden;
+          }
+
           .projects-hero-section .hero-bg {
             background-position: 50% 50%;
             transform: scale(1.05);
@@ -100,7 +105,7 @@ function Projects() {
         </div>
 
         {/* Content - Bottom Left */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 lg:pb-24">
+  <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
           <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               PROJECTS

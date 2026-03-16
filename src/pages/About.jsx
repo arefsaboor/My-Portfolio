@@ -20,7 +20,7 @@ const About = () => {
 
   // Smooth scroll to next section
   const scrollToContent = () => {
-    const target = document.getElementById('about-story');
+    const target = document.getElementById('about');
     if (!target) return;
 
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
@@ -47,9 +47,14 @@ const About = () => {
       <section 
         id="about-hero"
         className="relative w-full flex items-end lg:items-center overflow-hidden about-hero-section pt-12 md:pt-16 lg:pt-20"
-        style={{ minHeight: '100vh' }}
+        style={{ height: '100svh' }}
       >
         <style>{`
+          #about-hero {
+            padding-bottom: clamp(2.5rem, 5vh, 4rem);
+            overflow: hidden;
+          }
+
           .about-hero-section .hero-bg {
             background-position: 35% 30%;
             transform: scale(1.05);
@@ -329,7 +334,7 @@ const About = () => {
         </div>
 
         {/* Content - Bottom Left on mobile, Right Center on desktop */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 pb-16 sm:pb-20 flex justify-between lg:justify-end items-end gap-4 sm:gap-6">
+        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20 flex justify-between lg:justify-end items-end gap-4 sm:gap-6">
           <div className={`flex-1 lg:flex-initial pr-2 sm:pr-0 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`} style={{ width: 'clamp(320px, 45vw, 700px)' }}>
             {/* Heading */}
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white mb-4 sm:mb-6 about-hero-heading">
