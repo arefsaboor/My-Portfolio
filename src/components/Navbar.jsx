@@ -298,7 +298,7 @@ function Navbar() {
                       
                       {/* Dropdown Menu */}
                       <div
-                        className={`absolute top-full mt-2 right-0 w-64 bg-gray-900/95 backdrop-blur-md rounded-2xl shadow-2xl border border-teal-400/20 overflow-hidden transition-all duration-300 py-2 ${
+                        className={`absolute top-full mt-2 right-0 w-72 bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/70 overflow-hidden transition-all duration-300 py-2 divide-y divide-slate-800/70 ${
                           isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
                         }`}
                         style={{ zIndex: 9999 }}
@@ -309,10 +309,10 @@ function Navbar() {
                             handlePageClick(e, '/projects');
                             setIsDropdownOpen(false);
                           }}
-                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 border-b border-teal-400/10 mb-1"
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
                         >
-                          <div className="text-sm font-semibold">All Projects</div>
-                          <div className="text-xs text-gray-400/60 mt-1.5">View All Projects</div>
+                          <div className="text-sm font-semibold text-teal-300">All Projects</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">View All Projects</div>
                         </Link>
                         
                         <Link
@@ -327,10 +327,10 @@ function Navbar() {
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
-                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 border-b border-teal-400/10 my-1"
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
                         >
                           <div className="text-sm font-semibold">Books2Shelf</div>
-                          <div className="text-xs text-gray-400/60 mt-1.5">Digital Bookshelf With Google Books API</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">Digital Bookshelf With Google Books API</div>
                         </Link>
                         
                         <Link
@@ -345,10 +345,10 @@ function Navbar() {
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
-                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 mt-1"
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
                         >
                           <div className="text-sm font-semibold">Nirvan - Vedic Yoga</div>
-                          <div className="text-xs text-gray-400/60 mt-1.5">An Ancient Peace To The Modern World</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">An Ancient Peace To The Modern World</div>
                         </Link>
                         
                         <Link
@@ -363,10 +363,10 @@ function Navbar() {
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
-                          className="block px-6 py-4 text-white hover:bg-teal-400/10 hover:text-teal-400 transition-all duration-200 mt-1"
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
                         >
                           <div className="text-sm font-semibold">Portfolio</div>
-                          <div className="text-xs text-gray-400/60 mt-1.5">Personal Portfolio With Custom Domain</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">Personal Portfolio With Custom Domain</div>
                         </Link>
                       </div>
                     </div>

@@ -163,10 +163,11 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
           <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
             <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
               <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-                LET'S<br />COLLABORATE
+                GET IN TOUCH
               </h1>
               <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
-                Whether you have a clear vision or just an idea, I'd love to hear about your project. Let's discuss how we can bring your digital vision to life.
+                Tell me about your idea, timeline and goals.
+                I’ll get back to you with next steps and a clear way forward.
               </p>
               
               {/* Scroll Indicator */}
@@ -175,7 +176,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
                 className="group flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300"
                 aria-label="Scroll to contact form"
               >
-                <span className="text-sm font-medium tracking-wide">Get In Touch</span>
+                <span className="text-sm font-medium tracking-wide">SCROLL</span>
                 <svg 
                   className="w-5 h-5 animate-bounce" 
                   fill="none" 
@@ -203,7 +204,8 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
                   Let's Work Together
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed">
-                  Whether you have a clear vision or just an idea, I'd love to hear about your project. Let's discuss how we can bring your digital vision to life.
+                  Share a bit about your product, audience and challenges.
+                  The more context you give, the better I can suggest a solution that fits.
                 </p>
               </div>
               

@@ -105,13 +105,13 @@ function Projects() {
         </div>
 
         {/* Content - Bottom Left */}
-  <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
+        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
           <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
               PROJECTS
             </h1>
             <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
-              Crafting beautifully responsive and user-centered design that deserves to be displayed on screens.
+              A selection of product-focused web projects, showcasing UX, visual design and responsive front-end implementation.
             </p>
             
             {/* Scroll Indicator */}
@@ -120,7 +120,7 @@ function Projects() {
               className="group flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300"
               aria-label="Scroll to projects"
             >
-              <span className="text-sm font-medium tracking-wide">Explore projects</span>
+              <span className="text-sm font-medium tracking-wide">EXPLORE PROJECTS</span>
               <svg 
                 className="w-5 h-5 animate-bounce" 
                 fill="none" 

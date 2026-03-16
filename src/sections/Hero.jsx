@@ -33,7 +33,7 @@ function Hero() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Smooth scroll helper for consistent behavior
+  // Smooth scroll with optimized easing
   const smoothScrollTo = (targetId) => {
     const target = document.getElementById(targetId);
     if (!target) return;
@@ -41,30 +41,28 @@ function Hero() {
     const startPosition = window.pageYOffset;
     const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
     const distance = targetPosition - startPosition;
-    const duration = 900; // slightly slower, smoother
+    const duration = 800; // 0.8 seconds - faster and smoother
     let start = null;
 
-    const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t);
+    // Smoother easing function - less extreme than cubic
+    const easeInOutQuad = (t) => {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+    };
 
     const animation = (currentTime) => {
       if (start === null) start = currentTime;
       const timeElapsed = currentTime - start;
       const progress = Math.min(timeElapsed / duration, 1);
       const ease = easeInOutQuad(progress);
-
+      
       window.scrollTo(0, startPosition + distance * ease);
-
+      
       if (progress < 1) {
         requestAnimationFrame(animation);
       }
     };
 
     requestAnimationFrame(animation);
-  };
-
-  // Scroll to About section (used by both scroll indicators)
-  const handleScrollToAbout = () => {
-    smoothScrollTo('about');
   };
 
   // Handle CV button click - now shows modal on all devices
@@ -200,8 +198,6 @@ function Hero() {
           margin: 0 auto;
           padding-left: clamp(1.5rem, 3vw, 5rem);
           padding-right: clamp(1.5rem, 3vw, 5rem);
-          position: relative;
-          z-index: 5;
         }
         
         @media (min-width: 1024px) {
@@ -280,7 +276,7 @@ function Hero() {
         
         .hero-cta-button {
           min-height: clamp(1.5rem, 4vh, 4rem);
-          width: 180px;
+          min-width: 150px;
           padding-left: clamp(1.5rem, 2vw, 1.5rem);
           padding-right: clamp(1.5rem, 2vw, 1.5rem);
           background: #5eead4;
@@ -308,7 +304,7 @@ function Hero() {
         
         .hero-cta-button-secondary {
           min-height: clamp(1.5rem, 4vh, 4rem);
-          width: 180px;
+          min-width: 150px;
           padding-top: 0;
           padding-bottom: 0;
           padding-left: clamp(1.5rem, 2vw, 1.5rem);
@@ -325,12 +321,6 @@ function Hero() {
           display: inline-flex;
           align-items: center;
           justify-content: center;
-        }
-
-        @media (max-width: 640px) {
-          .hero-cta-button-secondary {
-            border-width: 1px;
-          }
         }
         
         .hero-cta-button-secondary:hover {
@@ -406,16 +396,6 @@ function Hero() {
           background: none;
           border: none;
           padding: 0;
-          position: relative;
-          z-index: 100;
-        }
-        
-        /* Mobile specific - ensure button is always tappable */
-        @media (max-width: 1535px) {
-          .mobile-scroll-indicator {
-            position: relative;
-            z-index: 999;
-          }
         }
         
         .scroll-indicator-wrapper:hover .scroll-border {
@@ -461,7 +441,6 @@ function Hero() {
       <div className="hero-main-container relative z-10">
         {/* Hero Content */}
         <div>
-        <div>
         <div className="flex items-center hero-content-gap hero-content-row-gap">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
@@ -503,11 +482,10 @@ function Hero() {
             </h2>
           </div>
         </div>
-        </div>
         
         {/* Tagline - Hidden on mobile */}
         <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
-          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(81%) sepia(55%) saturate(471%) hue-rotate(343deg) brightness(101%) contrast(98%)' }} />
+          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
           <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)' }}>
             <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
               Writer & Journalist turned Web Developer. :)<br />
@@ -517,9 +495,8 @@ function Hero() {
           </div>
         </div>
         
-        {/* Based in Berlin */}
-        <div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap">
+        {/* Based in Berlin - moved below description */}
+        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
           <img src="/globe.svg" alt="Location icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
           <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             <p className="hero-animated-text text-white font-normal whitespace-nowrap">
@@ -547,19 +524,12 @@ function Hero() {
           </button>
         </div>
         </div>
-        </div>
 
         {/* Scroll Indicator - Mobile */}
         <button 
-          onClick={handleScrollToAbout}
+          onClick={() => smoothScrollTo('about')}
           className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
-          type="button"
-          style={{ 
-            minWidth: '60px', 
-            minHeight: '80px',
-            padding: '8px'
-          }}
         >
           <span className="scroll-text font-light">Scroll</span>
           <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
@@ -572,10 +542,9 @@ function Hero() {
 
         {/* Scroll Indicator - Desktop */}
         <button 
-          onClick={handleScrollToAbout}
+          onClick={() => smoothScrollTo('about')}
           className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
-          type="button"
         >
           <span className="scroll-text font-light">Scroll</span>
           <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
