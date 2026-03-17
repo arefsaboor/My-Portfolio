@@ -7,7 +7,6 @@ import cvPdf from '../assets/Aref_Saboor_CV.pdf';
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
-  const [parallaxOffset, setParallaxOffset] = useState(0);
   const titles = heroTitles.skills;
 
   useEffect(() => {
@@ -17,21 +16,6 @@ function Hero() {
 
     return () => clearInterval(interval);
   }, [titles.length]);
-
-  // Subtle parallax effect for hero background on scroll
-  useEffect(() => {
-    const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReduced) return undefined;
-
-    const handleScroll = () => {
-      const y = window.scrollY;
-      const clamped = Math.min(y * 0.2, 80); // limit movement
-      setParallaxOffset(clamped);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Smooth scroll with optimized easing
   const smoothScrollTo = (targetId) => {
@@ -93,8 +77,6 @@ function Hero() {
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'scroll',
-          backgroundPosition: `65% ${20 + parallaxOffset * 0.05}%`,
-          transition: 'background-position 0.05s linear'
         }}
         role="img"
         aria-label="Portfolio hero background"

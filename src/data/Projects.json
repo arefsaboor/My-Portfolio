@@ -16,7 +16,6 @@
         "Cloud-based data storage with Firestore database",
         "Fully responsive across all devices"
       ],
-      "imageUrl": "/src/assets/books2shelf-screenshot.jpg",
       "screenshots": {
         "desktop": "/books2shelf-screenshots/books2shelf-desktop.png",
         "tablet": "/books2shelf-screenshots/books2shelf-tablet.png",
@@ -52,7 +51,6 @@
         "Integrated contact system for client inquiries",
         "Comprehensive showcase of skills and projects"
       ],
-      "imageUrl": "/src/assets/portfolio-screenshot.jpg",
       "screenshots": {
         "desktop": "/Portfolio-Site-Screenshots/Home-Desktop.png",
         "tablet": "/Portfolio-Site-Screenshots/Home-Tablet.png",
@@ -88,7 +86,6 @@
         "Mobile-First responsive architecture",
         "Complete UX case study published on Behance"
       ],
-      "imageUrl": "/src/assets/nirvan-screenshot.jpg",
       "screenshots": {
         "desktop": "/Nirvan-Screenshots/desktop-hero.png",
         "tablet": "/Nirvan-Screenshots/tablet-hero.png",

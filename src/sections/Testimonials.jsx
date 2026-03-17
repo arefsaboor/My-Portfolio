@@ -7,7 +7,6 @@ function Testimonials() {
       duration: "4 Months",
       description: "Mastered UI/UX design principles, from low to high-fidelity design. Learned user research methodologies, project management strategies, and product design thinking. Built interactive prototypes in Figma and Framer.",
       technologies: ["Figma", "Framer", "UI/UX Design", "Prototyping"],
-      projectLink: "#"
     },
     {
       id: 2,
@@ -16,7 +15,6 @@ function Testimonials() {
       duration: "3 Months",
       description: "Built a solid foundation in web development with HTML5, CSS3, and modern JavaScript. Learned responsive design, CSS frameworks like Bootstrap, TypeScript basics, and core internet functionality principles.",
       technologies: ["HTML5", "CSS3", "JavaScript", "Bootstrap"],
-      projectLink: "#"
     },
     {
       id: 3,
@@ -25,7 +23,6 @@ function Testimonials() {
       duration: "2.5 Months",
       description: "Developed modern web applications using React, Angular, and Vue.js. Mastered component-based architecture, Next.js for full-stack React, Tailwind CSS, headless CMS integration with Strapi, and deployment workflows.",
       technologies: ["React", "Next.js", "Tailwind CSS", "Angular"],
-      projectLink: "#"
     },
     {
       id: 4,
@@ -34,7 +31,6 @@ function Testimonials() {
       duration: "2.5 Months",
       description: "Created full-stack applications with backend integration. Worked with Node.js runtime, Express.js framework, database management, authentication systems, and performance optimization techniques.",
       technologies: ["Node.js", "Express.js", "MongoDB", "Authentication"],
-      projectLink: "#"
     }
   ];
 

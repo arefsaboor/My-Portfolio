@@ -115,59 +115,51 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
                 transform: scale(1.1);
               }
             }
-            
-            @keyframes blob {
-              0%, 100% {
-                transform: translate(0, 0) scale(1);
-              }
-              25% {
-                transform: translate(20px, -20px) scale(1.1);
-              }
-              50% {
-                transform: translate(-20px, 20px) scale(0.9);
-              }
-              75% {
-                transform: translate(20px, 20px) scale(1.05);
-              }
-            }
-            
-            .animate-blob {
-              animation: blob 7s infinite ease-in-out;
-            }
-            
-            .animation-delay-2000 {
-              animation-delay: 2s;
-            }
-            
-            .animation-delay-4000 {
-              animation-delay: 4s;
-            }
           `}</style>
           
           {/* Background - Gradient Pattern */}
           <div 
-            className="hero-bg absolute inset-0 z-0 bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900"
+            className="hero-bg absolute inset-0 z-0 bg-gradient-to-br from-teal-800 via-cyan-800 to-blue-800"
           >
-            {/* Animated Background Pattern */}
-            <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-              <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-              <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
+            {/* Email Icon with Checkmark */}
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 lg:w-[28rem] lg:h-[28rem] z-[20] opacity-30">
+              <svg viewBox="0 0 200 200" className="w-full h-full">
+                {/* Envelope body - centered */}
+                <rect x="40" y="80" width="120" height="85" rx="6" fill="#14b8a6" stroke="#0d9488" strokeWidth="2" />
+                
+                {/* Envelope flap - front triangle */}
+                <path d="M40 80 L100 120 L160 80" fill="#0d9488" stroke="#0d7c70" strokeWidth="2" strokeLinejoin="round" />
+                
+                {/* Envelope flap lines for depth */}
+                <line x1="40" y1="80" x2="40" y2="165" stroke="#0d7c70" strokeWidth="2" />
+                <line x1="160" y1="80" x2="160" y2="165" stroke="#0d7c70" strokeWidth="2" />
+                
+                {/* Checkmark badge - top center */}
+                <circle cx="100" cy="55" r="22" fill="#10b981" stroke="#059669" strokeWidth="2" />
+                <path d="M89 55 L97 63 L111 47" fill="none" stroke="white" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </div>
             
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent z-[10]"></div>
           </div>
 
           {/* Content - Bottom Left */}
           <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
             <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              {/* Response Badge */}
+              <div className="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-sm border border-teal-400/30 rounded-full px-4 py-2 mb-6">
+                <svg className="w-4 h-4 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <span className="text-sm font-medium text-teal-100">Response within 24 hours</span>
+              </div>
+              
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 GET IN TOUCH
               </h1>
-              <p className="text-xl sm:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
-                Tell me about your idea, timeline and goals.
-                I’ll get back to you with next steps and a clear way forward.
+              <p className="text-lg sm:text-xl lg:text-2xl text-white/90 font-light max-w-2xl leading-relaxed mb-8">
+                Have a project in mind? Let's discuss your vision and create something exceptional together.
               </p>
               
               {/* Scroll Indicator */}

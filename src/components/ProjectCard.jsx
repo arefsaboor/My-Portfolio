@@ -140,67 +140,119 @@ const ProjectCard = ({ project }) => {
           {/* Device Mockups */}
           <div className="relative z-10 w-full flex items-center justify-center">
             
-            {/* Desktop */}
+            {/* Desktop - MacBook Pro Style */}
             {activeDevice === 'desktop' && (
-              <div className="w-full max-w-3xl animate-fadeInScale">
-                <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-2xl p-2 shadow-2xl">
-                  <div className="flex items-center gap-2 px-3 py-2 bg-gray-700 rounded-t-xl">
-                    <div className="flex gap-1.5">
-                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
-                      <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+              <div className="w-full max-w-4xl animate-fadeInScale">
+                {/* Display Housing - Aluminum */}
+                <div className="relative bg-gradient-to-br from-slate-600 via-slate-700 to-slate-800 rounded-t-xl pt-1.5 px-1.5 pb-0" style={{ boxShadow: '-15px 25px 50px rgba(0,0,0,0.4)' }}>
+                  {/* Screen Bezel - Ultra thin like real MacBook */}
+                  <div className="relative bg-slate-900 rounded-t-lg p-0.5">
+                    {/* Notch */}
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-black rounded-b-3xl z-20 flex items-center justify-center">
+                      <div className="w-1.5 h-1.5 bg-slate-800 rounded-full"></div>
                     </div>
-                    <div className="hidden sm:flex flex-1 items-center gap-2 ml-4 px-3 py-1 bg-gray-600 rounded text-xs text-gray-300">
-                      <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                      </svg>
-                      <span className="truncate">{project.liveUrl}</span>
+                    
+                    {/* Browser Chrome */}
+                    <div className="bg-slate-800 rounded-t-md px-3 py-2 flex items-center gap-2 mt-3.5">
+                      <div className="flex gap-1.5">
+                        <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+                        <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+                      </div>
+                      <div className="flex-1 bg-slate-700 rounded text-xs text-slate-400 px-3 py-1 ml-2 truncate">
+                        {project.liveUrl}
+                      </div>
+                    </div>
+                    
+                    {/* Screenshot */}
+                    <div className="relative bg-white overflow-hidden">
+                      <img
+                        src={getImage(project.screenshots.desktop)}
+                        alt={`${project.name} Desktop`}
+                        className="w-full h-auto"
+                        style={{ 
+                          display: 'block',
+                          imageRendering: 'high-quality',
+                          WebkitFontSmoothing: 'antialiased'
+                        }}
+                        loading="lazy"
+                      />
                     </div>
                   </div>
-                  <div className="relative bg-white rounded-b-xl overflow-hidden">
-                    <img
-                      src={getImage(project.screenshots.desktop)}
-                      alt={`${project.name} Desktop`}
-                      className="w-full h-auto"
-                      style={{ aspectRatio: '16/10' }}
-                    />
+                </div>
+                
+                {/* Bottom Housing - Keyboard Deck */}
+                <div className="relative">
+                  {/* Hinge */}
+                  <div className="h-px bg-slate-950"></div>
+                  {/* Front Edge of Keyboard Base */}
+                  <div className="relative bg-gradient-to-b from-slate-600 via-slate-700 to-slate-600 rounded-b-xl h-4" style={{
+                    boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.1)'
+                  }}>
                   </div>
                 </div>
               </div>
             )}
             
-            {/* Tablet */}
+            {/* Tablet - iPad Pro Style (2024) */}
             {activeDevice === 'tablet' && (
               <div className="w-full max-w-md animate-fadeInScale">
-                <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-3xl p-3 shadow-2xl">
-                  <div className="absolute top-5 left-1/2 -translate-x-1/2 w-16 h-1 bg-gray-700 rounded-full"></div>
-                  <div className="relative bg-white rounded-2xl overflow-hidden mt-5">
+                {/* iPad Pro Frame - Thinner bezels */}
+                <div className="relative bg-gradient-to-b from-slate-800 to-slate-950 rounded-3xl p-2.5 shadow-2xl" style={{ boxShadow: '-12px 20px 40px rgba(0,0,0,0.4)' }}>
+                  {/* Screenshot Container */}
+                  <div className="relative bg-white rounded-2xl overflow-hidden">
+                    {/* Face ID Camera - Inside the screen at top */}
+                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-950 rounded-full ring-1 ring-slate-800/50 z-10"></div>
+                    
                     <img
                       src={getImage(project.screenshots.tablet)}
                       alt={`${project.name} Tablet`}
                       className="w-full h-auto"
-                      style={{ aspectRatio: '3/4' }}
+                      style={{ 
+                        display: 'block',
+                        imageRendering: 'high-quality',
+                        WebkitFontSmoothing: 'antialiased'
+                      }}
+                      loading="lazy"
                     />
                   </div>
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-gray-700 border-2 border-gray-600"></div>
                 </div>
               </div>
             )}
             
-            {/* Mobile */}
+            {/* Mobile - iPhone 15 Pro Style (2023) */}
             {activeDevice === 'mobile' && (
               <div className="w-full max-w-xs animate-fadeInScale">
-                <div className="relative bg-gradient-to-b from-gray-800 to-gray-900 rounded-[2.5rem] p-2 shadow-2xl">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-black rounded-b-3xl z-20 flex items-center justify-center gap-2">
-                    <div className="w-14 h-1 bg-gray-700 rounded-full"></div>
-                    <div className="w-2 h-2 bg-gray-700 rounded-full"></div>
+                <div className="relative bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-[2.5rem] p-3 shadow-2xl" style={{ boxShadow: '-8px 15px 35px rgba(0,0,0,0.4)' }}>
+                  {/* Dynamic Island - pill shaped cutout */}
+                  <div className="absolute top-1 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20 flex items-center justify-center px-3">
+                    <div className="flex items-center justify-between w-full">
+                      <div className="w-2 h-2 bg-slate-900 rounded-full"></div>
+                      <div className="flex-1 mx-2 h-1 bg-slate-900 rounded-full"></div>
+                      <div className="w-1.5 h-1.5 bg-slate-900 rounded-full"></div>
+                    </div>
                   </div>
-                  <div className="relative bg-white rounded-[2rem] overflow-hidden">
+                  
+                  {/* Side Buttons - iPhone 15 style */}
+                  {/* Action Button (left top) */}
+                  <div className="absolute left-0 top-[22%] w-1 h-10 bg-slate-950 rounded-r"></div>
+                  {/* Volume buttons (left) */}
+                  <div className="absolute left-0 top-[35%] w-1 h-14 bg-slate-950 rounded-r"></div>
+                  {/* Power button (right) */}
+                  <div className="absolute right-0 top-[30%] w-1 h-16 bg-slate-950 rounded-l"></div>
+                  
+                  {/* Screenshot Container */}
+                  <div className="relative bg-white rounded-[2.2rem] overflow-hidden">
                     <img
                       src={getImage(project.screenshots.mobile)}
                       alt={`${project.name} Mobile`}
                       className="w-full h-auto"
-                      style={{ aspectRatio: '9/19.5' }}
+                      style={{ 
+                        display: 'block',
+                        imageRendering: 'high-quality',
+                        WebkitFontSmoothing: 'antialiased'
+                      }}
+                      loading="lazy"
                     />
                   </div>
                 </div>
