@@ -16,6 +16,9 @@ import nirvanMobile from '../assets/Nirvan-Screenshots/mobile-hero.png';
 import portfolioDesktop from '../assets/Portfolio-Site-Screenshots/Home-Desktop.png';
 import portfolioTablet from '../assets/Portfolio-Site-Screenshots/Home-Tablet.png';
 import portfolioMobile from '../assets/Portfolio-Site-Screenshots/Home-Mobile.png';
+import bestsellersDesktop from '../assets/bestsellers-screenshots/bestsellers-desktop.png';
+import bestsellersTablet from '../assets/bestsellers-screenshots/bestsellers-tablet.png';
+import bestsellersMobile from '../assets/bestsellers-screenshots/bestsellers-mobile.png';
 
 const heroProjects = [
   {
@@ -28,8 +31,8 @@ const heroProjects = [
     mobile: books2shelfMobile,
     url: 'books2shelf.arefsaboor.com',
     links: [
-      { label: 'Subdomain', href: 'https://books2shelf.arefsaboor.com' },
       { label: 'Vercel', href: 'https://books2shelf.vercel.app' },
+      { label: 'Subdomain', href: 'https://books2shelf.arefsaboor.com' },
     ],
   },
   {
@@ -58,6 +61,31 @@ const heroProjects = [
     links: [
       { label: 'Subdomain', href: 'https://nirvan.arefsaboor.com' },
       { label: 'Vercel', href: 'https://nirvan-vedic.vercel.app' },
+    ],
+  },
+  {
+    name: 'BESTSELLERS',
+    subtitle: 'Modern Full-Stack E-commerce Bookstore',
+    description: 'Production-ready online bookstore with real Stripe payments, rich browsing, reviews, wishlists, and a full admin dashboard for inventory, orders, and coupons.',
+    techs: [
+      'Next.js 15 (App Router)',
+      'React 19',
+      'TypeScript',
+      'Tailwind CSS',
+      'Prisma ORM',
+      'PostgreSQL (Neon)',
+      'Stripe',
+      'NextAuth',
+      'Resend',
+      'Vercel',
+    ],
+    desktop: bestsellersDesktop,
+    tablet: bestsellersTablet,
+    mobile: bestsellersMobile,
+    url: 'bestsellerss.arefsaboor.com',
+    links: [
+      { label: 'Vercel', href: 'https://bestsellerss.vercel.app' },
+      { label: 'Subdomain', href: 'https://bestsellerss.arefsaboor.com' },
     ],
   },
 ];
@@ -104,7 +132,8 @@ function Projects() {
       setTimeout(() => {
         const hashMap = {
           '#books2shelf': 'project-1',
-          '#nirvan': 'project-3'
+          '#nirvan': 'project-3',
+          '#bestsellers': 'project-4'
         };
         const elementId = hashMap[hash];
         if (elementId) {
@@ -470,11 +499,17 @@ function Projects() {
 
           {/* Projects Grid */}
           <div className="space-y-12 sm:space-y-16 lg:space-y-20">
-            {projectsData.projects.map((project) => (
-              <div key={project.id} id={`project-${project.id}`}>
-                <ProjectCard project={project} />
-              </div>
-            ))}
+            {[...projectsData.projects]
+              .sort((a, b) => {
+                if (a.name === 'Bestsellers' && b.name !== 'Bestsellers') return -1;
+                if (b.name === 'Bestsellers' && a.name !== 'Bestsellers') return 1;
+                return a.id - b.id;
+              })
+              .map((project) => (
+                <div key={project.id} id={`project-${project.id}`}>
+                  <ProjectCard project={project} />
+                </div>
+              ))}
           </div>
         </div>
       </section>

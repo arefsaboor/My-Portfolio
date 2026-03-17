@@ -105,6 +105,52 @@
         "Published UX case study on Behance"
       ],
       "tags": ["UX Design", "Frontend", "Design Systems", "Mobile-First"]
+    },
+    {
+      "id": 4,
+      "name": "Bestsellers",
+      "subtitle": "Modern Full-Stack E-commerce Bookstore",
+      "category": "Full-Stack Development",
+      "role": "Full-Stack Developer",
+      "duration": "2026",
+      "description": "Production-ready online bookstore built with Next.js App Router that feels like a premium SaaS storefront. Supports rich browsing, wishlists, reviews, secure Stripe checkout, and a full admin dashboard.",
+      "challenge": "Build an e-commerce bookstore that goes beyond a simple demo shop, with real payments, robust auth, reviews, and an admin back office — while keeping performance, accessibility, and DX high.",
+      "solution": "Implemented a full-stack Next.js 15 App Router app with TypeScript, Prisma, and PostgreSQL. Integrated Stripe for payments and webhooks, NextAuth for auth, and Resend for transactional email. Added an admin dashboard for inventory, orders, coupons, and reports.",
+      "impact": [
+        "Real payments and refunds powered by Stripe with webhooks",
+        "Rich storefront with search, filters, categories, reviews, and recently viewed tracking",
+        "Full auth system with email/password, OAuth, password reset, and profile management",
+        "Admin dashboard for books, users, orders, coupons, and exportable reports",
+        "Optimized for performance, mobile responsiveness, and accessibility"
+      ],
+      "screenshots": {
+        "desktop": "/bestsellers-screenshots/bestsellers-desktop.png",
+        "tablet": "/bestsellers-screenshots/bestsellers-tablet.png",
+        "mobile": "/bestsellers-screenshots/bestsellers-mobile.png"
+      },
+      "liveUrl": "https://bestsellerss.arefsaboor.com",
+      "vercelUrl": "https://bestsellerss.vercel.app",
+      "githubUrl": "https://github.com/arefsaboor/bestsellers",
+      "technologies": [
+        "Next.js 15 (App Router)",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS",
+        "Prisma ORM",
+        "PostgreSQL (Neon)",
+        "Stripe",
+        "NextAuth",
+        "Resend",
+        "Vercel"
+      ],
+      "highlights": [
+        "Fully featured bookstore with search, filters, categories, author pages, reviews, and recently viewed",
+        "Cart, checkout, and secure Stripe integration with webhooks for order status and refunds",
+        "Wishlist with sharing links, newsletter sign-up, and email-backed contact form",
+        "Admin dashboard for books, users, orders, coupons, and exportable reports",
+        "Production deployment on Vercel with managed Postgres and performance-focused UX"
+      ],
+      "tags": ["Full-Stack", "Next.js", "Stripe", "E-commerce"]
     }
   ]
 }

@@ -13,6 +13,10 @@ import portfolioDesktop from '../assets/Portfolio-Site-Screenshots/Home-Desktop.
 import portfolioTablet from '../assets/Portfolio-Site-Screenshots/Home-Tablet.png';
 import portfolioMobile from '../assets/Portfolio-Site-Screenshots/Home-Mobile.png';
 
+import bestsellersDesktop from '../assets/bestsellers-screenshots/bestsellers-desktop.png';
+import bestsellersTablet from '../assets/bestsellers-screenshots/bestsellers-tablet.png';
+import bestsellersMobile from '../assets/bestsellers-screenshots/bestsellers-mobile.png';
+
 // Map JSON paths to imported images
 const screenshotMap = {
   '/books2shelf-screenshots/books2shelf-desktop.png': books2shelfDesktop,
@@ -24,6 +28,9 @@ const screenshotMap = {
   '/Portfolio-Site-Screenshots/Home-Desktop.png': portfolioDesktop,
   '/Portfolio-Site-Screenshots/Home-Tablet.png': portfolioTablet,
   '/Portfolio-Site-Screenshots/Home-Mobile.png': portfolioMobile,
+  '/bestsellers-screenshots/bestsellers-desktop.png': bestsellersDesktop,
+  '/bestsellers-screenshots/bestsellers-tablet.png': bestsellersTablet,
+  '/bestsellers-screenshots/bestsellers-mobile.png': bestsellersMobile,
 };
 
 const ProjectCard = ({ project }) => {

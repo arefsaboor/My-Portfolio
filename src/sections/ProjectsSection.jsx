@@ -41,9 +41,15 @@ function ProjectsSection() {
         
         {/* Projects Grid */}
         <div className="space-y-16 sm:space-y-20 lg:space-y-24">
-          {projectsData.projects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
+          {[...projectsData.projects]
+            .sort((a, b) => {
+              if (a.name === 'Bestsellers' && b.name !== 'Bestsellers') return -1;
+              if (b.name === 'Bestsellers' && a.name !== 'Bestsellers') return 1;
+              return a.id - b.id;
+            })
+            .map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
         </div>
         
       </div>
