@@ -3,6 +3,7 @@ import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
 import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
+import { smoothScrollToId } from '../utils/smoothScroll';
 
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -17,36 +18,8 @@ function Hero() {
     return () => clearInterval(interval);
   }, [titles.length]);
 
-  // Smooth scroll with optimized easing
   const smoothScrollTo = (targetId) => {
-    const target = document.getElementById(targetId);
-    if (!target) return;
-
-    const startPosition = window.pageYOffset;
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const distance = targetPosition - startPosition;
-    const duration = 800; // 0.8 seconds - faster and smoother
-    let start = null;
-
-    // Smoother easing function - less extreme than cubic
-    const easeInOutQuad = (t) => {
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-    };
-
-    const animation = (currentTime) => {
-      if (start === null) start = currentTime;
-      const timeElapsed = currentTime - start;
-      const progress = Math.min(timeElapsed / duration, 1);
-      const ease = easeInOutQuad(progress);
-      
-      window.scrollTo(0, startPosition + distance * ease);
-      
-      if (progress < 1) {
-        requestAnimationFrame(animation);
-      }
-    };
-
-    requestAnimationFrame(animation);
+    smoothScrollToId(targetId);
   };
 
   // Handle CV button click - now shows modal on all devices
@@ -445,7 +418,7 @@ function Hero() {
           </div>
         </div>
         <div className="flex items-center hero-content-gap hero-content-row-gap">
-          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
+          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
             <path fillRule="evenodd" d="M15.514 3.293a1 1 0 0 0-1.415 0L12.151 5.24a.93.93 0 0 1 .056.052l6.5 6.5a.97.97 0 0 1 .052.056L20.707 9.9a1 1 0 0 0 0-1.415l-5.193-5.193ZM7.004 8.27l3.892-1.46 6.293 6.293-1.46 3.893a1 1 0 0 1-.603.591l-9.494 3.355a1 1 0 0 1-.98-.18l6.452-6.453a1 1 0 0 0-1.414-1.414l-6.453 6.452a1 1 0 0 1-.18-.98l3.355-9.494a1 1 0 0 1 .591-.603Z" clipRule="evenodd" />
           </svg>
           <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
@@ -455,7 +428,7 @@ function Hero() {
           </div>
         </div>
         <div className="flex items-center hero-content-gap hero-content-row-gap">
-          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
           </svg>
           <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
@@ -467,7 +440,7 @@ function Hero() {
         
         {/* Tagline - Hidden on mobile */}
         <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
-          <img src={bulbIcon} alt="Idea icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
+          <img src={bulbIcon} alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
           <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)' }}>
             <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
               Writer & Journalist turned Web Developer. :)<br />
@@ -479,7 +452,7 @@ function Hero() {
         
         {/* Based in Berlin - moved below description */}
         <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
-          <img src="/globe.svg" alt="Location icon" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
+          <img src="/globe.svg" alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
           <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             <p className="hero-animated-text text-white font-normal whitespace-nowrap">
               Based in Berlin

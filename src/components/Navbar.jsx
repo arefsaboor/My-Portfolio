@@ -11,7 +11,6 @@ function Navbar() {
   const location = useLocation();
   const sidebarRef = useRef(null);
   const closeButtonRef = useRef(null);
-  const scrollPositionRef = useRef(0);
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
 
@@ -84,6 +83,9 @@ function Navbar() {
     if (isOpen) {
       handleClose();
     }
+    // We intentionally only depend on pathname so the sidebar
+    // closes when the route changes, not when isOpen toggles.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   // Toggle menu
@@ -498,7 +500,7 @@ function Navbar() {
             </button>
 
             {/* Menu Content */}
-            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-24 px-7 sm:px-6 md:px-8 lg:px-12 pb-20 sm:pb-16">
+            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-20 px-7 sm:px-6 md:px-8 lg:px-12 pb-16 sm:pb-14 md:pb-12">
               {/* Top Section: Brand + Navigation */}
               <div>
                 {/* Brand */}

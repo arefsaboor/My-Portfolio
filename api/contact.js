@@ -1,5 +1,6 @@
-// Serverless function to handle contact form submissions
-import nodemailer from 'nodemailer';
+/* global process */
+// Serverless function to handle contact form submissions using Resend
+import { Resend } from 'resend';
 
 export default async function handler(req, res) {
   // Only allow POST requests
@@ -21,22 +22,18 @@ export default async function handler(req, res) {
   }
 
   try {
-    // Create transporter using Gmail
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_PASSWORD, // Your Gmail App Password
-      },
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    // Email content
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: process.env.EMAIL_USER, // Send to yourself
-      replyTo: email, // Allow replying to the sender
-      subject: `Portfolio Contact: Message from ${name}`,
-      html: `
+    const fromAddress = process.env.RESEND_FROM_EMAIL;
+    const toAddress = process.env.RESEND_TO_EMAIL || process.env.RESEND_FROM_EMAIL;
+
+    if (!fromAddress || !process.env.RESEND_API_KEY) {
+      console.error('Missing Resend configuration: RESEND_API_KEY or RESEND_FROM_EMAIL');
+      return res.status(500).json({ error: 'Email service not configured. Please try again later.' });
+    }
+
+    const subject = `Portfolio Contact: Message from ${name}`;
+    const html = `
         <div style="font-family: Arial, sans-serif; padding: 20px; max-width: 600px;">
           <h2 style="color: #0d9488; border-bottom: 2px solid #0d9488; padding-bottom: 10px;">
             New Contact Form Submission
@@ -53,18 +50,24 @@ export default async function handler(req, res) {
             This message was sent from your portfolio contact form.
           </p>
         </div>
-      `,
-      text: `
+      `;
+
+    const text = `
 Name: ${name}
 Email: ${email}
 
 Message:
 ${message}
-      `,
-    };
+      `;
 
-    // Send email
-    await transporter.sendMail(mailOptions);
+    await resend.emails.send({
+      from: fromAddress,
+      to: toAddress,
+      reply_to: email,
+      subject,
+      html,
+      text,
+    });
 
     return res.status(200).json({ 
       success: true, 

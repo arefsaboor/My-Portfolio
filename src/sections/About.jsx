@@ -1,11 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 
 function Info({ variant = 'home' }) {
-  const [statValues, setStatValues] = useState([0, 0, 0, 0]);
+  const [statValues, setStatValues] = useState([1, 3, 15, 100]);
   const [hasAnimated, setHasAnimated] = useState(false);
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    let animationFrame;
+
     // Respect reduced motion
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
@@ -22,7 +24,6 @@ function Info({ variant = 'home' }) {
             
             const targets = [1, 3, 15, 100];
             const duration = 1200;
-            let animationFrame;
             const start = performance.now();
 
             const tick = (now) => {
@@ -44,13 +45,17 @@ function Info({ variant = 'home' }) {
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (animationFrame) {
+        cancelAnimationFrame(animationFrame);
+      }
+      if (currentSection) {
+        observer.unobserve(currentSection);
       }
     };
   }, [hasAnimated]);
@@ -381,7 +386,7 @@ function Info({ variant = 'home' }) {
             <div className="about-story">
               <h3 className="about-story-title">My Journey</h3>
               <p className="about-story-text">
-                I'm a <strong>professional video journalist</strong> and <strong>graphic designer</strong> who discovered the power of combining visual arts with code. For years, I've mastered visual communication, composition, color theory, and storytelling through media production.
+                I'm a <strong>video journalist</strong> and a <strong>self-learned graphic designer</strong> who discovered the power of combining visual arts with code. For years, I've mastered visual communication, composition, color theory, and storytelling through media production.
               </p>
               {variant === 'page' && (
                 <p className="about-story-text">
@@ -422,14 +427,14 @@ function Info({ variant = 'home' }) {
                 <span className="stat-number">{statValues[0]} Year</span>
                 <span className="stat-label">
                   Product Design &<br />
-                  Dev Training
+                  Development Training
                 </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[1]}+</span>
                 <span className="stat-label">
-                  Web & Design<br />
-                  Projects Shipped
+                  Final Projects<br />
+                  Designed and Developed
                 </span>
               </div>
               <div className="stat-card">
@@ -442,8 +447,8 @@ function Info({ variant = 'home' }) {
               <div className="stat-card">
                 <span className="stat-number">{statValues[3]}%</span>
                 <span className="stat-label">
-                  Focus On<br />
-                  Visual Quality
+                  Highly motivated<br />
+                  Seeking My First Tech Role
                 </span>
               </div>
             </div>

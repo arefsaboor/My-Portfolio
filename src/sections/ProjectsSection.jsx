@@ -9,30 +9,9 @@ function ProjectsSection() {
         
         {/* Section Header */}
         <div className="text-center mb-12 sm:mb-16 lg:mb-20">
-          <div style={{
-            display: 'inline-block',
-            padding: '0.625rem 1.5rem',
-            background: '#0d9488',
-            color: 'white',
-            fontSize: 'clamp(0.8125rem, 1.3vw, 0.875rem)',
-            fontWeight: '700',
-            letterSpacing: '0.05em',
-            textTransform: 'uppercase',
-            borderRadius: '50px',
-            marginBottom: 'clamp(1.5rem, 3vh, 2rem)',
-            boxShadow: '0 4px 20px rgba(13, 148, 136, 0.25)'
-          }}>
-            Portfolio
-          </div>
-          <h2 style={{
-            fontSize: 'clamp(2.75rem, 5.5vw, 4rem)',
-            fontWeight: '900',
-            color: '#0f172a',
-            lineHeight: '1.1',
-            marginBottom: 'clamp(1.5rem, 3vh, 2rem)',
-            letterSpacing: '-0.03em'
-          }}>
-            Featured <span style={{ color: '#0d9488' }}>Projects</span>
+          <div className="section-badge">Portfolio</div>
+          <h2 className="section-heading">
+            Featured <span className="section-heading-highlight">Projects</span>
           </h2>
           <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             Explore live demos with device switching — see how each project adapts across desktop, tablet, and mobile

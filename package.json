@@ -11,10 +11,10 @@
   },
   "dependencies": {
     "@vercel/analytics": "^1.6.1",
-    "nodemailer": "^8.0.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-router-dom": "^7.9.5"
+    "react-router-dom": "^7.9.5",
+    "resend": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.36.0",

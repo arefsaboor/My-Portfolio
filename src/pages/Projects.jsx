@@ -5,6 +5,7 @@ import projectsData from '../data/Projects.json';
 import PageLoader from '../components/PageLoader';
 import CVPreviewModal from '../components/CVPreviewModal';
 import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
+import { smoothScrollToId } from '../utils/smoothScroll';
 
 // Import project screenshots
 import books2shelfDesktop from '../assets/books2shelf-screenshots/books2shelf-desktop.png';
@@ -20,75 +21,45 @@ import bestsellersDesktop from '../assets/bestsellers-screenshots/bestsellers-de
 import bestsellersTablet from '../assets/bestsellers-screenshots/bestsellers-tablet.png';
 import bestsellersMobile from '../assets/bestsellers-screenshots/bestsellers-mobile.png';
 
-const heroProjects = [
-  {
-    name: 'BOOKS2SHELF',
-    subtitle: 'Digital Bookshelf App',
-    description: 'Created a digital Bookshelf SPA with real-time book search and user authentication. Features Google Books API integration, Firebase Auth and Firestore database for seamless book management.',
-    techs: ['React', 'Vite', 'Tailwind CSS', 'JavaScript', 'Firebase', 'Google Books API'],
-    desktop: books2shelfDesktop,
-    tablet: books2shelfTablet,
-    mobile: books2shelfMobile,
-    url: 'books2shelf.arefsaboor.com',
-    links: [
-      { label: 'Vercel', href: 'https://books2shelf.vercel.app' },
-      { label: 'Subdomain', href: 'https://books2shelf.arefsaboor.com' },
-    ],
-  },
-  {
-    name: 'PORTFOLIO',
-    subtitle: 'Personal Custom Domain',
-    description: 'Built a responsive Portfolio first in Framer (No-Code Designing) and then developed as SPA using React, Vite and Tailwind CSS. Features comprehensive skills & projects showcase.',
-    techs: ['React', 'Vite', 'Tailwind CSS', 'JavaScript', 'Framer', 'Vercel'],
-    desktop: portfolioDesktop,
-    tablet: portfolioTablet,
-    mobile: portfolioMobile,
-    url: 'arefsaboor.com',
-    links: [
-      { label: 'Vercel', href: 'https://arefsortfolio.vercel.app' },
-      { label: 'Custom Domain', href: 'https://www.arefsaboor.com' },
-    ],
-  },
-  {
-    name: 'NIRVAN',
-    subtitle: 'An Ancient Peace To The Modern World',
-    description: 'Crafted a High Fidelity Figma prototype (30+ screens) with comprehensive Design System, then implemented pixel-perfect UI from Figma to Code using HTML, CSS and JavaScript.',
-    techs: ['HTML5', 'CSS3', 'JavaScript', 'Figma', 'Design Systems'],
-    desktop: nirvanDesktop,
-    tablet: nirvanTablet,
-    mobile: nirvanMobile,
-    url: 'nirvan.arefsaboor.com',
-    links: [
-      { label: 'Subdomain', href: 'https://nirvan.arefsaboor.com' },
-      { label: 'Vercel', href: 'https://nirvan-vedic.vercel.app' },
-    ],
-  },
-  {
-    name: 'BESTSELLERS',
-    subtitle: 'Modern Full-Stack E-commerce Bookstore',
-    description: 'Production-ready online bookstore with real Stripe payments, rich browsing, reviews, wishlists, and a full admin dashboard for inventory, orders, and coupons.',
-    techs: [
-      'Next.js 15 (App Router)',
-      'React 19',
-      'TypeScript',
-      'Tailwind CSS',
-      'Prisma ORM',
-      'PostgreSQL (Neon)',
-      'Stripe',
-      'NextAuth',
-      'Resend',
-      'Vercel',
-    ],
-    desktop: bestsellersDesktop,
-    tablet: bestsellersTablet,
-    mobile: bestsellersMobile,
-    url: 'bestsellerss.arefsaboor.com',
-    links: [
-      { label: 'Vercel', href: 'https://bestsellerss.vercel.app' },
-      { label: 'Subdomain', href: 'https://bestsellerss.arefsaboor.com' },
-    ],
-  },
-];
+const heroScreenshotsById = {
+  1: { desktop: books2shelfDesktop, tablet: books2shelfTablet, mobile: books2shelfMobile },
+  2: { desktop: portfolioDesktop, tablet: portfolioTablet, mobile: portfolioMobile },
+  3: { desktop: nirvanDesktop, tablet: nirvanTablet, mobile: nirvanMobile },
+  4: { desktop: bestsellersDesktop, tablet: bestsellersTablet, mobile: bestsellersMobile },
+};
+
+const heroProjects = projectsData.projects
+  .map((project) => {
+    const screenshots = heroScreenshotsById[project.id];
+    if (!screenshots) return null;
+
+    const links = [];
+    if (project.vercelUrl) {
+      links.push({ label: 'Vercel', href: project.vercelUrl });
+    }
+    if (project.liveUrl) {
+      const liveLabel = project.name === 'Bestsellers' ? 'Subdomain' : 'Custom Domain';
+      links.push({ label: liveLabel, href: project.liveUrl });
+    }
+
+    const primaryUrl = project.liveUrl || project.vercelUrl || project.githubUrl || '';
+    const displayUrl = primaryUrl
+      .replace(/^https?:\/\//, '')
+      .replace(/\/$/, '');
+
+    return {
+      name: project.name.toUpperCase(),
+      subtitle: project.subtitle,
+      description: project.description,
+      techs: project.technologies || [],
+      desktop: screenshots.desktop,
+      tablet: screenshots.tablet,
+      mobile: screenshots.mobile,
+      url: displayUrl,
+      links,
+    };
+  })
+  .filter(Boolean);
 
 function Projects() {
   // Clone-based infinite track: [last, 0, 1, 2, first]
@@ -178,23 +149,7 @@ function Projects() {
 
   // Smooth scroll to projects section
   const scrollToProjects = () => {
-    const target = document.getElementById('projects-list');
-    if (!target) return;
-
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const duration = 800;
-    let start = null;
-
-    const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-    const animation = (currentTime) => {
-      if (!start) start = currentTime;
-      const progress = Math.min((currentTime - start) / duration, 1);
-      window.scrollTo(0, window.pageYOffset + (targetPosition - window.pageYOffset) * easeInOutQuad(progress));
-      if (progress < 1) requestAnimationFrame(animation);
-    };
-
-    requestAnimationFrame(animation);
+    smoothScrollToId('projects-list');
   };
 
   return (
@@ -291,7 +246,14 @@ function Projects() {
                                 </div>
                               </div>
                               <div className="relative overflow-hidden bg-white">
-                                <img src={project.desktop} alt={`${project.name} Desktop`} className="w-full h-auto" style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }} loading="eager" decoding="sync" />
+                                <img
+                                  src={project.desktop}
+                                  alt={`${project.name} Desktop`}
+                                  className="w-full h-auto"
+                                  style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                                  loading="lazy"
+                                  decoding="async"
+                                />
                               </div>
                             </div>
                           </div>
@@ -308,7 +270,14 @@ function Projects() {
                           <div className="bg-gradient-to-b from-slate-800 to-slate-950 rounded-lg lg:rounded-2xl p-[2px] lg:p-1.5 relative" style={{ boxShadow: '-12px 20px 35px rgba(0,0,0,0.3)' }}>
                             <div className="relative overflow-hidden rounded-md lg:rounded-xl bg-white">
                               <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 bg-slate-950 rounded-full ring-1 ring-slate-800/50 z-10"></div>
-                              <img src={project.tablet} alt={`${project.name} Tablet`} className="w-full h-auto" style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }} loading="eager" decoding="sync" />
+                              <img
+                                src={project.tablet}
+                                alt={`${project.name} Tablet`}
+                                className="w-full h-auto"
+                                style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                                loading="lazy"
+                                decoding="async"
+                              />
                             </div>
                           </div>
                         </div>
@@ -328,7 +297,14 @@ function Projects() {
                             <div className="absolute left-0 top-[35%] w-0.5 h-4 lg:h-5 bg-slate-950 rounded-r"></div>
                             <div className="absolute right-0 top-[25%] w-0.5 h-5 lg:h-6 bg-slate-950 rounded-l"></div>
                             <div className="relative overflow-hidden rounded-[0.3rem] lg:rounded-[1rem] bg-white">
-                              <img src={project.mobile} alt={`${project.name} Mobile`} className="w-full h-auto" style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }} loading="eager" decoding="sync" />
+                              <img
+                                src={project.mobile}
+                                alt={`${project.name} Mobile`}
+                                className="w-full h-auto"
+                                style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                                loading="lazy"
+                                decoding="async"
+                              />
                             </div>
                           </div>
                         </div>

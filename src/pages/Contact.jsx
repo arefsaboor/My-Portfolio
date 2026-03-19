@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import PageLoader from '../components/PageLoader';
+import { smoothScrollToId } from '../utils/smoothScroll';
 
 const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -22,23 +23,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
 
   // Smooth scroll to contact form
   const scrollToForm = () => {
-    const target = document.getElementById('contact-form-section');
-    if (!target) return;
-
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const duration = 800;
-    let start = null;
-
-    const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-    const animation = (currentTime) => {
-      if (!start) start = currentTime;
-      const progress = Math.min((currentTime - start) / duration, 1);
-      window.scrollTo(0, window.pageYOffset + (targetPosition - window.pageYOffset) * easeInOutQuad(progress));
-      if (progress < 1) requestAnimationFrame(animation);
-    };
-
-    requestAnimationFrame(animation);
+    smoothScrollToId('contact-form-section');
   };
 
   const handleSubmit = async (e) => {
@@ -115,6 +100,16 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
                 transform: scale(1.1);
               }
             }
+
+            /* Fine-tune email icon position on very small screens (e.g. iPhone SE) */
+            @media (max-width: 400px) {
+              .contact-hero-email {
+                width: 14rem;
+                height: 14rem;
+                top: 48%;
+                transform: translate(-50%, -52%) scale(0.9);
+              }
+            }
           `}</style>
           
           {/* Background - Gradient Pattern */}
@@ -122,7 +117,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
             className="hero-bg absolute inset-0 z-0 bg-gradient-to-br from-teal-800 via-cyan-800 to-blue-800"
           >
             {/* Email Icon with Checkmark */}
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 lg:w-[28rem] lg:h-[28rem] z-[20] opacity-30">
+            <div className="contact-hero-email absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 lg:w-[28rem] lg:h-[28rem] z-[20] opacity-30">
               <svg viewBox="0 0 200 200" className="w-full h-full">
                 {/* Envelope body - centered */}
                 <rect x="40" y="80" width="120" height="85" rx="6" fill="#14b8a6" stroke="#0d9488" strokeWidth="2" />
@@ -147,14 +142,6 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
           {/* Content - Bottom Left */}
           <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
             <div className={`max-w-4xl transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-              {/* Response Badge */}
-              <div className="inline-flex items-center gap-2 bg-teal-500/20 backdrop-blur-sm border border-teal-400/30 rounded-full px-4 py-2 mb-6">
-                <svg className="w-4 h-4 text-teal-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                <span className="text-sm font-medium text-teal-100">Response within 24 hours</span>
-              </div>
-              
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
                 GET IN TOUCH
               </h1>

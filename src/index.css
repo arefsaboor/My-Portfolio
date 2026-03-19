@@ -143,6 +143,33 @@
   .animate-blink {
     animation: blink 2s ease-in-out infinite;
   }
+
+  .section-badge {
+    display: inline-block;
+    padding: 0.625rem 1.5rem;
+    background: #0d9488;
+    color: white;
+    font-size: clamp(0.8125rem, 1.3vw, 0.875rem);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-radius: 50px;
+    margin-bottom: clamp(1.5rem, 3vh, 2rem);
+    box-shadow: 0 4px 20px rgba(13, 148, 136, 0.25);
+  }
+
+  .section-heading {
+    font-size: clamp(2.75rem, 5.5vw, 4rem);
+    font-weight: 900;
+    color: #0f172a;
+    line-height: 1.1;
+    margin-bottom: clamp(1.5rem, 3vh, 2rem);
+    letter-spacing: -0.03em;
+  }
+
+  .section-heading-highlight {
+    color: #0d9488;
+  }
 }
 
 @keyframes fadeIn {

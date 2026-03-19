@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageLoader from '../components/PageLoader';
 import WebImage from '../assets/Web-Image-Full.jpg';
 import CVPreviewModal from '../components/CVPreviewModal';
+import { smoothScrollToId } from '../utils/smoothScroll';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -11,23 +12,7 @@ const About = () => {
 
   // Smooth scroll to next section
   const scrollToContent = () => {
-    const target = document.getElementById('about-story');
-    if (!target) return;
-
-    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-    const duration = 800;
-    let start = null;
-
-    const easeInOutQuad = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-
-    const animation = (currentTime) => {
-      if (!start) start = currentTime;
-      const progress = Math.min((currentTime - start) / duration, 1);
-      window.scrollTo(0, window.pageYOffset + (targetPosition - window.pageYOffset) * easeInOutQuad(progress));
-      if (progress < 1) requestAnimationFrame(animation);
-    };
-
-    requestAnimationFrame(animation);
+    smoothScrollToId('about-story');
   };
 
   return (
@@ -390,9 +375,9 @@ const About = () => {
       <section id="about-story" className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <span className="text-teal-600 text-sm font-semibold tracking-widest uppercase inline-block mb-4">The Full Story</span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-6">
-              From Storyteller to <span className="text-teal-600">Interface Craftsman</span>
+            <span className="section-badge">The Full Story</span>
+            <h2 className="section-heading">
+              From Storyteller to <span className="section-heading-highlight">Interface Craftsman</span>
             </h2>
           </div>
           <div className="max-w-4xl mx-auto mb-16">
@@ -496,9 +481,9 @@ const About = () => {
       <section className="py-16 sm:py-24 bg-white">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <span className="text-teal-600 text-sm font-semibold tracking-widest uppercase inline-block mb-4">What Sets Me Apart</span>
-            <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
-              Beyond the Code
+            <span className="section-badge">What Sets Me Apart</span>
+            <h2 className="section-heading">
+              Beyond the <span className="section-heading-highlight">Code</span>
             </h2>
             <p className="text-xl text-gray-600 max-w-4xl mx-auto lg:whitespace-nowrap">
               The unique strengths I bring from journalism and design to web development
