@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-import cvPdf from '../assets/Aref_Saboor_CV.pdf';
-import cvImage from '../assets/Aref_Saboor_CV.jpg'; // High-quality resume image for mobile devices
+import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
+import cvImage from '../assets/Aref_Saboor_CV.png'; // High-quality resume image for mobile devices
 
 function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const [isAnimating, setIsAnimating] = useState(false);

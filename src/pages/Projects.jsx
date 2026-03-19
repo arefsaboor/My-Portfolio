@@ -4,7 +4,7 @@ import ProjectCard from '../components/ProjectCard';
 import projectsData from '../data/Projects.json';
 import PageLoader from '../components/PageLoader';
 import CVPreviewModal from '../components/CVPreviewModal';
-import cvPdf from '../assets/Aref_Saboor_CV.pdf';
+import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
 
 // Import project screenshots
 import books2shelfDesktop from '../assets/books2shelf-screenshots/books2shelf-desktop.png';

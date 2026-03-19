@@ -9,7 +9,7 @@ function Info({ variant = 'home' }) {
     // Respect reduced motion
     const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
-      setStatValues([1, 5, 15, 100]);
+      setStatValues([1, 3, 15, 100]);
       return undefined;
     }
 
@@ -20,7 +20,7 @@ function Info({ variant = 'home' }) {
           if (entry.isIntersecting && !hasAnimated) {
             setHasAnimated(true);
             
-            const targets = [1, 5, 15, 100];
+            const targets = [1, 3, 15, 100];
             const duration = 1200;
             let animationFrame;
             const start = performance.now();

@@ -314,7 +314,25 @@ function Navbar() {
                           <div className="text-sm font-semibold text-teal-300">All Projects</div>
                           <div className="text-xs text-slate-200/80 mt-1.5">View All Projects</div>
                         </Link>
-                        
+                        {/* Order: Bestsellers, Books2Shelf, Portfolio, Nirvan */}
+                        <Link
+                          to="/projects#bestsellers"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsDropdownOpen(false);
+                            if (location.pathname !== '/projects') {
+                              window.location.href = '/projects#bestsellers';
+                            } else {
+                              const element = document.getElementById('project-4');
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
+                        >
+                          <div className="text-sm font-semibold">Bestsellers</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">Modern Full-Stack E-commerce Bookstore</div>
+                        </Link>
+
                         <Link
                           to="/projects#books2shelf"
                           onClick={(e) => {
@@ -332,25 +350,7 @@ function Navbar() {
                           <div className="text-sm font-semibold">Books2Shelf</div>
                           <div className="text-xs text-slate-200/80 mt-1.5">Digital Bookshelf With Google Books API</div>
                         </Link>
-                        
-                        <Link
-                          to="/projects#nirvan"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setIsDropdownOpen(false);
-                            if (location.pathname !== '/projects') {
-                              window.location.href = '/projects#nirvan';
-                            } else {
-                              const element = document.getElementById('project-3');
-                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            }
-                          }}
-                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
-                        >
-                          <div className="text-sm font-semibold">Nirvan - Vedic Yoga</div>
-                          <div className="text-xs text-slate-200/80 mt-1.5">An Ancient Peace To The Modern World</div>
-                        </Link>
-                        
+
                         <Link
                           to="/projects#portfolio"
                           onClick={(e) => {
@@ -367,6 +367,24 @@ function Navbar() {
                         >
                           <div className="text-sm font-semibold">Portfolio</div>
                           <div className="text-xs text-slate-200/80 mt-1.5">Personal Portfolio With Custom Domain</div>
+                        </Link>
+
+                        <Link
+                          to="/projects#nirvan"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            setIsDropdownOpen(false);
+                            if (location.pathname !== '/projects') {
+                              window.location.href = '/projects#nirvan';
+                            } else {
+                              const element = document.getElementById('project-3');
+                              element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                          }}
+                          className="block px-6 py-4 text-white hover:bg-slate-800/80 hover:text-teal-300 transition-all duration-200"
+                        >
+                          <div className="text-sm font-semibold">Nirvan - Vedic Yoga</div>
+                          <div className="text-xs text-slate-200/80 mt-1.5">An Ancient Peace To The Modern World</div>
                         </Link>
                       </div>
                     </div>
@@ -541,10 +559,11 @@ function Navbar() {
                         {/* Dropdown Menu in Sidebar */}
                         <div
                           className={`overflow-hidden transition-all duration-300 ${
-                            isDropdownOpen ? 'max-h-48 sm:max-h-56 md:max-h-72 lg:max-h-[28rem] opacity-100 mt-2 sm:mt-3' : 'max-h-0 opacity-0'
+                            isDropdownOpen ? 'max-h-48 opacity-100 mt-2 sm:mt-3' : 'max-h-0 opacity-0'
                           }`}
                         >
-                          <div className="flex flex-col gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6 border-l-2 border-teal-400/30 max-h-44 sm:max-h-52 md:max-h-64 lg:max-h-96 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+                          {/* Inner list: clamp height so ~3 items are visible, rest scroll */}
+                          <div className="flex flex-col gap-2 md:gap-3 pl-3 sm:pl-4 md:pl-6 border-l-2 border-teal-400/30 max-h-40 overflow-y-auto overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
                             <Link
                               to="/projects"
                               onClick={(e) => {
@@ -557,7 +576,26 @@ function Navbar() {
                               <div className="font-semibold">All Projects</div>
                               <div className="text-xs text-gray-400/60 mt-1">View All Projects</div>
                             </Link>
-                            
+                            {/* Order: Bestsellers, Books2Shelf, Portfolio, Nirvan */}
+                            <Link
+                              to="/projects#bestsellers"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                                if (location.pathname !== '/projects') {
+                                  window.location.href = '/projects#bestsellers';
+                                } else {
+                                  const element = document.getElementById('project-4');
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">Bestsellers</div>
+                              <div className="text-xs text-gray-400/60 mt-1">Modern Full-Stack E-commerce Bookstore</div>
+                            </Link>
+
                             <Link
                               to="/projects#books2shelf"
                               onClick={(e) => {
@@ -576,26 +614,7 @@ function Navbar() {
                               <div className="font-semibold">Books2Shelf</div>
                               <div className="text-xs text-gray-400/60 mt-1">Digital Bookshelf With Google Books API</div>
                             </Link>
-                            
-                            <Link
-                              to="/projects#nirvan"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                setIsDropdownOpen(false);
-                                toggleMenu();
-                                if (location.pathname !== '/projects') {
-                                  window.location.href = '/projects#nirvan';
-                                } else {
-                                  const element = document.getElementById('project-3');
-                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                                }
-                              }}
-                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
-                            >
-                              <div className="font-semibold">Nirvan - Vedic Yoga</div>
-                              <div className="text-xs text-gray-400/60 mt-1">An Ancient Peace To The Modern World</div>
-                            </Link>
-                            
+
                             <Link
                               to="/projects#portfolio"
                               onClick={(e) => {
@@ -613,6 +632,25 @@ function Navbar() {
                             >
                               <div className="font-semibold">Portfolio</div>
                               <div className="text-xs text-gray-400/60 mt-1">Personal Portfolio With Custom Domain</div>
+                            </Link>
+
+                            <Link
+                              to="/projects#nirvan"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setIsDropdownOpen(false);
+                                toggleMenu();
+                                if (location.pathname !== '/projects') {
+                                  window.location.href = '/projects#nirvan';
+                                } else {
+                                  const element = document.getElementById('project-3');
+                                  element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                }
+                              }}
+                              className="block text-white/90 hover:text-teal-400 transition-all duration-200 text-sm md:text-base font-light hover:translate-x-1 transform"
+                            >
+                              <div className="font-semibold">Nirvan - Vedic Yoga</div>
+                              <div className="text-xs text-gray-400/60 mt-1">An Ancient Peace To The Modern World</div>
                             </Link>
                           </div>
                         </div>

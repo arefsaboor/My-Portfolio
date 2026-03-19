@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
-import cvPdf from '../assets/Aref_Saboor_CV.pdf';
+import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
 
 function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -297,7 +297,7 @@ function Hero() {
           font-weight: 500;
           line-height: 1;
           border-radius: 9999px;
-          border: 2px solid #5eead4;
+          border: 1px solid #5eead4;
           cursor: pointer;
           transition: all 0.3s ease;
           display: inline-flex;
