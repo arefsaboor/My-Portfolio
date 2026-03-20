@@ -71,6 +71,18 @@
     {
       "id": 18,
       "title": "Creative Technologist"
+    },
+    {
+      "id": 19,
+      "title": "Frontend / Backend"
+    },
+    {
+      "id": 20,
+      "title": "Node.js / Express.js"
+    },
+    {
+      "id": 21,
+      "title": "React.js / Next.js"
     }
   ]
 }

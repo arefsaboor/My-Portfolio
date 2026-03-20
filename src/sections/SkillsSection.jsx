@@ -97,7 +97,7 @@ function SkillsSection() {
         .skills-professional-header {
           text-align: center;
           margin-bottom: clamp(5rem, 8vh, 7rem);
-          max-width: 800px;
+          max-width: 1000px;
           margin-left: auto;
           margin-right: auto;
           position: relative;
@@ -127,7 +127,7 @@ function SkillsSection() {
         /* Category section */
         .category-professional-section {
           margin-bottom: clamp(4.5rem, 7vh, 6rem);
-          max-width: 1200px;
+          max-width: 1536px;
           margin-left: auto;
           margin-right: auto;
           position: relative;
@@ -263,14 +263,14 @@ function SkillsSection() {
       `}</style>
 
       <section className="skills-professional-wrapper py-20 md:py-28 lg:py-32">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           {/* Header */}
           <div className="skills-professional-header">
             <h2 className="skills-professional-heading">
               <span className="gradient-text">Technical</span> Expertise
             </h2>
             <p className="skills-professional-subheading">
-              A comprehensive blend of design expertise and modern development technologies
+              Design thinking meets modern web development
             </p>
           </div>
 

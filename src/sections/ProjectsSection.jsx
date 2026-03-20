@@ -13,8 +13,8 @@ function ProjectsSection() {
           <h2 className="section-heading">
             Featured <span className="section-heading-highlight">Projects</span>
           </h2>
-          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Explore live demos with device switching — see how each project adapts across desktop, tablet, and mobile
+          <p className="text-gray-600 max-w-[1000px] mx-auto leading-relaxed" style={{ fontSize: 'clamp(1.25rem, 2.3vw, 1.5rem)', lineHeight: '1.6' }}>
+            Real projects. Real code. Fully responsive.
           </p>
         </div>
         

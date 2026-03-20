@@ -92,7 +92,7 @@ function Info({ variant = 'home' }) {
         }
 
         .about-container {
-          max-width: 1400px;
+          max-width: 1536px;
           margin: 0 auto;
           position: relative;
           z-index: 1;
@@ -135,11 +135,11 @@ function Info({ variant = 'home' }) {
         }
 
         .about-subheading {
-          font-size: clamp(1.25rem, 2.3vw, 1.625rem);
+          font-size: clamp(1.25rem, 2.3vw, 1.5rem);
           line-height: 1.6;
           color: #475569;
           font-weight: 400;
-          max-width: 720px;
+          max-width: 1000px;
           margin: 0 auto;
         }
 
@@ -147,7 +147,7 @@ function Info({ variant = 'home' }) {
           font-size: clamp(0.95rem, 1.7vw, 1.0625rem);
           line-height: 1.6;
           color: #94a3b8;
-          max-width: 720px;
+          max-width: 1000px;
           margin: 1rem auto 0 auto;
         }
 
@@ -369,8 +369,7 @@ function Info({ variant = 'home' }) {
               <span className="highlight">Design-First</span> Developer
             </h2>
             <p className="about-subheading">
-              Where visual storytelling meets technical execution,<br />
-              building websites that don't just work, but captivate.
+              Where visual storytelling meets technical execution.
             </p>
             {variant === 'page' && (
               <p className="about-subheading-secondary">
@@ -426,29 +425,25 @@ function Info({ variant = 'home' }) {
               <div className="stat-card">
                 <span className="stat-number">{statValues[0]} Year</span>
                 <span className="stat-label">
-                  Product Design &<br />
-                  Development Training
+                  Full-Stack Training
                 </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[1]}+</span>
                 <span className="stat-label">
-                  Final Projects<br />
-                  Designed and Developed
+                  Live Projects
                 </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[2]}+</span>
                 <span className="stat-label">
-                  Tools & Tech<br />
-                  Used In Projects
+                  Technologies
                 </span>
               </div>
               <div className="stat-card">
                 <span className="stat-number">{statValues[3]}%</span>
                 <span className="stat-label">
-                  Highly motivated<br />
-                  Seeking My First Tech Role
+                  Ready for My First Role
                 </span>
               </div>
             </div>

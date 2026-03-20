@@ -315,8 +315,8 @@ const About = () => {
 
             {/* Tagline - Mobile Only */}
             <div className="lg:hidden hero-content-box border-l-2 border-teal-400/70" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)', paddingTop: 'clamp(0.75rem, 1.5vh, 1.25rem)', paddingBottom: 'clamp(0.75rem, 1.5vh, 1.25rem)', paddingLeft: 'clamp(0.75rem, 2vw, 1.5rem)', paddingRight: 'clamp(0.75rem, 2vw, 1.5rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)', boxSizing: 'border-box' }}>
-              <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.95rem, 2.5vw, 1.1rem)' }}>
-                Writer & Journalist turned Web Developer. :)<br />
+              <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.85rem, 2.2vw, 1.05rem)' }}>
+                A Journalist turned Web Developer!<br />
                 I don't just build websites, I create visual experiences that tell stories and captivate audiences.
               </p>
             </div>

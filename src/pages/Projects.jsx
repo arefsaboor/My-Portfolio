@@ -345,41 +345,53 @@ function Projects() {
           <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/0 to-transparent pointer-events-none"></div>
         </div>
 
-        {/* ── Slide Navigation — single static strip, always below carousel on all devices ── */}
+        {/* ── Slide Navigation — refined controls with backdrop ── */}
         <div
-          className="absolute z-20 left-0 right-0 flex justify-center items-center gap-5"
-          style={{ bottom: 'clamp(11rem, 23vh, 15rem)' }}
+          className="absolute z-20 left-0 right-0 flex justify-center items-center"
+          style={{ bottom: 'clamp(9.5rem, 20vh, 13rem)' }}
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          <button
-            onClick={() => { setHasTransition(true); setTrackPos(p => p - 1); }}
-            className="text-white/60 hover:text-white transition-colors"
-            aria-label="Previous project"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          {heroProjects.map((_, i) => (
+          {/* Backdrop for controls */}
+          <div className="inline-flex items-center justify-between w-[85%] sm:w-[75%] md:w-[65%] lg:w-[55%] max-w-2xl px-1.5 sm:px-2 lg:px-2.5 py-1.5 sm:py-2 lg:py-2.5 bg-slate-900/40 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
+            {/* Previous Button */}
             <button
-              key={i}
-              onClick={() => { setHasTransition(true); setTrackPos(i + 1); }}
-              className={`rounded-full transition-all duration-300 ${
-                i === activeSlide ? 'w-7 h-3 bg-teal-400' : 'w-3 h-3 bg-white/40 hover:bg-white/70'
-              }`}
-              aria-label={`Go to project ${i + 1}`}
-            />
-          ))}
-          <button
-            onClick={() => { setHasTransition(true); setTrackPos(p => p + 1); }}
-            className="text-white/60 hover:text-white transition-colors"
-            aria-label="Next project"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+              onClick={() => { setHasTransition(true); setTrackPos(p => p - 1); }}
+              className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
+              aria-label="Previous project"
+            >
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            {/* Dots - Centered */}
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              {heroProjects.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => { setHasTransition(true); setTrackPos(i + 1); }}
+                  className={`rounded-full transition-all duration-300 ${
+                    i === activeSlide 
+                      ? 'w-6 h-2 sm:w-7 sm:h-2.5 bg-teal-400 shadow-lg shadow-teal-400/50' 
+                      : 'w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white/40 hover:bg-white/70 hover:scale-125'
+                  }`}
+                  aria-label={`Go to project ${i + 1}`}
+                />
+              ))}
+            </div>
+            
+            {/* Next Button */}
+            <button
+              onClick={() => { setHasTransition(true); setTrackPos(p => p + 1); }}
+              className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
+              aria-label="Next project"
+            >
+              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
         </div>
 
         {/* Content - Bottom Center */}
@@ -413,15 +425,16 @@ function Projects() {
       </section>
       
       {/* Projects List Section */}
-      <section id="projects-list" className="relative bg-gradient-to-b from-white via-gray-50 to-white py-20 sm:py-24 lg:py-32">
+      <section id="projects-list" className="relative bg-gradient-to-b from-white via-gray-50 to-white py-20 md:py-28 lg:py-32">
         <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           {/* Section Header */}
           <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
-              RECENT WORKS
+            <span className="section-badge">MY WORK</span>
+            <h2 className="section-heading">
+              ALL <span className="section-heading-highlight">PROJECTS</span>
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Toggle between devices to see responsive designs in action
+            <p className="text-gray-600 max-w-[1000px] mx-auto" style={{ fontSize: 'clamp(1.25rem, 2.3vw, 1.5rem)' }}>
+              Live demos. Device switching. Real responsive design.
             </p>
           </div>
 
@@ -432,7 +445,7 @@ function Projects() {
                 <div>
                   <p className="text-sm font-semibold text-teal-600 uppercase tracking-wide mb-1">Projects</p>
                   <p className="text-3xl font-bold text-teal-600">{projectsData.projects.length}</p>
-                  <p className="text-xs text-gray-500 mt-1">Completed</p>
+                  <p className="text-xs text-gray-500 mt-1">Live Projects</p>
                 </div>
                 <div>
                   <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -447,7 +460,7 @@ function Projects() {
                 <div>
                   <p className="text-sm font-semibold text-teal-600 uppercase tracking-wide mb-1">Timeline</p>
                   <p className="text-3xl font-bold text-teal-600">2025 - 2026</p>
-                  <p className="text-xs text-gray-500 mt-1">Active Years</p>
+                  <p className="text-xs text-gray-500 mt-1">Duration</p>
                 </div>
                 <div>
                   <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -462,7 +475,7 @@ function Projects() {
                 <div>
                   <p className="text-sm font-semibold text-teal-600 uppercase tracking-wide mb-1">Technologies</p>
                   <p className="text-3xl font-bold text-teal-600">15+</p>
-                  <p className="text-xs text-gray-500 mt-1">Tools Used</p>
+                  <p className="text-xs text-gray-500 mt-1">Tech Stack</p>
                 </div>
                 <div>
                   <svg className="w-8 h-8 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -491,7 +504,7 @@ function Projects() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-teal-900 to-cyan-900 py-20 sm:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-900 via-teal-900 to-cyan-900 py-20 md:py-28 lg:py-32 overflow-hidden">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
@@ -506,8 +519,8 @@ function Projects() {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
             Have a Project in Mind?
           </h2>
-          <p className="text-xl sm:text-2xl text-white/90 font-light mb-10 max-w-2xl mx-auto lg:whitespace-nowrap">
-            Let's collaborate and bring your ideas to life with clean code and beautiful design
+          <p className="text-xl sm:text-2xl text-white/90 font-light mb-10 max-w-2xl mx-auto">
+            Clean code meets beautiful design.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

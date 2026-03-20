@@ -94,7 +94,7 @@ function Testimonials() {
           font-size: clamp(1.25rem, 2.3vw, 1.5rem);
           line-height: 1.6;
           color: #475569;
-          max-width: 720px;
+          max-width: 1000px;
           margin: 0 auto;
           font-weight: 400;
         }
@@ -104,7 +104,7 @@ function Testimonials() {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
           gap: clamp(2rem, 3vw, 3rem);
-          max-width: 1100px;
+          max-width: 1536px;
           margin: 0 auto;
         }
 
@@ -241,7 +241,7 @@ function Testimonials() {
       `}</style>
 
       <section className="learning-wrapper py-20 md:py-28 lg:py-32">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           {/* Header */}
           <div className="learning-header">
             <div className="learning-badge">My Curriculum</div>

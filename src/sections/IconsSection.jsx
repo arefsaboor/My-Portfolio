@@ -52,36 +52,19 @@ function IconsSection() {
       <style>{`
         .icons-section-wrapper {
           width: 100%;
-          overflow: hidden;
-          padding: 4rem 0;
-          background: #ffffff;
+          padding: 5rem 0;
+          background: rgba(240, 253, 250, 0.5);
         }
 
-        .icons-heading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 1rem;
-          font-size: clamp(0.875rem, 1.2vw, 1rem);
-          font-weight: 600;
-          color: #64748b;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          margin-bottom: 2rem;
-          text-align: center;
+        @media (min-width: 768px) {
+          .icons-section-wrapper {
+            padding: 7rem 0;
+          }
         }
 
-        .icons-heading::before,
-        .icons-heading::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: #e2e8f0;
-        }
-
-        @media (max-width: 640px) {
-          .icons-heading {
-            gap: 0.75rem;
+        @media (min-width: 1024px) {
+          .icons-section-wrapper {
+            padding: 8rem 0;
           }
         }
 
@@ -142,7 +125,16 @@ function IconsSection() {
         }
       `}</style>
 
-      <section className="icons-section-wrapper">        <div className="icons-heading">Technologies I Work With</div>        <div className="icon-scroll-track">
+      <section className="icons-section-wrapper">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="text-center mb-12 sm:mb-16">
+            <div className="section-badge">Tech Stack</div>
+            <h2 className="section-heading">
+              Technologies I <span className="section-heading-highlight">Work With</span>
+            </h2>
+          </div>
+          <div className="overflow-hidden">
+            <div className="icon-scroll-track">
           {[...Array(4)].flatMap((_, setIndex) =>
             techIcons.map((icon, iconIndex) => (
               <div key={`icon-${setIndex}-${iconIndex}`} className="icon-scroll-item">
@@ -150,6 +142,8 @@ function IconsSection() {
               </div>
             ))
           )}
+        </div>
+          </div>
         </div>
       </section>
     </>

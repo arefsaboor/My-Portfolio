@@ -171,7 +171,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
       )}
 
       {/* Contact Form Section */}
-      <section id="contact-form-section" className="py-20 sm:py-24 lg:py-32 bg-gradient-to-b from-white via-gray-50 to-white">
+      <section id="contact-form-section" className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white via-gray-50 to-white">
         <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
           
           <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
