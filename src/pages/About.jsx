@@ -372,18 +372,17 @@ const About = () => {
       </div>
 
       {/* Career Journey Timeline - Unique to About Page */}
-      <section id="about-story" className="py-16 sm:py-24 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+      <section id="about-story" className="py-20 md:py-28 lg:py-32 bg-gradient-to-b from-gray-50 to-white">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <span className="section-badge">The Full Story</span>
+            <span className="section-badge">MY JOURNEY</span>
             <h2 className="section-heading">
               From Storyteller to <span className="section-heading-highlight">Interface Craftsman</span>
             </h2>
           </div>
           <div className="max-w-4xl mx-auto mb-16">
             <p className="text-xl text-gray-600 leading-relaxed">
-              My path from a military environment as a video journalist to web development wasn't typical, 
-              but it gave me something most developers don't have: a professional eye for visual storytelling.
+              My path from military video journalist to web development wasn't typical—but it gave me something most developers lack: a professional eye for visual storytelling.
             </p>
           </div>
 
@@ -478,15 +477,15 @@ const About = () => {
       </section>
 
       {/* What Makes Me Different - Personal Values */}
-      <section className="py-16 sm:py-24 bg-white">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
+      <section className="py-20 md:py-28 lg:py-32 bg-white">
+        <div className="max-w-[1536px] mx-auto px-6 sm:px-8 lg:px-12">
           <div className="text-center mb-16">
-            <span className="section-badge">What Sets Me Apart</span>
+            <span className="section-badge">WHAT MAKES ME DIFFERENT</span>
             <h2 className="section-heading">
               Beyond the <span className="section-heading-highlight">Code</span>
             </h2>
-            <p className="text-xl text-gray-600 max-w-4xl mx-auto lg:whitespace-nowrap">
-              The unique strengths I bring from journalism and design to web development
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+              Where journalism meets modern web development.
             </p>
           </div>
 
@@ -541,7 +540,7 @@ const About = () => {
       </section>
 
       {/* CTA Section - Unified with Projects Page */}
-      <section className="relative bg-gradient-to-br from-slate-900 via-teal-900 to-cyan-900 py-20 sm:py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-slate-900 via-teal-900 to-cyan-900 py-20 md:py-28 lg:py-32 overflow-hidden">
         {/* Animated Background Pattern */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-400 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
@@ -556,8 +555,8 @@ const About = () => {
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
             Ready to Work Together?
           </h2>
-          <p className="text-xl sm:text-2xl text-white/90 font-light mb-10 max-w-3xl mx-auto lg:whitespace-nowrap">
-            Creating exceptional digital experiences through freelance, remote & hybrid collaboration
+          <p className="text-xl sm:text-2xl text-white/90 font-light mb-10 max-w-3xl mx-auto">
+            Let's build something exceptional together.
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

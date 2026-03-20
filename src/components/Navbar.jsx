@@ -270,32 +270,42 @@ function Navbar() {
                 // Special handling for Projects link with dropdown
                 if (link.name === 'Projects') {
                   return (
-                    <div key={link.id} className="relative" ref={dropdownRef}>
-                      <button
+                    <div key={link.id} className="relative flex items-center gap-1" ref={dropdownRef}>
+                      <Link
+                        to={link.path}
                         onClick={(e) => {
-                          e.stopPropagation();
-                          setIsDropdownOpen(!isDropdownOpen);
+                          handlePageClick(e, link.path);
+                          setIsDropdownOpen(false);
                         }}
-                        className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect} flex items-center gap-1`}
+                        className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect}`}
                         style={{ fontSize: 'clamp(0.9375rem, 1vw + 0.25rem, 1.125rem)' }}
                       >
-                        <span className="pointer-events-none">{link.name}</span>
-                        <svg 
-                          className={`w-4 h-4 transition-transform duration-300 pointer-events-none ${isDropdownOpen ? 'rotate-180' : ''}`} 
-                          fill="none" 
-                          stroke="currentColor" 
-                          viewBox="0 0 24 24"
-                        >
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        {link.name}
                         <span 
-                          className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full transition-opacity duration-300 pointer-events-none ${
+                          className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full transition-opacity duration-300 ${
                             location.pathname === link.path
                               ? 'bg-cyan-400 opacity-100' 
                               : 'bg-teal-400 opacity-0 group-hover:opacity-100'
                           }`}
                           style={{ bottom: 'clamp(-1.25rem, -1.5vw, -1.5rem)' }}
                         />
+                      </Link>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setIsDropdownOpen(!isDropdownOpen);
+                        }}
+                        className="text-white hover:text-teal-400 transition-all duration-300"
+                        aria-label="Toggle projects dropdown"
+                      >
+                        <svg 
+                          className={`w-4 h-4 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
                       </button>
                       
                       {/* Dropdown Menu */}
@@ -528,16 +538,35 @@ function Navbar() {
                   if (link.name === 'Projects') {
                     return (
                       <div key={link.id} className="relative" ref={sidebarDropdownRef}>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            setIsDropdownOpen(prev => !prev);
-                          }}
-                          className="relative w-full text-left text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-2 transform group text-base sm:text-lg md:text-xl lg:text-2xl flex items-center justify-between"
-                        >
-                          <span className="flex items-center gap-3 pointer-events-none">
+                        <div className="flex items-center justify-between gap-3">
+                          <Link
+                            to={link.path}
+                            onClick={(e) => {
+                              handlePageClick(e, link.path);
+                              setIsDropdownOpen(false);
+                            }}
+                            className="relative flex-1 text-white hover:text-teal-400 transition-all duration-300 font-light hover:translate-x-2 transform group text-base sm:text-lg md:text-xl lg:text-2xl"
+                          >
                             {link.name}
+                            <span 
+                              className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-opacity duration-300 ${
+                                location.pathname === link.path 
+                                  ? 'bg-cyan-400 opacity-100' 
+                                  : 'bg-teal-400 opacity-0 group-hover:opacity-100'
+                              }`}
+                              style={{ marginLeft: '-0.75rem' }}
+                              aria-hidden="true"
+                            />
+                          </Link>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              setIsDropdownOpen(prev => !prev);
+                            }}
+                            className="text-white hover:text-teal-400 transition-all duration-300 p-1"
+                            aria-label="Toggle projects dropdown"
+                          >
                             <svg 
                               className={`w-5 h-5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} 
                               fill="none" 
@@ -546,17 +575,8 @@ function Navbar() {
                             >
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
-                          </span>
-                          <span 
-                            className={`absolute left-0 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-opacity duration-300 pointer-events-none ${
-                              location.pathname === link.path 
-                                ? 'bg-cyan-400 opacity-100' 
-                                : 'bg-teal-400 opacity-0 group-hover:opacity-100'
-                            }`}
-                            style={{ marginLeft: '-0.75rem' }}
-                            aria-hidden="true"
-                          />
-                        </button>
+                          </button>
+                        </div>
                         
                         {/* Dropdown Menu in Sidebar */}
                         <div
