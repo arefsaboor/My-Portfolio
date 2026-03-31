@@ -13,7 +13,7 @@ import Footer from './components/Footer'
 function AppContent() {
   const location = useLocation();
   const prevLocationRef = useRef(null);
-  const [showMainLoader, setShowMainLoader] = useState(false);
+  const [showMainLoader, setShowMainLoader] = useState(() => window.location.pathname === '/');
   const [showHomePageLoader, setShowHomePageLoader] = useState(false);
 
   useEffect(() => {

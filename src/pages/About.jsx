@@ -415,7 +415,7 @@ const About = () => {
                     <span className="text-sm text-gray-500">•</span>
                     <span className="text-sm text-gray-600">Visual Communication Mastery</span>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Professional Visual Storyteller</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">Visual Storyteller</h3>
                   <p className="text-gray-600 leading-relaxed text-lg mb-4">
                     Worked professionally as a video journalist and graphic designer, mastering composition, 
                     color theory, typography, and the art of keeping audiences engaged through visual narratives.

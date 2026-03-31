@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
 import projectsData from '../data/Projects.json';
@@ -73,9 +73,23 @@ function Projects() {
   const [hasTransition, setHasTransition] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [contentWidth, setContentWidth] = useState(null);
+  const contentRef = useRef(null);
 
   // Which real slide is active (for dots)
   const activeSlide = ((trackPos - 1) % SLIDE_COUNT + SLIDE_COUNT) % SLIDE_COUNT;
+
+  // Measure the w-fit content block width to match pill nav width
+  useEffect(() => {
+    if (!contentRef.current) return;
+    const ro = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        setContentWidth(entry.contentRect.width);
+      }
+    });
+    ro.observe(contentRef.current);
+    return () => ro.disconnect();
+  }, []);
 
   // Preload every screenshot before the carousel is revealed so images
   // never pop-in mid-slide (browsers skip off-screen images even with loading=eager)
@@ -160,16 +174,12 @@ function Projects() {
       }} />}
       <div className="bg-white">
       {/* Hero Section - Full Screen Immersive */}
-      <section 
+      <section
         id="projects-hero"
-        className="relative w-full flex items-end overflow-hidden projects-hero-section"
+        className="relative w-full flex flex-col overflow-hidden"
         style={{ height: '100svh' }}
       >
         <style>{`
-          #projects-hero {
-            padding-bottom: clamp(2.5rem, 5vh, 4rem);
-            overflow: hidden;
-          }
           .hero-laptop { width: min(56vw, 600px); }
           .hero-tablet { width: min(25vw, 290px); }
           .hero-phone  { width: min(14vw, 130px); }
@@ -184,95 +194,88 @@ function Projects() {
             .hero-phone  { width: min(9vw, 130px); }
           }
           @media (min-width: 1536px) {
-            .hero-laptop { width: min(44vw, 680px); }
-            .hero-tablet { width: min(18vw, 290px); }
-            .hero-phone  { width: min(11vw, 130px); }
+            .hero-laptop { width: min(40vw, 620px); }
+            .hero-tablet { width: min(16vw, 260px); }
+            .hero-phone  { width: min(9.5vw, 115px); }
+          }
+          @media (max-height: 780px) and (min-width: 1024px) {
+            .hero-laptop { width: min(34vw, 500px); }
+            .hero-tablet { width: min(14vw, 210px); }
+            .hero-phone  { width: min(8vw, 95px); }
+          }
+          @media (max-height: 650px) and (min-width: 1024px) {
+            .hero-laptop { width: min(28vw, 420px); }
+            .hero-tablet { width: min(12vw, 175px); }
+            .hero-phone  { width: min(7vw, 80px); }
           }
         `}</style>
-        
-        {/* Background - Dark with Cyan Center */}
-        <div 
-          className="hero-bg absolute inset-0 z-0 bg-gradient-to-b from-slate-900 via-cyan-700 to-slate-900"
-        >
-          {/* Animated Background Pattern */}
+
+        {/* Background — spans entire section */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-slate-900 via-cyan-700 to-slate-900">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
             <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
             <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl"></div>
           </div>
-          
-          {/* Subtle Grid Pattern */}
           <div className="absolute inset-0 opacity-5" style={{ backgroundImage: 'radial-gradient(circle, #5eead4 1px, transparent 1px)', backgroundSize: '50px 50px' }}></div>
-          
-          {/* Multi-Device Showcase — Infinite Sliding Track */}
-          <div className={`absolute inset-0 overflow-hidden transition-opacity duration-500 ${isVisible && imagesLoaded ? 'opacity-100' : 'opacity-0'}`}>
-            {/* Track: clone-padded [last,0,1,2,first], GPU-composited translateX */}
-            <div
-              onTransitionEnd={handleTransitionEnd}
-              style={{
-                display: 'flex',
-                width: `${extendedSlides.length * 100}%`,
-                height: '100%',
-                transform: `translateX(calc(-${trackPos} * (100% / ${extendedSlides.length})))`,
-                transition: hasTransition ? 'transform 1.1s cubic-bezier(0.65, 0, 0.35, 1)' : 'none',
-                willChange: 'transform',
-              }}
-            >
-              {extendedSlides.map((project, idx) => (
-                <div
-                  key={idx}
-                  style={{ width: `${100 / extendedSlides.length}%`, flexShrink: 0, height: '100%' }}
-                  className="flex items-center justify-center px-4 sm:px-6 lg:px-12 xl:px-20"
-                >
-                  {/* Per-slide split layout */}
-                  <div className="flex flex-col xl:flex-row items-start xl:items-end justify-center gap-4 xl:gap-12 w-fit xl:w-fit max-w-[1600px] mx-auto">
+        </div>
 
-                    {/* Left Side - Device Showcase */}
-                    <div className="flex items-end justify-center xl:justify-start gap-0 flex-shrink-0 order-2 xl:order-1">
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 z-10 bg-gradient-to-b from-slate-900/80 via-transparent to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent pointer-events-none"></div>
 
-                      {/* Laptop */}
-                      <div className="hero-laptop relative z-10 flex-shrink-0">
-                        <div className="relative" style={{ boxShadow: '-15px 25px 40px rgba(0,0,0,0.3)' }}>
-                          <div className="relative bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-t-lg lg:rounded-t-xl pt-[2px] lg:pt-1 px-[2px] lg:px-1 pb-0">
-                            <div className="relative bg-slate-950 rounded-t-md lg:rounded-t-lg p-[1px] lg:p-1">
-                              <div className="bg-slate-800 rounded-t-md px-1.5 lg:px-2 py-1 lg:py-1.5 flex items-center gap-1 lg:gap-1.5 mt-0.5 lg:mt-1">
-                                <div className="flex gap-1 lg:gap-1.5">
-                                  <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-red-500"></div>
-                                  <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-yellow-500"></div>
-                                  <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-green-500"></div>
-                                </div>
-                                <div className="flex-1 bg-slate-700 rounded text-[5px] lg:text-[7px] text-slate-400 px-2 py-0.5 ml-1 truncate">
-                                  {project.url}
-                                </div>
+        {/* ── Carousel area — flex-1 so it fills all space above the fixed bottom strip ── */}
+        <div
+          className={`relative z-20 flex-1 overflow-hidden transition-opacity duration-500 ${isVisible && imagesLoaded ? 'opacity-100' : 'opacity-0'}`}
+          style={{ paddingTop: 'calc(clamp(1.5rem, 3vh, 3rem) + clamp(3rem, 4vw + 0.5rem, 5rem))' }}
+        >
+          <div
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              display: 'flex',
+              width: `${extendedSlides.length * 100}%`,
+              height: '100%',
+              transform: `translateX(calc(-${trackPos} * (100% / ${extendedSlides.length})))`,
+              transition: hasTransition ? 'transform 1.1s cubic-bezier(0.65, 0, 0.35, 1)' : 'none',
+              willChange: 'transform',
+            }}
+          >
+            {extendedSlides.map((project, idx) => (
+              <div
+                key={idx}
+                style={{ width: `${100 / extendedSlides.length}%`, flexShrink: 0, height: '100%' }}
+                className="flex items-center justify-center px-4 sm:px-6 lg:px-12 xl:px-20"
+              >
+                {/* Per-slide split layout */}
+                  <div
+                    ref={idx === 1 ? contentRef : undefined}
+                    className="flex flex-col gap-4 xl:gap-5 w-fit max-w-[1600px] mx-auto"
+                  >
+
+                  {/* Top row — devices + right panel, both bottom-aligned */}
+                  <div className="flex flex-col xl:flex-row items-start xl:items-end justify-center gap-4 xl:gap-12">
+
+                  {/* Left — Device Showcase */}
+                  <div className="flex items-end justify-center xl:justify-start gap-0 flex-shrink-0 order-2 xl:order-1">
+                    {/* Laptop */}
+                    <div className="hero-laptop relative z-10 flex-shrink-0">
+                      <div className="relative">
+                        <div className="relative bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 rounded-t-lg lg:rounded-t-xl pt-[2px] lg:pt-1 px-[2px] lg:px-1 pb-0">
+                          <div className="relative bg-slate-950 rounded-t-md lg:rounded-t-lg p-[1px] lg:p-1">
+                            <div className="bg-slate-800 rounded-t-md px-1.5 lg:px-2 py-1 lg:py-1.5 flex items-center gap-1 lg:gap-1.5 mt-0.5 lg:mt-1">
+                              <div className="flex gap-1 lg:gap-1.5">
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-red-500"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-yellow-500"></div>
+                                <div className="w-1.5 h-1.5 lg:w-2 lg:h-2 rounded-full bg-green-500"></div>
                               </div>
-                              <div className="relative overflow-hidden bg-white">
-                                <img
-                                  src={project.desktop}
-                                  alt={`${project.name} Desktop`}
-                                  className="w-full h-auto"
-                                  style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
-                                  loading="lazy"
-                                  decoding="async"
-                                />
+                              <div className="flex-1 bg-slate-700 rounded text-[5px] lg:text-[7px] text-slate-400 px-2 py-0.5 ml-1 truncate">
+                                {project.url}
                               </div>
                             </div>
-                          </div>
-                          <div className="relative">
-                            <div className="h-px bg-slate-950"></div>
-                            <div className="h-1 lg:h-3 rounded-b-lg lg:rounded-b-xl bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900" style={{ boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.08)' }}></div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Tablet */}
-                      <div className="hero-tablet relative z-20 flex-shrink-0 -ml-7 md:-ml-10 xl:-ml-16">
-                        <div className="relative">
-                          <div className="bg-gradient-to-b from-slate-800 to-slate-950 rounded-lg lg:rounded-2xl p-[2px] lg:p-1.5 relative" style={{ boxShadow: '-12px 20px 35px rgba(0,0,0,0.3)' }}>
-                            <div className="relative overflow-hidden rounded-md lg:rounded-xl bg-white">
-                              <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 bg-slate-950 rounded-full ring-1 ring-slate-800/50 z-10"></div>
+                            <div className="relative overflow-hidden bg-white">
                               <img
-                                src={project.tablet}
-                                alt={`${project.name} Tablet`}
+                                src={project.desktop}
+                                alt={`${project.name} Desktop`}
                                 className="w-full h-auto"
                                 style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
                                 loading="lazy"
@@ -281,146 +284,151 @@ function Projects() {
                             </div>
                           </div>
                         </div>
-                      </div>
-
-                      {/* Phone */}
-                      <div className="hero-phone relative z-30 flex-shrink-0 -ml-5 md:-ml-7 xl:-ml-10">
                         <div className="relative">
-                          <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-[0.4rem] lg:rounded-[1.2rem] p-[2px] lg:p-1 relative" style={{ boxShadow: '-8px 15px 30px rgba(0,0,0,0.3)' }}>
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 lg:w-8 h-1.5 lg:h-2 bg-black rounded-full z-10 flex items-center justify-center px-1">
-                              <div className="flex items-center justify-between w-full">
-                                <div className="w-0.5 h-0.5 lg:w-1 lg:h-1 bg-slate-900 rounded-full"></div>
-                                <div className="flex-1 mx-0.5 h-0.5 bg-slate-900 rounded-full"></div>
-                              </div>
-                            </div>
-                            <div className="absolute left-0 top-[20%] w-0.5 h-3 lg:h-4 bg-slate-950 rounded-r"></div>
-                            <div className="absolute left-0 top-[35%] w-0.5 h-4 lg:h-5 bg-slate-950 rounded-r"></div>
-                            <div className="absolute right-0 top-[25%] w-0.5 h-5 lg:h-6 bg-slate-950 rounded-l"></div>
-                            <div className="relative overflow-hidden rounded-[0.3rem] lg:rounded-[1rem] bg-white">
-                              <img
-                                src={project.mobile}
-                                alt={`${project.name} Mobile`}
-                                className="w-full h-auto"
-                                style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
-                                loading="lazy"
-                                decoding="async"
-                              />
-                            </div>
-                          </div>
+                          <div className="h-px bg-slate-950"></div>
+                          <div className="h-1 lg:h-3 rounded-b-lg lg:rounded-b-xl bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900" style={{ boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.08)' }}></div>
                         </div>
                       </div>
-
                     </div>
 
-                    {/* Right Side - Project Description */}
-                    <div className="xl:max-w-xs 2xl:max-w-sm order-1 xl:order-2 text-left">
-                      <div className="p-0">
-                        <h2 className="text-xl sm:text-2xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 xl:mb-3">{project.name}</h2>
-                        <p className="text-sm sm:text-base xl:text-xl text-teal-100 mb-1 sm:mb-3 xl:mb-6 font-light">{project.subtitle}</p>
-                        <p className="hidden sm:block text-sm xl:text-lg text-white/90 leading-relaxed mb-3 xl:mb-6">{project.description}</p>
-                        <div className="hidden xl:flex flex-wrap gap-2 mb-6">
-                          {project.techs.map(tech => (
-                            <span key={tech} className="px-3 py-1 bg-slate-700/80 border border-white/20 rounded-full text-sm text-white">{tech}</span>
-                          ))}
+                    {/* Tablet */}
+                    <div className="hero-tablet relative z-20 flex-shrink-0 -ml-7 md:-ml-10 xl:-ml-16">
+                      <div className="relative">
+                        <div className="bg-gradient-to-b from-slate-800 to-slate-950 rounded-lg lg:rounded-2xl p-[2px] lg:p-1.5 relative">
+                          <div className="relative overflow-hidden rounded-md lg:rounded-xl bg-white">
+                            <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 bg-slate-950 rounded-full ring-1 ring-slate-800/50 z-10"></div>
+                            <img
+                              src={project.tablet}
+                              alt={`${project.name} Tablet`}
+                              className="w-full h-auto"
+                              style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
                         </div>
-                        <div className="hidden xl:flex gap-3">
-                          {project.links.map(link => (
-                            <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300 flex-1 whitespace-nowrap">
-                              <span>{link.label}</span>
-                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                            </a>
-                          ))}
+                      </div>
+                    </div>
+
+                    {/* Phone */}
+                    <div className="hero-phone relative z-30 flex-shrink-0 -ml-5 md:-ml-7 xl:-ml-10">
+                      <div className="relative">
+                        <div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 rounded-[0.4rem] lg:rounded-[1.2rem] p-[2px] lg:p-1 relative">
+                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 lg:w-8 h-1.5 lg:h-2 bg-black rounded-full z-10 flex items-center justify-center px-1">
+                            <div className="flex items-center justify-between w-full">
+                              <div className="w-0.5 h-0.5 lg:w-1 lg:h-1 bg-slate-900 rounded-full"></div>
+                              <div className="flex-1 mx-0.5 h-0.5 bg-slate-900 rounded-full"></div>
+                            </div>
+                          </div>
+                          <div className="absolute left-0 top-[20%] w-0.5 h-3 lg:h-4 bg-slate-950 rounded-r"></div>
+                          <div className="absolute left-0 top-[35%] w-0.5 h-4 lg:h-5 bg-slate-950 rounded-r"></div>
+                          <div className="absolute right-0 top-[25%] w-0.5 h-5 lg:h-6 bg-slate-950 rounded-l"></div>
+                          <div className="relative overflow-hidden rounded-[0.3rem] lg:rounded-[1rem] bg-white">
+                            <img
+                              src={project.mobile}
+                              alt={`${project.name} Mobile`}
+                              className="w-full h-auto"
+                              style={{ display: 'block', imageRendering: 'high-quality', WebkitFontSmoothing: 'antialiased' }}
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </div>
                         </div>
                       </div>
                     </div>
 
                   </div>
+
+                  {/* Right — Heading + Subtitle + Techs + CTA buttons */}
+                  <div className="xl:max-w-xs 2xl:max-w-sm order-1 xl:order-2 text-left">
+                    <h2 className="text-xl sm:text-2xl xl:text-4xl font-bold text-white mb-1 sm:mb-2 xl:mb-3">{project.name}</h2>
+                    <p className="text-sm sm:text-base xl:text-xl text-teal-100 mb-2 sm:mb-3 xl:mb-5 font-light">{project.subtitle}</p>
+                    <div className="hidden xl:flex flex-wrap gap-2 mb-5">
+                      {project.techs.map(tech => (
+                        <span key={tech} className="px-3 py-1 bg-slate-700/80 border border-white/20 rounded-full text-sm text-white">{tech}</span>
+                      ))}
+                    </div>
+                    <div className="hidden xl:flex gap-3">
+                      {project.links.map(link => (
+                        <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 bg-teal-600 hover:bg-teal-500 text-white px-6 py-3 rounded-md font-semibold transition-colors duration-300 flex-1 whitespace-nowrap">
+                          <span>{link.label}</span>
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+
+                  </div>{/* end top row */}
+
+                  {/* Separator */}
+                  <div className="w-0 min-w-full h-px bg-white/20"></div>
+
+                  {/* Description */}
+                  <p className="text-xs sm:text-sm xl:text-base text-white/75 font-light leading-relaxed w-0 min-w-full">{project.description}</p>
+
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-          
-          {/* Gradient Overlays - Top and Bottom for Readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/0 to-transparent pointer-events-none"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/0 to-transparent pointer-events-none"></div>
         </div>
 
-        {/* ── Slide Navigation — refined controls with backdrop ── */}
+        {/* ── Pill nav: prev • dots • next — static, never slides ── */}
         <div
-          className="absolute z-20 left-0 right-0 flex justify-center items-center"
-          style={{ bottom: 'clamp(9.5rem, 20vh, 13rem)' }}
+          className="relative z-30 flex-shrink-0 flex justify-center px-4 sm:px-6 lg:px-12 xl:px-20 pt-0 pb-5 sm:pb-6"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Backdrop for controls */}
-          <div className="inline-flex items-center justify-between w-[85%] sm:w-[75%] md:w-[65%] lg:w-[55%] max-w-2xl px-1.5 sm:px-2 lg:px-2.5 py-1.5 sm:py-2 lg:py-2.5 bg-slate-900/40 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
-            {/* Previous Button */}
+          <div
+            className="flex items-center gap-3 rounded-full p-2 justify-between border border-white/10"
+            style={contentWidth ? { width: contentWidth } : { width: '100%' }}
+          >
             <button
               onClick={() => { setHasTransition(true); setTrackPos(p => p - 1); }}
-              className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
+              className="flex items-center justify-center w-9 h-9 flex-shrink-0 rounded-full bg-slate-700/60 hover:bg-slate-600/80 text-white/70 hover:text-white transition-all duration-300 border border-white/10"
               aria-label="Previous project"
             >
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
-            
-            {/* Dots - Centered */}
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-2">
               {heroProjects.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => { setHasTransition(true); setTrackPos(i + 1); }}
-                  className={`rounded-full transition-all duration-300 ${
-                    i === activeSlide 
-                      ? 'w-6 h-2 sm:w-7 sm:h-2.5 bg-teal-400 shadow-lg shadow-teal-400/50' 
-                      : 'w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white/40 hover:bg-white/70 hover:scale-125'
+                  className={`transition-all duration-300 rounded-full ${
+                    i === activeSlide
+                      ? 'w-5 h-2 bg-teal-400'
+                      : 'w-2 h-2 bg-white/30 hover:bg-white/60'
                   }`}
                   aria-label={`Go to project ${i + 1}`}
                 />
               ))}
             </div>
-            
-            {/* Next Button */}
             <button
               onClick={() => { setHasTransition(true); setTrackPos(p => p + 1); }}
-              className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-full bg-white/10 hover:bg-white/20 text-white/70 hover:text-white transition-all duration-300 hover:scale-110"
+              className="flex items-center justify-center w-9 h-9 flex-shrink-0 rounded-full bg-slate-700/60 hover:bg-slate-600/80 text-white/70 hover:text-white transition-all duration-300 border border-white/10"
               aria-label="Next project"
             >
-              <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
               </svg>
             </button>
           </div>
         </div>
 
-        {/* Content - Bottom Center */}
-        <div className="relative z-10 w-full px-6 sm:px-12 lg:px-20">
-          <div className={`max-w-4xl mx-auto text-center transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            {/* Horizontal Line */}
-            <div className="w-full h-px bg-white/20 mb-3 sm:mb-8"></div>
-            
-            <p className="text-xs sm:text-lg lg:text-xl text-white/90 font-light max-w-4xl leading-relaxed mb-4 sm:mb-8">
-              Real projects solving real problems — from concept to polished, production-ready code
-            </p>
-            
-            {/* CTA Button */}
-            <button
-              onClick={scrollToProjects}
-              className="inline-flex items-center gap-2 sm:gap-3 bg-teal-600 hover:bg-teal-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md font-semibold transition-colors duration-300"
-              aria-label="Scroll to projects"
-            >
-              <span className="text-[10px] sm:text-sm tracking-wide">EXPLORE PROJECTS</span>
-              <svg 
-                className="w-5 h-5 animate-bounce" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-            </button>
-          </div>
+        {/* ── Explore Projects CTA — outside carousel, never slides ── */}
+        <div className="relative z-30 flex-shrink-0 flex justify-center pt-3 sm:pt-4 pb-6 sm:pb-8">
+          <button
+            onClick={scrollToProjects}
+            className="inline-flex items-center gap-2 sm:gap-3 bg-teal-600 hover:bg-teal-500 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md font-semibold transition-colors duration-300"
+            aria-label="Scroll to projects"
+          >
+            <span className="text-[10px] sm:text-sm tracking-wide">EXPLORE PROJECTS</span>
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+          </button>
         </div>
       </section>
       

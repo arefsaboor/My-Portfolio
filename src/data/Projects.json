@@ -2,7 +2,7 @@
   "projects": [
     {
       "id": 1,
-      "name": "Books |2| Shelf",
+      "name": "Books|2|Shelf",
       "subtitle": "A Digital Bookshelf | With Google Books API",
       "category": "Full-Stack Development",
       "role": "Full-Stack Developer",
@@ -72,7 +72,7 @@
     },
     {
       "id": 3,
-      "name": "NIRVAN | First Project",
+      "name": "Nirvan",
       "subtitle": "An Ancient Peace To The Modern World",
       "category": "Frontend Development",
       "role": "UX Designer & Frontend Developer",
