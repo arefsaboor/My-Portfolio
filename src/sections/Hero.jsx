@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import heroTitles from '../data/HeroTitles.json';
 import bulbIcon from '../bulb.svg';
 import CVPreviewModal from '../components/CVPreviewModal';
-import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
+import cvPdf from '../assets/ArefSaboor_Resume_2026-updated.pdf';
 import { smoothScrollToId } from '../utils/smoothScroll';
 
 function Hero() {

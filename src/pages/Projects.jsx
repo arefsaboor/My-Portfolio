@@ -4,7 +4,7 @@ import ProjectCard from '../components/ProjectCard';
 import projectsData from '../data/Projects.json';
 import PageLoader from '../components/PageLoader';
 import CVPreviewModal from '../components/CVPreviewModal';
-import cvPdf from '../assets/ArefSaboor_Resume_2026.pdf';
+import cvPdf from '../assets/ArefSaboor_Resume_2026-updated.pdf';
 import { smoothScrollToId } from '../utils/smoothScroll';
 
 // Import project screenshots
