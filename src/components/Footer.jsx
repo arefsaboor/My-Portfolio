@@ -202,9 +202,9 @@ function Footer() {
                 <span className="text-sm">+49 (0) 174 781 76 11</span>
               </a>
               <div className="flex items-center gap-3 transition-all duration-300 location-item">
-                <img 
-                  src="/globe.svg" 
-                  alt="Globe" 
+                <img
+                  src={`${import.meta.env.BASE_URL}globe.svg`}
+                  alt="Globe"
                   className="w-5 h-5 globe-icon"
                 />
                 <span className="text-sm">Based in Berlin, Germany</span>

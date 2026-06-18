@@ -13,7 +13,9 @@ import Footer from './components/Footer'
 function AppContent() {
   const location = useLocation();
   const prevLocationRef = useRef(null);
-  const [showMainLoader, setShowMainLoader] = useState(() => window.location.pathname === '/');
+  const [showMainLoader, setShowMainLoader] = useState(
+    () => window.location.pathname === '/portfolio' || window.location.pathname === '/portfolio/'
+  );
   const [showHomePageLoader, setShowHomePageLoader] = useState(false);
 
   useEffect(() => {
@@ -65,7 +67,7 @@ function AppContent() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/portfolio">
       <AppContent />
     </Router>
   )

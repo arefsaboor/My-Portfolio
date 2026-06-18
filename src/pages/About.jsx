@@ -495,7 +495,7 @@ const About = () => {
             <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 group hover:-translate-y-1">
               <div className="flex flex-col items-center mb-6">
                 <div className="w-14 h-14 flex items-center justify-center mb-4">
-                  <img src="/IHK-logo.svg" alt="IHK Logo" className="w-12 h-12 object-contain" />
+                  <img src={`${import.meta.env.BASE_URL}IHK-logo.svg`} alt="IHK Logo" className="w-12 h-12 object-contain" />
                 </div>
                 <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">IHK-Certified</p>
                 <p className="text-lg font-bold text-gray-900">Full-Stack Developer</p>
@@ -510,7 +510,7 @@ const About = () => {
             <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 group hover:-translate-y-1">
               <div className="flex flex-col items-center mb-6">
                 <div className="w-14 h-14 flex items-center justify-center mb-4">
-                  <img src="/Pentool.svg" alt="Graphic Design" className="w-12 h-12 object-contain" />
+                  <img src={`${import.meta.env.BASE_URL}Pentool.svg`} alt="Graphic Design" className="w-12 h-12 object-contain" />
                 </div>
                 <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Self-Learned</p>
                 <p className="text-lg font-bold text-gray-900">Graphic Designer</p>
@@ -525,7 +525,7 @@ const About = () => {
             <div className="bg-white rounded-2xl p-10 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-200 group hover:-translate-y-1">
               <div className="flex flex-col items-center mb-6">
                 <div className="w-14 h-14 flex items-center justify-center mb-4">
-                  <img src="/VideoCut.svg" alt="Video Journalism" className="w-12 h-12 object-contain" />
+                  <img src={`${import.meta.env.BASE_URL}VideoCut.svg`} alt="Video Journalism" className="w-12 h-12 object-contain" />
                 </div>
                 <p className="text-sm font-semibold text-gray-600 uppercase tracking-wider">Experienced</p>
                 <p className="text-lg font-bold text-gray-900">Video Journalist</p>
