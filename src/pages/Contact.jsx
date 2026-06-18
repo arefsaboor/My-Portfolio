@@ -31,7 +31,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
     setStatus({ submitting: true, submitted: false, error: null });
 
     try {
-      const response = await fetch(`${import.meta.env.BASE_URL}api/contact`, {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -207,7 +207,7 @@ const Contact = ({ showPageLoader = true, showHeroSection = true }) => {
 
                 <div className="group flex items-start gap-4 p-5 rounded-2xl bg-white border-2 border-gray-200 hover:border-teal-300 hover:shadow-lg transition-all duration-300">
                   <div className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                    <img src={`${import.meta.env.BASE_URL}globe.svg`} alt="Globe" className="w-7 h-7" />
+                    <img src="/globe.svg" alt="Globe" className="w-7 h-7" />
                   </div>
                   <div className="flex-1">
                     <p className="text-xs font-bold text-teal-800 uppercase tracking-wider mb-1">Based in</p>

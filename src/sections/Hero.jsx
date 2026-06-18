@@ -452,7 +452,7 @@ function Hero() {
         
         {/* Based in Berlin - moved below description */}
         <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
-          <img src={`${import.meta.env.BASE_URL}globe.svg`} alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
+          <img src="/globe.svg" alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
           <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
             <p className="hero-animated-text text-white font-normal whitespace-nowrap">
               Based in Berlin

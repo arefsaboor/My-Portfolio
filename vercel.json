@@ -4,9 +4,6 @@
   "installCommand": "npm install",
   "routes": [
     { "handle": "filesystem" },
-    { "src": "/portfolio/assets/(.*)", "dest": "/assets/$1" },
-    { "src": "/portfolio/api/(.*)", "dest": "/api/$1" },
-    { "src": "/portfolio/(globe\\.svg|IHK-logo\\.svg|Pentool\\.svg|VideoCut\\.svg|favicon\\.png|IMAGE_002\\.jpg)", "dest": "/$1" },
     { "src": "/.*", "dest": "/index.html" }
   ],
   "headers": [
