@@ -183,14 +183,14 @@ function Footer() {
             <h4 className="text-base font-semibold mb-6 text-gray-300 uppercase tracking-wider">Get In Touch</h4>
             <div className="space-y-4 mb-8">
               <a 
-                href="mailto:info@arefsaboor.com" 
+                href="mailto:arefsaboor.m@gmail.com" 
                 className="flex items-center gap-3 text-gray-400 hover:text-teal-400 transition-all duration-300 group"
               >
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
                 </svg>
-                <span className="text-sm">info@arefsaboor.com</span>
+                <span className="text-sm">arefsaboor.m@gmail.com</span>
               </a>
               <a 
                 href="tel:+4917478176611" 

@@ -1,12 +1,7 @@
 import { useState, useEffect } from 'react';
 import PageLoader from '../components/PageLoader';
 import Hero from '../sections/Hero';
-import About from '../sections/About';
-import SkillsSection from '../sections/SkillsSection';
-import IconsSection from '../sections/IconsSection';
-import ProjectsSection from '../sections/ProjectsSection';
-import Testimonials from '../sections/Testimonials';
-import Contact from '../pages/Contact';
+import HomepageContent from '../sections/homepage-content/HomepageContent';
 
 function Home({ showPageLoader = false, onLoaderComplete }) {
   const [showLoader, setShowLoader] = useState(showPageLoader);
@@ -29,12 +24,7 @@ function Home({ showPageLoader = false, onLoaderComplete }) {
     <>
       {showLoader && <PageLoader pageName="Home" onComplete={handleLoaderComplete} />}
       <Hero />
-      <About variant="home" />
-      <SkillsSection />
-      <IconsSection />
-      <Testimonials />
-      <ProjectsSection />
-      <Contact showPageLoader={false} showHeroSection={false} />
+      <HomepageContent />
     </>
   );
 }

@@ -46,7 +46,7 @@ function Hero() {
       <div 
         className="hero-background absolute inset-0 z-0 w-full h-full"
         style={{
-          backgroundImage: 'url(/IMAGE_002.webp), url(/IMAGE_002.jpg)',
+          backgroundImage: 'url(/IMAGE_002.webp)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'scroll',
@@ -116,7 +116,7 @@ function Hero() {
         .scroll-indicator-animate {
           animation: scrollIndicator 2s ease-in-out infinite;
         }
-        
+
         /* Hide desktop scroll indicator until layout switches */
         .desktop-scroll-indicator {
           display: none !important;
@@ -396,7 +396,7 @@ function Hero() {
       <div className="hero-main-container relative z-10">
         {/* Hero Content */}
         <div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap">
+        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginBottom: 'clamp(0.5rem, 1.2vh, 1rem)' }}>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
           </svg>
@@ -417,28 +417,28 @@ function Hero() {
             ))}
           </div>
         </div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap">
-          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" strokeWidth="2.5">
-            <path fillRule="evenodd" d="M15.514 3.293a1 1 0 0 0-1.415 0L12.151 5.24a.93.93 0 0 1 .056.052l6.5 6.5a.97.97 0 0 1 .052.056L20.707 9.9a1 1 0 0 0 0-1.415l-5.193-5.193ZM7.004 8.27l3.892-1.46 6.293 6.293-1.46 3.893a1 1 0 0 1-.603.591l-9.494 3.355a1 1 0 0 1-.98-.18l6.452-6.453a1 1 0 0 0-1.414-1.414l-6.453 6.452a1 1 0 0 1-.18-.98l3.355-9.494a1 1 0 0 1 .591-.603Z" clipRule="evenodd" />
-          </svg>
-          <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
-            <h2 className="hero-main-heading text-white animate-fade-in-delay font-medium leading-none" style={{ paddingTop: 'clamp(0.15rem, 1vh, 1.5rem)', paddingBottom: 'clamp(0.15rem, 1vh, 1.5rem)' }}>
-              UX/UI Designer
+        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginBottom: 'clamp(1.25rem, 2.5vh, 2rem)' }}>
+          <span className="hero-icon flex-shrink-0" aria-hidden="true" />
+          <div
+            className="relative hero-content-box overflow-hidden flex flex-col border-l-2 border-teal-400/50"
+            style={{
+              paddingTop: 'clamp(0.5rem, 1.2vh, 1rem)',
+              paddingBottom: 'clamp(0.5rem, 1.2vh, 1rem)',
+              background: 'linear-gradient(to right, rgba(17, 24, 39, 0.92) 0%, rgba(17, 24, 39, 0.65) 60%, rgba(17, 24, 39, 0.25) 80%, transparent 95%, transparent 100%)',
+            }}
+          >
+            <h2 className="text-white leading-none tracking-wide" style={{ fontSize: 'clamp(2.25rem, 6.5vw, 4.5rem)' }}>
+              <span className="font-bold">Aref </span>
+              <span className="font-thin">Saboor</span>
             </h2>
+            <p className="text-white/90 font-thin" style={{ fontSize: 'clamp(1.125rem, 2.2vw, 1.625rem)', marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
+              <span className="block md:inline">UX/UI Designer</span>
+              <span className="hidden md:inline text-teal-400 mx-2" style={{ fontSize: '1.2em', lineHeight: 0 }}>&middot;</span>
+              <span className="block md:inline">Full Stack Developer</span>
+            </p>
           </div>
         </div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap">
-          <svg className="hero-icon text-white transition-transform hover:scale-110 duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-          </svg>
-          <div className="hero-content-box flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
-            <h2 className="hero-main-heading text-white animate-fade-in-delay font-medium leading-none" style={{ paddingTop: 'clamp(0.15rem, 1vh, 1.5rem)', paddingBottom: 'clamp(0.15rem, 1vh, 1.5rem)' }}>
-              Full Stack Developer
-            </h2>
-          </div>
-        </div>
-        
-        {/* Tagline - Hidden on mobile */}
+        {/* Tagline - hidden on mobile to save space over the photo */}
         <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
           <img src={bulbIcon} alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
           <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)' }}>
@@ -461,7 +461,7 @@ function Hero() {
         </div>
         
         {/* Call to Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4" style={{ marginTop: 'clamp(1.5rem, 3vh, 2.5rem)', marginLeft: 'calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem))' }}>
+        <div className="flex flex-col items-start sm:flex-row gap-3 sm:gap-4" style={{ marginTop: 'clamp(1.5rem, 3vh, 2.5rem)', marginLeft: 'calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem))' }}>
           <button 
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
             className="hero-cta-button"
