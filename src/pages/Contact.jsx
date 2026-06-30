@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import PageLoader from '../components/PageLoader';
 import SocialIconLink from '../components/SocialIconLink';
 import FormStatus from '../components/FormStatus';
 import { contactMethods, socialLinks } from '../data/contactData';
@@ -25,9 +24,8 @@ const methodIcons = {
 
 const inputClass = 'w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:bg-white outline-none transition-all text-slate-900 placeholder-slate-400';
 
-const Contact = ({ showPageLoader = true }) => {
+const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [showLoader, setShowLoader] = useState(showPageLoader);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -88,7 +86,6 @@ const Contact = ({ showPageLoader = true }) => {
 
   return (
     <>
-      {showLoader && <PageLoader pageName="Contact" onComplete={() => setShowLoader(false)} />}
       <div className="bg-white">
         <section className={`pt-28 lg:pt-32 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] lg:min-h-[calc(100vh-8rem)]">

@@ -4,11 +4,7 @@ function Loader({ onComplete }) {
   const greetings = [
     'Hello',
     'سلام',
-    'Merhaba',
-    'नमस्ते',
-    '¡Hola',
     'Bonjour',
-    'Ciao',
     '你好',
     'Hallo'
   ];
@@ -22,34 +18,34 @@ function Loader({ onComplete }) {
       // Initial delay before first word appears
       const timer = setTimeout(() => {
         setCurrentIndex(0);
-      }, 200);
+      }, 100);
       return () => clearTimeout(timer);
     } else if (currentIndex === 0) {
-      // First word (Hello): 800ms
+      // First word (Hello): 450ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 800);
+      }, 450);
       return () => clearTimeout(timer);
     } else if (currentIndex === 1) {
-      // Second word (سلام): 800ms - same as first to be visible
+      // Second word (سلام): 450ms - same as first to be visible
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 800);
+      }, 450);
       return () => clearTimeout(timer);
     } else if (currentIndex > 1 && currentIndex < greetings.length - 1) {
-      // Middle words: fade in place fast - 250ms
+      // Middle words: fade in place fast - 150ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 250);
+      }, 150);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length - 1) {
-      // Last word (Hallo): 800ms
+      // Last word (Hallo): 450ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 800);
+      }, 450);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length) {
-      // All text animations complete, last text swiping up (takes 0.6s)
+      // All text animations complete, last text swiping up
       // Then fade out entire screen
       const waitTimer = setTimeout(() => {
         setFadeOut(true);
@@ -57,9 +53,9 @@ function Loader({ onComplete }) {
         const hideTimer = setTimeout(() => {
           setIsVisible(false);
           onComplete();
-        }, 1000);
+        }, 500);
         return () => clearTimeout(hideTimer);
-      }, 600);
+      }, 300);
       return () => clearTimeout(waitTimer);
     }
   }, [currentIndex, greetings.length, onComplete]);
@@ -107,7 +103,7 @@ function Loader({ onComplete }) {
         }
 
         .loader-overlay.fade-out {
-          animation: fadeOutUp 1s ease-out forwards;
+          animation: fadeOutUp 0.5s ease-out forwards;
         }
 
         /* Animated Background Pattern */
@@ -217,13 +213,13 @@ function Loader({ onComplete }) {
         /* First word animation - faster */
         .loader-text.first.current,
         .loader-text.first.previous {
-          transition: all 0.6s ease-in-out;
+          transition: all 0.35s ease-in-out;
         }
 
         /* Last word animation - faster, same as first */
         .loader-text.last.current,
         .loader-text.last.previous {
-          transition: all 0.6s ease-in-out;
+          transition: all 0.35s ease-in-out;
         }
 
         /* First text states - swipe from bottom */
@@ -280,9 +276,9 @@ function Loader({ onComplete }) {
           transition-delay: 0s;
         }
 
-        /* Second word delays 0.6s (waiting for first word's 0.6s exit) - fade in place */
+        /* Second word delays 0.35s (waiting for first word's exit) - fade in place */
         .loader-text.second.current {
-          transition-delay: 0.6s;
+          transition-delay: 0.35s;
         }
 
         /* Middle texts fade in place - no delay needed */

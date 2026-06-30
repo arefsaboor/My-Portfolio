@@ -1,18 +1,20 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import PageLoader from '../components/PageLoader';
 import AboutHero from '../sections/AboutHero';
 import AboutContent from '../sections/AboutContent';
 import CVPreviewModal from '../components/CVPreviewModal';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [showLoader, setShowLoader] = useState(true);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsVisible(true);
+  }, []);
 
   return (
     <>
-      {showLoader && <PageLoader pageName="About" onComplete={() => { setShowLoader(false); setIsVisible(true); }} />}
       <div className="bg-white">
         <AboutHero isVisible={isVisible} />
 
