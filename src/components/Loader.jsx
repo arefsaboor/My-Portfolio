@@ -18,31 +18,31 @@ function Loader({ onComplete }) {
       // Initial delay before first word appears
       const timer = setTimeout(() => {
         setCurrentIndex(0);
-      }, 100);
-      return () => clearTimeout(timer);
-    } else if (currentIndex === 0) {
-      // First word (Hello): 450ms
-      const timer = setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
-      }, 450);
-      return () => clearTimeout(timer);
-    } else if (currentIndex === 1) {
-      // Second word (سلام): 450ms - same as first to be visible
-      const timer = setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
-      }, 450);
-      return () => clearTimeout(timer);
-    } else if (currentIndex > 1 && currentIndex < greetings.length - 1) {
-      // Middle words: fade in place fast - 150ms
-      const timer = setTimeout(() => {
-        setCurrentIndex(currentIndex + 1);
       }, 150);
       return () => clearTimeout(timer);
-    } else if (currentIndex === greetings.length - 1) {
-      // Last word (Hallo): 450ms
+    } else if (currentIndex === 0) {
+      // First word (Hello): 600ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
-      }, 450);
+      }, 600);
+      return () => clearTimeout(timer);
+    } else if (currentIndex === 1) {
+      // Second word (سلام): 600ms - same as first to be visible
+      const timer = setTimeout(() => {
+        setCurrentIndex(currentIndex + 1);
+      }, 600);
+      return () => clearTimeout(timer);
+    } else if (currentIndex > 1 && currentIndex < greetings.length - 1) {
+      // Middle words: long enough to actually read - 400ms
+      const timer = setTimeout(() => {
+        setCurrentIndex(currentIndex + 1);
+      }, 400);
+      return () => clearTimeout(timer);
+    } else if (currentIndex === greetings.length - 1) {
+      // Last word (Hallo): 600ms
+      const timer = setTimeout(() => {
+        setCurrentIndex(currentIndex + 1);
+      }, 600);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length) {
       // All text animations complete, last text swiping up
@@ -53,9 +53,9 @@ function Loader({ onComplete }) {
         const hideTimer = setTimeout(() => {
           setIsVisible(false);
           onComplete();
-        }, 500);
+        }, 600);
         return () => clearTimeout(hideTimer);
-      }, 300);
+      }, 400);
       return () => clearTimeout(waitTimer);
     }
   }, [currentIndex, greetings.length, onComplete]);
@@ -103,7 +103,7 @@ function Loader({ onComplete }) {
         }
 
         .loader-overlay.fade-out {
-          animation: fadeOutUp 0.5s ease-out forwards;
+          animation: fadeOutUp 0.6s ease-out forwards;
         }
 
         /* Animated Background Pattern */
@@ -213,13 +213,13 @@ function Loader({ onComplete }) {
         /* First word animation - faster */
         .loader-text.first.current,
         .loader-text.first.previous {
-          transition: all 0.35s ease-in-out;
+          transition: all 0.4s ease-in-out;
         }
 
         /* Last word animation - faster, same as first */
         .loader-text.last.current,
         .loader-text.last.previous {
-          transition: all 0.35s ease-in-out;
+          transition: all 0.4s ease-in-out;
         }
 
         /* First text states - swipe from bottom */
@@ -276,9 +276,9 @@ function Loader({ onComplete }) {
           transition-delay: 0s;
         }
 
-        /* Second word delays 0.35s (waiting for first word's exit) - fade in place */
+        /* Second word delays 0.4s (waiting for first word's exit) - fade in place */
         .loader-text.second.current {
-          transition-delay: 0.35s;
+          transition-delay: 0.4s;
         }
 
         /* Middle texts fade in place - no delay needed */
