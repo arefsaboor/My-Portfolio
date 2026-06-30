@@ -54,8 +54,8 @@ function Impressum() {
             </p>
             <p>
               <span className="text-slate-400">Website:</span>{' '}
-              <a href="https://arefsaboor.com" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 transition-colors">
-                arefsaboor.com
+              <a href="https://arefsaboor.de" target="_blank" rel="noopener noreferrer" className="text-teal-600 hover:text-teal-700 transition-colors">
+                arefsaboor.de
               </a>
             </p>
           </Section>
