@@ -13,6 +13,10 @@ function Navbar() {
   const closeButtonRef = useRef(null);
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
+  const lightHeroRoutes = ['/about', '/contact', '/projects', '/impressum'];
+  const isLightHero = lightHeroRoutes.includes(location.pathname);
+  const navTextClass = isLightHero ? 'text-slate-900' : 'text-white';
+  const navShadowClass = isLightHero ? '' : 'drop-shadow-lg';
 
   // Handle click on current page - smooth scroll to top
   const handlePageClick = (e, path) => {
@@ -182,7 +186,7 @@ function Navbar() {
         }
         
         .logo-text {
-          font-size: clamp(1.25rem, 2vw + 0.5rem, 1.75rem);
+          font-size: clamp(1rem, 1.4vw + 0.4rem, 1.25rem);
           line-height: 1;
           display: block;
         }
@@ -248,9 +252,9 @@ function Navbar() {
             {/* Logo */}
             <div className="flex-shrink-0 logo-wrapper">
               <Link to="/" className="block" onClick={handleLogoClick}>
-                <h1 className="logo-text font-bold text-white tracking-wide drop-shadow-lg m-0">
-                  <span className="font-bold">AREF </span>
-                  <span className="font-thin">SABOOR</span>
+                <h1 className={`logo-text font-bold ${navTextClass} tracking-wide ${navShadowClass} m-0`}>
+                  <span className="font-bold">Aref </span>
+                  <span className="font-thin">Saboor</span>
                 </h1>
               </Link>
             </div>
@@ -277,14 +281,14 @@ function Navbar() {
                           handlePageClick(e, link.path);
                           setIsDropdownOpen(false);
                         }}
-                        className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect}`}
+                        className={`relative ${navTextClass} hover:text-teal-400 transition-all duration-300 font-light ${navShadowClass} group transform ${hoverEffect}`}
                         style={{ fontSize: 'clamp(0.9375rem, 1vw + 0.25rem, 1.125rem)' }}
                       >
                         {link.name}
-                        <span 
+                        <span
                           className={`absolute left-1/2 -translate-x-1/2 w-2 h-2 rounded-full transition-opacity duration-300 ${
                             location.pathname === link.path
-                              ? 'bg-cyan-400 opacity-100' 
+                              ? 'bg-cyan-400 opacity-100'
                               : 'bg-teal-400 opacity-0 group-hover:opacity-100'
                           }`}
                           style={{ bottom: 'clamp(-1.25rem, -1.5vw, -1.5rem)' }}
@@ -295,7 +299,7 @@ function Navbar() {
                           e.stopPropagation();
                           setIsDropdownOpen(!isDropdownOpen);
                         }}
-                        className="text-white hover:text-teal-400 transition-all duration-300"
+                        className={`${navTextClass} hover:text-teal-400 transition-all duration-300`}
                         aria-label="Toggle projects dropdown"
                       >
                         <svg 
@@ -313,7 +317,7 @@ function Navbar() {
                         className={`absolute top-full mt-2 right-0 w-72 bg-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-slate-700/70 overflow-hidden transition-all duration-300 py-2 divide-y divide-slate-800/70 ${
                           isDropdownOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'
                         }`}
-                        style={{ zIndex: 9999 }}
+                        style={{ zIndex: zIndex.navDropdown }}
                       >
                         <Link
                           to="/projects"
@@ -335,7 +339,7 @@ function Navbar() {
                             if (location.pathname !== '/projects') {
                               window.location.href = '/projects#bestsellers';
                             } else {
-                              const element = document.getElementById('project-4');
+                              const element = document.getElementById('bestsellers');
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
@@ -353,7 +357,7 @@ function Navbar() {
                             if (location.pathname !== '/projects') {
                               window.location.href = '/projects#books2shelf';
                             } else {
-                              const element = document.getElementById('project-1');
+                              const element = document.getElementById('books2shelf');
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
@@ -371,7 +375,7 @@ function Navbar() {
                             if (location.pathname !== '/projects') {
                               window.location.href = '/projects#portfolio';
                             } else {
-                              const element = document.getElementById('project-2');
+                              const element = document.getElementById('portfolio');
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
@@ -389,7 +393,7 @@ function Navbar() {
                             if (location.pathname !== '/projects') {
                               window.location.href = '/projects#nirvan';
                             } else {
-                              const element = document.getElementById('project-3');
+                              const element = document.getElementById('nirvan');
                               element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                           }}
@@ -409,7 +413,7 @@ function Navbar() {
                     key={link.id}
                     to={link.path}
                     onClick={(e) => handlePageClick(e, link.path)}
-                    className={`relative text-white hover:text-teal-400 transition-all duration-300 font-light drop-shadow-lg group transform ${hoverEffect}`}
+                    className={`relative ${navTextClass} hover:text-teal-400 transition-all duration-300 font-light ${navShadowClass} group transform ${hoverEffect}`}
                     style={{ fontSize: 'clamp(0.9375rem, 1vw + 0.25rem, 1.125rem)' }}
                   >
                     {link.name}
@@ -520,8 +524,8 @@ function Navbar() {
                   }`}
                 >
                   <h2 className="font-bold text-white text-xl sm:text-2xl md:text-3xl mb-2 sm:mb-3">
-                    <span className="font-bold">AREF </span>
-                    <span className="font-thin">SABOOR</span>
+                    <span className="font-bold">Aref </span>
+                    <span className="font-thin">Saboor</span>
                   </h2>
                   <div className="h-1 w-16 bg-gradient-to-r from-teal-400 to-cyan-500 rounded-full" />
                 </div>
@@ -608,7 +612,7 @@ function Navbar() {
                                 if (location.pathname !== '/projects') {
                                   window.location.href = '/projects#bestsellers';
                                 } else {
-                                  const element = document.getElementById('project-4');
+                                  const element = document.getElementById('bestsellers');
                                   element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}
@@ -627,7 +631,7 @@ function Navbar() {
                                 if (location.pathname !== '/projects') {
                                   window.location.href = '/projects#books2shelf';
                                 } else {
-                                  const element = document.getElementById('project-1');
+                                  const element = document.getElementById('books2shelf');
                                   element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}
@@ -646,7 +650,7 @@ function Navbar() {
                                 if (location.pathname !== '/projects') {
                                   window.location.href = '/projects#portfolio';
                                 } else {
-                                  const element = document.getElementById('project-2');
+                                  const element = document.getElementById('portfolio');
                                   element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}
@@ -665,7 +669,7 @@ function Navbar() {
                                 if (location.pathname !== '/projects') {
                                   window.location.href = '/projects#nirvan';
                                 } else {
-                                  const element = document.getElementById('project-3');
+                                  const element = document.getElementById('nirvan');
                                   element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
                                 }
                               }}

@@ -7,6 +7,7 @@ export const navigationLinks = [
 
 export const zIndex = {
   navbar: 50,
+  navDropdown: 60,
   burgerButton: 50,
   sidebarOverlay: 100,
   sidebar: 110
