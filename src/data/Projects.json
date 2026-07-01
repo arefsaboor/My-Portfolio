@@ -21,7 +21,7 @@
         "tablet": "/books2shelf-screenshots/books2shelf-tablet.png",
         "mobile": "/books2shelf-screenshots/books2shelf-mobile.png"
       },
-      "liveUrl": "https://books2shelf.arefsaboor.com",
+      "liveUrl": "https://books2shelf.arefsaboor.de",
       "vercelUrl": "https://books2shelf.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/jlU2VAZVQMb3tscWV34pI8/Books2Shelf?page-id=0%3A1&node-id=2-4&p=f&viewport=323%2C292%2C0.04&t=Hr452RwEbnMrb9Uu-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A4",
       "githubUrl": "https://github.com/arefsaboor/books2shelf_arefsaboor",
@@ -91,7 +91,7 @@
         "tablet": "/Nirvan-Screenshots/tablet-hero.png",
         "mobile": "/Nirvan-Screenshots/mobile-hero.png"
       },
-      "liveUrl": "https://nirvan.arefsaboor.com",
+      "liveUrl": "https://nirvan.arefsaboor.de",
       "vercelUrl": "https://nirvan-vedic.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/rrjokG2q8eYdcXz6GFcth8/Batch_001_Block_3_Aref_Saboor_UX_Design_and_Produktentwicklung?page-id=2003%3A60&node-id=2731-1520&starting-point-node-id=2731%3A1520&t=lQJPFszJPjypsQhz-1",
       "caseStudyUrl": "https://www.behance.net/gallery/230927521/NIRVAN-Vedic-Yoga",
@@ -128,7 +128,7 @@
         "tablet": "/bestsellers-screenshots/bestsellers-tablet.png",
         "mobile": "/bestsellers-screenshots/bestsellers-mobile.png"
       },
-      "liveUrl": "https://bestsellerss.arefsaboor.com",
+      "liveUrl": "https://bestsellers.arefsaboor.de",
       "vercelUrl": "https://bestsellerss.vercel.app",
       "githubUrl": "https://github.com/arefsaboor/bestsellers",
       "technologies": [
