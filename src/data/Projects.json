@@ -128,7 +128,7 @@
         "tablet": "/bestsellers-screenshots/bestsellers-tablet.png",
         "mobile": "/bestsellers-screenshots/bestsellers-mobile.png"
       },
-      "liveUrl": "https://bestsellers.arefsaboor.de",
+      "liveUrl": "https://bestsellerss.arefsaboor.de",
       "vercelUrl": "https://bestsellerss.vercel.app",
       "githubUrl": "https://github.com/arefsaboor/bestsellers",
       "technologies": [
