@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom';
 import AboutHero from '../sections/AboutHero';
 import AboutContent from '../sections/AboutContent';
 import CVPreviewModal from '../components/CVPreviewModal';
+import { usePageMeta } from '../utils/usePageMeta';
 
 const About = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
+
+  usePageMeta(
+    'About Aref Saboor - UX/UI Designer & Full Stack Developer',
+    "From video journalist to full-stack developer: Aref Saboor's story, background, training, and what makes his design-first approach different."
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -58,7 +64,7 @@ const About = () => {
                   to="/projects"
                   className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-3 bg-white text-slate-700 font-medium rounded-lg border border-slate-300 hover:border-teal-400 hover:text-teal-600 transition-colors"
                 >
-                  <span>View My Projects</span>
+                  <span>View All Projects</span>
                 </Link>
               </div>
             </div>

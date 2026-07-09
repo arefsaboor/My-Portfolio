@@ -1,0 +1,197 @@
+UX/UI REVIEW — arefsaboor.de
+Typography, color, UX writing, and visual craft
+Verified via: live Playwright/Chromium screenshots at 1440x900 (desktop),
+390x844 (mobile), and 320x700 (narrow-phone overflow check), plus direct
+reads of the Tailwind classes and inline styles producing each value below.
+All fixes below were re-verified live in a second Playwright pass after
+editing (screenshots + bounding-box re-measurement), not just re-read in
+source.
+
+IMPLEMENTATION STATUS AT A GLANCE
+--------------------------------------------------------------------------------
+[DONE] Unified "View Resume" label (Hero.jsx button, was "Resume")
+[DONE] Unified "View All Projects" label (About.jsx CTA, was "View My Projects")
+[DONE] Fixed numbering: credentials now restart at 01 instead of continuing
+       the timeline's 05/06/07 (src/sections/AboutContent.jsx)
+[DONE] Unified ghost-number color: Projects list now uses slate-200,
+       matching About's timeline (was teal-100 on Projects only)
+[DONE] Fixed mobile sidebar dead zone: 360px gap measured down to 77px
+       (src/components/Navbar.jsx)
+[DONE] Increased credential icon weight: 32px bare icon -> 48px icon in a
+       rounded teal-tinted chip (src/sections/AboutContent.jsx)
+[DONE] Fixed button hierarchy in the Projects hero carousel: only the first
+       link ("Visit Live") is now solid/primary, others are outlined/
+       secondary (src/sections/ProjectsHero.jsx)
+[NOT DONE] No typographic point of view (needs a typeface decision from you)
+[NOT DONE] Italic overused as emphasis device (subjective, minor, skipped)
+[NOT DONE] Two accent hues for hover vs. current-page (cyan-400/teal-400) —
+           small, cosmetic, not done yet, tell me if you want it
+[NOT DONE] Neumorphism on Home reads dated — tied to the homepage-vs-
+           subpages decision you already deferred in audit-report.txt
+[NOT DONE] "Four different labels" for going to see the work — see the
+           NOTE below, this turned out to be more nuanced than a simple
+           rename once I checked what each button actually does
+[NOT DONE] Too many equal-weight buttons on the full Projects LIST page
+           (LinkButtons.jsx) — checked the code, this one is actually
+           already correct (primary/secondary styles differ there); the
+           bug was specifically in the hero carousel, now fixed
+[NOT DONE] Three icon families (line/filled/flat) — needs a design decision
+           on which single icon system to standardize on, bigger effort
+[NOT DONE] Logo click reloads the page — removing window.location.reload()
+           would also remove the "replay intro loader" behavior; that's a
+           product decision (is replay-on-click a wanted feature?), not a
+           pure bug fix, so I left it for you to decide
+================================================================================
+
+
+NOTE ON THE "FOUR DIFFERENT CTA LABELS" FINDING
+--------------------------------------------------------------------------------
+When I went to fix this, I found the four buttons don't actually all go to
+the same place — I was wrong to say they did in the original review:
+
+  - Home hero "Recent Works"   -> scrolls to the Featured Projects section
+                                   further down the SAME Home page (never
+                                   navigates to /projects at all)
+  - Projects hero "Explore
+    Projects"                  -> scrolls down within the /projects page
+                                   to the full list below
+  - About CTA "View My
+    Projects"                  -> navigates to the /projects route
+  - Nav dropdown "All Projects" -> navigates to the /projects route
+
+Renaming all four to identical text would have made Home's button actively
+misleading (it would say "View Projects" but not go to the Projects page).
+So I only merged the two that are genuinely the same action:
+About's CTA now matches the nav dropdown's wording ("View All Projects").
+Home's hero button and the Projects-page scroll button were left as-is
+because their destinations really are different — this is really the
+homepage-duplication issue surfacing again, not an isolated copy problem.
+
+
+1. TYPOGRAPHY
+--------------------------------------------------------------------------------
+No custom typeface anywhere in the codebase — every page runs on the bare
+system-ui stack. That's a legitimate choice, but it's then asked to perform
+two unrelated personalities:
+
+  About.jsx / AboutHero.jsx heading style:
+    "Aref Saboor" — font-weight 300, tight tracking — quiet, editorial.
+
+  HomepageContent.jsx heading style:
+    "Featured Projects" — font-weight 900, tight tracking — loud, bold,
+    SaaS-landing-page voice.
+
+  Same typeface family, opposite temperament. A visitor's eye has to
+  recalibrate what kind of site this is every time they cross from Home's
+  lower sections into About or Projects.
+
+[KEEP] The bold/thin name lockup is a real signature.
+  "Aref" (bold) + "Saboor" (thin) repeats identically in the navbar, hero,
+  footer, and mobile sidebar. That's exactly the kind of small, consistent
+  mark a portfolio should have. Don't change it.
+
+[NOT DONE] No typographic point of view.
+  Relying entirely on the system font means every visual "voice" comes from
+  weight and tracking alone. Right now the type says nothing about design
+  taste, only about restraint. Suggestion: one characterful display face
+  for names/headlines, system stack kept for body copy and UI chrome. Not
+  implemented — picking a specific typeface is a taste decision for you to
+  make, not something to impose unilaterally.
+
+[NOT DONE] Italic is the only emphasis device, used identically on three
+  different pages: "Interface Craftsman" (About), "Let's Work Together"
+  (Contact), "Beyond the Code" (About again). Minor and subjective — left
+  alone unless you want it varied.
+
+
+2. COLOR
+--------------------------------------------------------------------------------
+Palette in actual use (verified against Tailwind defaults + inline styles):
+
+  Teal 600   #0d9488   Primary accent, buttons, links
+  Teal 400   #2dd4bf   Hero CTA fill, hover-state dots
+  Cyan 400   #22d3ee   "Current page" indicator dot ONLY
+  Green 500  #22c55e   "Live" status badge
+  Slate 900  #0f172a   Ink / dark surfaces
+  Home gray  #eef1f0   Homepage-only neumorphic surface (not used elsewhere)
+
+[KEEP] Green for the "Live" badge instead of brand teal is the right call.
+
+[NOT DONE] Two accent hues doing the same conceptual job (cyan-400 for
+  "current page," teal-400 for "hovering"). Cosmetic, low priority, not
+  implemented — say the word if you want these consolidated to one hue.
+
+[DONE] The oversized index numbers changing color per page — Projects list
+  recolored from teal-100 to slate-200 to match About's timeline.
+
+[NOT DONE] Neumorphism reads dated next to the editorial pages. Tied
+  directly to the homepage-vs-subpages redesign you already chose to defer
+  — not touched.
+
+
+3. UX WRITING
+--------------------------------------------------------------------------------
+[DONE] "Resume" vs. "View Resume" — both now say "View Resume."
+
+[DONE, PARTIALLY — see NOTE above] Four different "go see my work" labels —
+  only the two that were truly duplicate actions were merged.
+
+[DONE] Numbering implying a false sequence — credentials restart at 01.
+
+[KEEP] The error/success copy is well-judged, nothing to fix.
+
+
+4. VISUAL CRAFT
+--------------------------------------------------------------------------------
+[KEEP] The hero's "lower-third" caption boxes — genuine idea, left alone.
+
+[DONE] Mobile menu dead zone.
+  Before: 360px empty gap (43% of a 390x844 screen), measured via
+  bounding-box coordinates between the nav links and the bio/social block.
+  Fix: changed the sidebar's flex container from justify-between to
+  justify-center with an explicit gap-16 (sm:gap-20).
+  After: re-measured at 77px — the visual gap now reads as intentional
+  breathing room, not a layout gap.
+
+[DONE] Button hierarchy in the Projects hero carousel (src/sections/
+  ProjectsHero.jsx). "Visit Live" and "Live Vercel" were rendering with the
+  exact same solid-teal style. Now only the first link in each project's
+  link list renders solid/primary; any additional links render as
+  outlined/secondary. Checked LinkButtons.jsx (used on the full Projects
+  list page) separately — that one already had correct primary/secondary
+  styling, so nothing needed fixing there.
+
+[DONE] Credential icons undersold real credentials.
+  Before: bare 32px (w-8 h-8) monochrome icon, no background.
+  After: 48px container (w-12 h-12) with a rounded teal-50 background chip
+  around a 28px (w-7 h-7) icon — confirmed visually larger and more present
+  in a live screenshot.
+
+[NOT DONE] Three icon families (line/filled/flat brand marks) in one site.
+  Needs a decision on which single icon system to standardize toward —
+  bigger-scope change than the others, left as a recommendation.
+
+[NOT DONE] Logo click on Home triggers a full page reload
+  (window.location.reload() in Navbar.jsx) to replay the greeting-loader
+  animation. Not fixed because removing the reload would also remove the
+  "replay intro on click" behavior entirely — that's a product decision
+  (do you want this feature at all, and if so, should it be rebuilt without
+  a reload via lifted state in App.jsx?), not a mechanical bug fix.
+
+
+================================================================================
+VERIFICATION
+================================================================================
+npm run lint and npm run build both pass clean after all changes above.
+Every [DONE] item was re-checked live: dev server started, driven with
+headless Chromium, screenshots taken, and (for the mobile gap specifically)
+the actual pixel gap re-measured via getBoundingClientRect — not just
+re-read in source. Nothing has been committed to git.
+
+Files touched in this pass:
+  src/pages/About.jsx
+  src/sections/Hero.jsx
+  src/sections/AboutContent.jsx
+  src/pages/projects-list-content/ProjectsListContent.jsx
+  src/components/Navbar.jsx
+  src/sections/ProjectsHero.jsx

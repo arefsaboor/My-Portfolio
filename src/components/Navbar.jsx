@@ -13,8 +13,11 @@ function Navbar() {
   const closeButtonRef = useRef(null);
   const dropdownRef = useRef(null);
   const sidebarDropdownRef = useRef(null);
-  const lightHeroRoutes = ['/about', '/contact', '/projects', '/impressum'];
-  const isLightHero = lightHeroRoutes.includes(location.pathname);
+  // Only the homepage has a dark photo hero behind the transparent navbar;
+  // every other route (including any future route or an unmatched 404 path)
+  // opens on a light background, so it defaults to dark nav text instead of
+  // needing to be added to a whitelist by hand.
+  const isLightHero = location.pathname !== '/';
   const navTextClass = isLightHero ? 'text-slate-900' : 'text-white';
   const navShadowClass = isLightHero ? '' : 'drop-shadow-lg';
 
@@ -514,7 +517,7 @@ function Navbar() {
             </button>
 
             {/* Menu Content */}
-            <div className="flex flex-col h-full justify-between py-8 sm:py-16 md:py-20 px-7 sm:px-6 md:px-8 lg:px-12 pb-16 sm:pb-14 md:pb-12">
+            <div className="flex flex-col h-full justify-center gap-16 sm:gap-20 py-8 sm:py-16 md:py-20 px-7 sm:px-6 md:px-8 lg:px-12 pb-16 sm:pb-14 md:pb-12">
               {/* Top Section: Brand + Navigation */}
               <div>
                 {/* Brand */}

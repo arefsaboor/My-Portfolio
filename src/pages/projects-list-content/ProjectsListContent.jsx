@@ -35,7 +35,7 @@ export default function ProjectsListContent() {
                       <span className="text-xs text-slate-400">{p.duration}</span>
                     </div>
 
-                    <span className="text-5xl sm:text-6xl lg:text-7xl font-light text-teal-100 leading-none">{String(i + 1).padStart(2, '0')}</span>
+                    <span className="text-5xl sm:text-6xl lg:text-7xl font-light text-slate-200 leading-none">{String(i + 1).padStart(2, '0')}</span>
                     <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-900 mt-3 mb-2">{p.name}</h3>
                     <p className="text-base sm:text-lg text-slate-500 mb-5">{p.subtitle}</p>
                     <p className="text-slate-600 leading-relaxed mb-6 max-w-lg">{p.description}</p>

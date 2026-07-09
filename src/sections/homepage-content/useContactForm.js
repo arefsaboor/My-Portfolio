@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export function useContactForm() {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', website: '' });
   const [status, setStatus] = useState({ submitting: false, submitted: false, error: null });
 
   const handleChange = (e) => {
@@ -20,7 +20,7 @@ export function useContactForm() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || 'Failed to send message');
       setStatus({ submitting: false, submitted: true, error: null });
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '', website: '' });
       setTimeout(() => setStatus({ submitting: false, submitted: false, error: null }), 5000);
     } catch (error) {
       setStatus({ submitting: false, submitted: false, error: error.message || 'Failed to send message. Please try again.' });

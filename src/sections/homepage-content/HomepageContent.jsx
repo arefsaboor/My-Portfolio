@@ -232,9 +232,22 @@ export default function HomepageContent() {
             <form onSubmit={handleSubmit} className={`${neu} ${cardBorder} rounded-xl p-8 space-y-4`}>
               {status.submitted && <p className="text-teal-700 bg-teal-50 px-4 py-3 rounded-xl text-sm">Message sent! I&apos;ll respond within 24 hours.</p>}
               {status.error && <p className="text-red-700 bg-red-50 px-4 py-3 rounded-xl text-sm">{status.error}</p>}
-              <input type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="Your name" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none bg-[#eef1f0]`} />
-              <input type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="Your email" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none bg-[#eef1f0]`} />
-              <textarea name="message" value={formData.message} onChange={handleChange} required rows="4" placeholder="Your message" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none resize-none bg-[#eef1f0]`} />
+              <input
+                type="text"
+                name="website"
+                value={formData.website}
+                onChange={handleChange}
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                className="absolute -left-[9999px] w-px h-px overflow-hidden"
+              />
+              <label htmlFor="home-contact-name" className="sr-only">Your name</label>
+              <input id="home-contact-name" type="text" name="name" value={formData.name} onChange={handleChange} required placeholder="Your name" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none bg-[#eef1f0]`} />
+              <label htmlFor="home-contact-email" className="sr-only">Your email</label>
+              <input id="home-contact-email" type="email" name="email" value={formData.email} onChange={handleChange} required placeholder="Your email" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none bg-[#eef1f0]`} />
+              <label htmlFor="home-contact-message" className="sr-only">Your message</label>
+              <textarea id="home-contact-message" name="message" value={formData.message} onChange={handleChange} required rows="4" placeholder="Your message" className={`${neuInset} w-full px-4 py-3 rounded-xl border-0 focus:ring-2 focus:ring-teal-400 outline-none resize-none bg-[#eef1f0]`} />
               <button type="submit" disabled={status.submitting} className="w-full px-8 py-3 bg-teal-600 text-white font-semibold rounded-xl hover:bg-teal-700 transition-colors disabled:opacity-60 shadow-lg">
                 {status.submitting ? 'Sending…' : 'Send Message'}
               </button>

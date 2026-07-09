@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SocialIconLink from '../components/SocialIconLink';
 import FormStatus from '../components/FormStatus';
 import { contactMethods, socialLinks } from '../data/contactData';
+import { usePageMeta } from '../utils/usePageMeta';
 
 const methodIcons = {
   Email: (
@@ -29,13 +30,19 @@ const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: ''
+    message: '',
+    website: '' // honeypot: left empty by real users, hidden from view
   });
   const [status, setStatus] = useState({
     submitting: false,
     submitted: false,
     error: null
   });
+
+  usePageMeta(
+    "Contact Aref Saboor | Let's Work Together",
+    'Get in touch with Aref Saboor for your next web design or development project. Based in Berlin, available for remote and worldwide work.'
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -62,7 +69,7 @@ const Contact = () => {
       }
 
       setStatus({ submitting: false, submitted: true, error: null });
-      setFormData({ name: '', email: '', message: '' });
+      setFormData({ name: '', email: '', message: '', website: '' });
 
       setTimeout(() => {
         setStatus({ submitting: false, submitted: false, error: null });
@@ -136,6 +143,16 @@ const Contact = () => {
 
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <FormStatus status={status} />
+                    <input
+                      type="text"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      className="absolute -left-[9999px] w-px h-px overflow-hidden"
+                    />
                     <div>
                       <label htmlFor="name" className="block text-sm font-semibold text-slate-900 mb-2">Name</label>
                       <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="Your name" />

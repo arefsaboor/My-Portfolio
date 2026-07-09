@@ -470,12 +470,12 @@ function Hero() {
             Recent Works
           </button>
           
-          <button 
+          <button
             onClick={handleCVClick}
             className="hero-cta-button-secondary"
             aria-label="Preview CV"
           >
-            Resume
+            View Resume
           </button>
         </div>
         </div>

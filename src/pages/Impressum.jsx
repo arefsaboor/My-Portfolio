@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { usePageMeta } from '../utils/usePageMeta';
 
 function Section({ title, children }) {
   return (
@@ -11,6 +12,11 @@ function Section({ title, children }) {
 }
 
 function Impressum() {
+  usePageMeta(
+    'Impressum | Aref Saboor',
+    'Legal information (Impressum) for arefsaboor.de, in accordance with German TMG §5.'
+  );
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

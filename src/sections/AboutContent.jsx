@@ -7,7 +7,9 @@ function Row({ number, label, meta, current, title, description, tags, icon, alt
 
       <div>
         {icon ? (
-          <img src={icon} alt={alt} className="w-8 h-8 object-contain mb-2" />
+          <div className="w-12 h-12 rounded-lg bg-teal-50 flex items-center justify-center mb-3">
+            <img src={icon} alt={alt} className="w-7 h-7 object-contain" />
+          </div>
         ) : null}
         <p className="text-sm font-semibold text-slate-900 uppercase tracking-wide">{label}</p>
         {meta && <p className="text-xs text-slate-400 mt-1">{meta}</p>}
@@ -74,7 +76,7 @@ export default function AboutContent() {
             {credentials.map((c, i) => (
               <Row
                 key={c.title}
-                number={String(timelineItems.length + i + 1).padStart(2, '0')}
+                number={String(i + 1).padStart(2, '0')}
                 label={c.kicker}
                 title={c.title}
                 description={c.description}

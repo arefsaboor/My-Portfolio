@@ -1,0 +1,229 @@
+PORTFOLIO AUDIT — arefsaboor.de
+Codebase, security, SEO, and dead-code review
+Verified via: direct file reads, npm run lint, npm run build, targeted greps,
+and a live Playwright/Chromium pass against the running dev server.
+================================================================================
+
+IMPLEMENTATION STATUS AT A GLANCE
+--------------------------------------------------------------------------------
+[DONE]     P3 — Removed ~20 dead CSS animation classes from index.css
+[DONE]     P3 — Removed 3 unused keyframes from tailwind.config.js
+[DONE]     P3 — Deleted unused src/assets/web.svg
+[DONE]     P3 — Removed dead "screenshots" field from Projects.json
+[DONE]     P0 — Fixed /Favicon.png -> /favicon.png casing bug in vercel.json
+[DONE]     P0 — Added catch-all 404 route (src/pages/NotFound.jsx)
+[DONE]     P0 — Added honeypot field to both contact forms
+[DONE]     P0 — Added HTML-escaping + length caps in api/contact.js
+[DONE]     P1 — Added per-page <title>/meta description (src/utils/usePageMeta.js)
+[DONE]     P1 — Added public/robots.txt and public/sitemap.xml
+[NOT DONE] P0 — Privacy policy / Datenschutzerklärung page (needs real legal
+                content from you — I won't draft German legal text unilaterally)
+[NOT DONE] P0 — og-image.jpg for social sharing (needs an actual 1200x630 image
+                asset from you — I have no source image to generate one from)
+[NOT DONE] P2 — Homepage vs. sub-page duplication/redesign — you explicitly
+                chose "leave it as-is for now" when asked, so no code was
+                touched here. This is a design decision waiting on you, not
+                something I forgot.
+
+Everything marked [DONE] above is committed to the working tree right now
+(not committed to git — I don't commit unless you ask). Everything marked
+[NOT DONE] is exactly that: not started, because it needs either content
+only you can provide, or a decision you deferred.
+================================================================================
+
+
+SECTION 1 — LEGAL & SECURITY
+--------------------------------------------------------------------------------
+
+[NOT DONE] No privacy policy (Datenschutzerklärung)
+  File: none exists. Impressum exists at src/pages/Impressum.jsx but that is
+  a different legal document under German law.
+  Why it matters: the contact form collects name/email/message and the site
+  runs Vercel Analytics — both are personal-data processing under GDPR. A
+  German TMG/DSGVO-compliant site needs a dedicated privacy policy, not just
+  an Impressum. I did not draft this because it requires actual decisions
+  about what data you process and how (analytics retention, whether you use
+  cookies, etc.) — that's not something to invent on your behalf.
+  Action needed from you: decide what to disclose, then I can build the page.
+
+[DONE] Contact endpoint spam protection
+  Files: api/contact.js, src/pages/Contact.jsx,
+         src/sections/homepage-content/useContactForm.js,
+         src/sections/homepage-content/HomepageContent.jsx
+  Added a hidden honeypot field ("website") to both contact forms. If a bot
+  fills it, the API returns a fake success (200) without sending email or
+  touching credentials. Verified this short-circuit works by calling the
+  handler directly with a filled honeypot field.
+
+[DONE] Unescaped user input in HTML email
+  File: api/contact.js
+  Added an escapeHtml() function; name/email/message are now escaped before
+  being interpolated into the HTML email body. Verified the code path runs
+  cleanly through to a real (fake-credential) Gmail SMTP call without
+  throwing.
+
+[DONE] No length limits on submitted fields
+  File: api/contact.js
+  Added MAX_NAME_LENGTH (200) and MAX_MESSAGE_LENGTH (5000) checks.
+
+
+SECTION 2 — SEO & DISCOVERABILITY
+--------------------------------------------------------------------------------
+
+[NOT DONE] og:image points to a file that doesn't exist
+  File: index.html references https://www.arefsaboor.de/og-image.jpg
+  No such file exists anywhere in the repo. Every LinkedIn/X/Slack/WhatsApp
+  share of this site currently shows a broken or blank preview image.
+  Why not done: this needs an actual 1200x630px image (e.g. a screenshot of
+  the hero or a branded card) — I have no source asset to generate one from
+  and didn't want to fabricate a placeholder graphic under your name.
+  Action needed from you: send me an image, or tell me to compose one from
+  existing site assets (e.g. the hero photo + name lockup) and I'll build it.
+
+[DONE] Every route shared one <title> and meta description
+  File: src/utils/usePageMeta.js (new), called from all 5 page components
+  Each route now sets its own document.title and meta description on mount.
+  Verified live: Home, About, Projects, Contact, and Impressum each show a
+  distinct browser-tab title (confirmed via headless Chromium).
+
+[DONE] No 404 route, no robots.txt, no sitemap.xml
+  Files: src/pages/NotFound.jsx (new), src/App.jsx (added catch-all route),
+         public/robots.txt (new), public/sitemap.xml (new)
+  Verified live: navigating to an unknown path now renders a proper 404 page
+  styled to match the rest of the site, with a link back home.
+
+
+SECTION 3 — ARCHITECTURE & DUPLICATION (recommendations, none implemented —
+see status table above; you chose to defer this)
+--------------------------------------------------------------------------------
+
+[NOT DONE — your call] The homepage runs a second, complete portfolio
+  File: src/sections/homepage-content/HomepageContent.jsx (247 lines)
+  Renders its own About blurb, skills grid, learning-journey timeline,
+  featured-projects showcase, and contact form — the same four things the
+  dedicated About/Projects/Contact pages already cover — but styled in a
+  soft neumorphic system (#eef1f0, inset shadows) that doesn't appear
+  anywhere else on the site. A visitor scrolls through a full portfolio on
+  Home, then clicking "About" or "Projects" sees nearly the same content
+  again in a visually different design system.
+  Options I offered: (a) trim Home to a short teaser linking to the
+  dedicated pages, or (b) restyle HomepageContent.jsx onto the same design
+  system as the sub-pages. You chose "leave it as-is for now."
+
+[NOT DONE — not requested] DeviceShowcase is copy-pasted, not shared
+  A byte-for-byte duplicate of pages/projects-list-content/DeviceShowcase.jsx
+  is defined inline inside HomepageContent.jsx (lines 34-89) instead of being
+  imported. Left alone because it's part of the homepage-content system you
+  chose not to touch yet.
+
+[NOT DONE — not requested] Three separate contact-form implementations
+  Contact.jsx, HomepageContent.jsx, and useContactForm.js each hold their own
+  form state against the same /api/contact endpoint. I added the honeypot
+  field to all three (see Section 1) but did not consolidate them into one
+  shared implementation, since that's tangled up with the homepage decision
+  above.
+
+[NOT DONE — not requested] Navbar dropdown duplicated verbatim, desktop vs.
+  mobile. src/components/Navbar.jsx hand-writes the same four-project
+  dropdown twice (~150 lines each) with a manual comment keeping the order
+  in sync by hand instead of a shared data array. Not touched — this is a
+  refactor with no visual/security/SEO urgency, listed as a "nice to have."
+
+[NOT DONE — not requested] Same bio/tagline copy repeated four times across
+  Hero.jsx, AboutHero.jsx, Footer.jsx, and Navbar.jsx's mobile sidebar. Not
+  touched, same reasoning as above.
+
+
+SECTION 4 — DEAD CODE & UNUSED ASSETS (all fixed)
+--------------------------------------------------------------------------------
+
+[DONE] ~20 unused animation classes removed from src/index.css:
+  animate-fade-in, animate-fade-in-delay(-2/-3), animation-delay-1200-fade,
+  animate-blob, animation-delay-2000/4000, animate-slide-in-right,
+  animation-delay-100 through animation-delay-1500 (12 variants),
+  animate-blink, section-badge, section-heading, section-heading-highlight.
+  Also removed the now-orphaned keyframes: fadeIn, sidebarOpen, slideInRight,
+  blink, blob. Kept animate-sidebar-bloom / animate-sidebar-bloom-close,
+  which are actually used by Navbar.jsx.
+
+[DONE] tailwind.config.js — removed unused custom animations/keyframes:
+  live-pulse, dot-pulse, fadeIn. Confirmed zero usages anywhere in src/
+  before removing.
+
+[DONE] Deleted src/assets/web.svg — never imported anywhere in the codebase.
+
+[DONE] Removed the "screenshots" field from every entry in
+  src/data/Projects.json — pointed at .png paths that don't exist in
+  public/, and was never read anywhere; the app resolves all project images
+  through separate WebP imports in the sharedData.js files instead.
+
+[DONE] Fixed vercel.json's cache-control rule, which targeted
+  "/Favicon.png" (capital F) while the real file is "favicon.png" — on
+  Vercel's case-sensitive routing this rule was silently dead.
+
+Verification: npm run lint and npm run build both pass clean after every
+change above. The production CSS bundle shrank slightly (51.16kB -> 50.77kB
+gzipped) confirming the removed classes were real dead weight.
+
+
+SECTION 5 — PERFORMANCE (recommendations, none implemented)
+--------------------------------------------------------------------------------
+
+[NOT DONE — not requested] Two unoptimized image assets, one oversized PDF
+  src/assets/Aref-Saboor_Resume_2026.jpg (1.14 MB) and
+  src/assets/AboutHero-Portrait.jpg (395 KB) remain JPG while every project
+  screenshot on the site was properly converted to WebP. The resume PDF
+  itself is 4.3 MB. Not touched — would need you to confirm you're OK with
+  me re-compressing/re-encoding these source images.
+
+[NOT DONE — not requested] No route-based code splitting
+  All five pages bundle into one 420 KB JS file (127 KB gzip, confirmed via
+  vite build). Not severe at this scale; React.lazy per route would help
+  but wasn't part of what you asked me to execute.
+
+
+SECTION 6 — ACCESSIBILITY (partially addressed)
+--------------------------------------------------------------------------------
+
+[DONE — bonus, done alongside the honeypot fix] Homepage contact form had no
+  <label> elements, only placeholder text (Contact.jsx's form did this
+  correctly; HomepageContent.jsx's didn't). Added sr-only labels to all
+  three fields while already touching that form for the honeypot change.
+
+[NOT DONE — not requested] Logo click on Home triggers a full page reload
+  (window.location.reload()) just to replay the greeting-loader animation.
+  Jarring compared to normal SPA navigation. Not touched — cosmetic/UX
+  judgment call, not a bug.
+
+[NOT DONE — not requested] Hero's rotating skill-title has no pause-on-hover
+  or pause-on-focus. Not touched.
+
+
+================================================================================
+WHERE TO FIND THE ACTUAL CODE CHANGES
+================================================================================
+Run `git status` / `git diff` in the project root to see every file touched.
+Nothing has been committed to git — these are working-tree changes only,
+waiting for your review before you decide to commit them.
+
+Files changed:
+  src/index.css
+  tailwind.config.js
+  src/data/Projects.json
+  vercel.json
+  src/App.jsx
+  src/pages/NotFound.jsx            (new)
+  src/utils/usePageMeta.js          (new)
+  src/pages/Home.jsx
+  src/pages/About.jsx
+  src/pages/Projects.jsx
+  src/pages/Contact.jsx
+  src/pages/Impressum.jsx
+  api/contact.js
+  src/sections/homepage-content/useContactForm.js
+  src/sections/homepage-content/HomepageContent.jsx
+  public/robots.txt                 (new)
+  public/sitemap.xml                (new)
+
+Files deleted:
+  src/assets/web.svg

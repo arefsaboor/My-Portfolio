@@ -8,6 +8,7 @@ import About from './pages/About'
 import Projects from './pages/Projects'
 import Contact from './pages/Contact'
 import Impressum from './pages/Impressum'
+import NotFound from './pages/NotFound'
 import Footer from './components/Footer'
 
 function AppContent() {
@@ -25,6 +26,7 @@ function AppContent() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/impressum" element={<Impressum />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
         <Footer />

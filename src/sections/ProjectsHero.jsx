@@ -250,8 +250,18 @@ export default function ProjectsHero({ isVisible = true }) {
                     ))}
                   </div>
                   <div className="hidden xl:flex gap-2.5">
-                    {project.links.map(link => (
-                      <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-1.5 bg-teal-600 hover:bg-teal-500 text-white px-4 py-2 rounded-md text-xs font-semibold transition-colors duration-300 flex-1 whitespace-nowrap">
+                    {project.links.map((link, linkIdx) => (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-md text-xs font-semibold transition-colors duration-300 flex-1 whitespace-nowrap ${
+                          linkIdx === 0
+                            ? 'bg-teal-600 hover:bg-teal-500 text-white'
+                            : 'bg-white border border-slate-200 hover:border-teal-300 text-slate-600 hover:text-teal-700'
+                        }`}
+                      >
                         <span>{link.label}</span>
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
                       </a>
