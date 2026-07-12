@@ -19,40 +19,30 @@ import icon5 from '../../assets/svg-icons/5-TS.svg';
 import icon6 from '../../assets/svg-icons/6-React.svg';
 import icon7 from '../../assets/svg-icons/7-HTML.svg';
 import icon8 from '../../assets/svg-icons/8-CSS.svg';
-import icon9 from '../../assets/svg-icons/9-Postman.svg';
 import icon10 from '../../assets/svg-icons/10-Docker.svg';
 import icon11 from '../../assets/svg-icons/11-GitHub.svg';
 import icon12 from '../../assets/svg-icons/12-Firebase.svg';
 import icon13 from '../../assets/svg-icons/13-Vercel.svg';
 import icon14 from '../../assets/svg-icons/14-Tailwind.svg';
 import icon15 from '../../assets/svg-icons/15-Figma.svg';
-import icon16 from '../../assets/svg-icons/16-Vector.svg';
-import icon17 from '../../assets/svg-icons/17-VsCode.svg';
-import icon18 from '../../assets/svg-icons/18-Microsoft Office.svg';
-import icon19 from '../../assets/svg-icons/19-Premiere.svg';
 import icon20 from '../../assets/svg-icons/20-Illustrator.svg';
 import icon21 from '../../assets/svg-icons/21-Photoshop.svg';
 
 export const techIcons = [
-  { src: icon1, alt: 'Node.js', name: 'Node.js' },
-  { src: icon2, alt: 'Next.js', name: 'Next.js' },
-  { src: icon3, alt: 'Vite', name: 'Vite' },
-  { src: icon4, alt: 'JavaScript', name: 'JavaScript' },
-  { src: icon5, alt: 'TypeScript', name: 'TypeScript' },
   { src: icon6, alt: 'React', name: 'React' },
+  { src: icon2, alt: 'Next.js', name: 'Next.js' },
+  { src: icon5, alt: 'TypeScript', name: 'TypeScript' },
+  { src: icon4, alt: 'JavaScript', name: 'JavaScript' },
+  { src: icon14, alt: 'Tailwind CSS', name: 'Tailwind' },
+  { src: icon1, alt: 'Node.js', name: 'Node.js' },
+  { src: icon15, alt: 'Figma', name: 'Figma' },
   { src: icon7, alt: 'HTML5', name: 'HTML5' },
   { src: icon8, alt: 'CSS3', name: 'CSS3' },
-  { src: icon9, alt: 'Postman', name: 'Postman' },
-  { src: icon10, alt: 'Docker', name: 'Docker' },
-  { src: icon11, alt: 'GitHub', name: 'GitHub' },
+  { src: icon3, alt: 'Vite', name: 'Vite' },
   { src: icon12, alt: 'Firebase', name: 'Firebase' },
+  { src: icon11, alt: 'GitHub', name: 'GitHub' },
   { src: icon13, alt: 'Vercel', name: 'Vercel' },
-  { src: icon14, alt: 'Tailwind CSS', name: 'Tailwind' },
-  { src: icon15, alt: 'Figma', name: 'Figma' },
-  { src: icon16, alt: 'Vector', name: 'Vector' },
-  { src: icon17, alt: 'VS Code', name: 'VS Code' },
-  { src: icon18, alt: 'Microsoft Office', name: 'MS Office' },
-  { src: icon19, alt: 'Premiere Pro', name: 'Premiere' },
+  { src: icon10, alt: 'Docker', name: 'Docker' },
   { src: icon20, alt: 'Illustrator', name: 'Illustrator' },
   { src: icon21, alt: 'Photoshop', name: 'Photoshop' },
 ];
@@ -96,7 +86,7 @@ export const aboutStats = [
   { value: '1 Year', label: 'Full-Stack Training' },
   { value: '3+', label: 'Live Projects' },
   { value: '15+', label: 'Technologies' },
-  { value: '100%', label: 'Ready for My First Role' },
+  { value: 'Now', label: 'Available to Work' },
 ];
 
 const thumbByName = {
@@ -134,5 +124,4 @@ export const featuredProjects = [...projectsData.projects]
 export const contactDetails = [
   { label: 'Drop me a line', value: 'arefsaboor.m@gmail.com', href: 'mailto:arefsaboor.m@gmail.com', sub: 'You can also drop me direct emails' },
   { label: 'Based in', value: 'Berlin, Germany', sub: 'Open to remote & worldwide projects' },
-  { label: 'Call Me', value: '+49 (0) 174 781 76 11', href: 'tel:+4917478176611', sub: 'You can also WhatsApp me!' },
 ];

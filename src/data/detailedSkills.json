@@ -1,0 +1,221 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "title": "Design & UX",
+      "icon": "design",
+      "description": "Creating beautiful and intuitive user experiences",
+      "skills": [
+        {
+          "id": 1,
+          "name": "UI / UX Design",
+          "level": 88
+        },
+        {
+          "id": 2,
+          "name": "Figma",
+          "level": 90
+        },
+        {
+          "id": 3,
+          "name": "Framer",
+          "level": 85
+        },
+        {
+          "id": 4,
+          "name": "Design Systems",
+          "level": 80
+        },
+        {
+          "id": 5,
+          "name": "Prototyping",
+          "level": 85
+        },
+        {
+          "id": 6,
+          "name": "Responsive Design",
+          "level": 90
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Frontend Development",
+      "icon": "frontend",
+      "description": "Building responsive and performant web applications",
+      "skills": [
+        {
+          "id": 1,
+          "name": "React",
+          "level": 90
+        },
+        {
+          "id": 2,
+          "name": "Next.js",
+          "level": 85
+        },
+        {
+          "id": 3,
+          "name": "JavaScript",
+          "level": 88
+        },
+        {
+          "id": 4,
+          "name": "TypeScript",
+          "level": 82
+        },
+        {
+          "id": 5,
+          "name": "HTML5",
+          "level": 95
+        },
+        {
+          "id": 6,
+          "name": "CSS3",
+          "level": 95
+        },
+        {
+          "id": 7,
+          "name": "Tailwind CSS",
+          "level": 92
+        },
+        {
+          "id": 8,
+          "name": "Vite",
+          "level": 85
+        },
+        {
+          "id": 9,
+          "name": "Bootstrap",
+          "level": 85
+        },
+        {
+          "id": 10,
+          "name": "MUI",
+          "level": 80
+        },
+        {
+          "id": 11,
+          "name": "Chakra UI",
+          "level": 78
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Backend & Data",
+      "icon": "backend",
+      "description": "Developing server-side applications and integrations",
+      "skills": [
+        {
+          "id": 1,
+          "name": "Node.js",
+          "level": 80
+        },
+        {
+          "id": 2,
+          "name": "Express.js",
+          "level": 82
+        },
+        {
+          "id": 3,
+          "name": "REST APIs",
+          "level": 85
+        },
+        {
+          "id": 4,
+          "name": "MongoDB",
+          "level": 78
+        },
+        {
+          "id": 5,
+          "name": "PostgreSQL",
+          "level": 75
+        },
+        {
+          "id": 6,
+          "name": "Prisma",
+          "level": 80
+        },
+        {
+          "id": 7,
+          "name": "Firebase",
+          "level": 80
+        },
+        {
+          "id": 8,
+          "name": "Firestore",
+          "level": 78
+        },
+        {
+          "id": 9,
+          "name": "Authentication",
+          "level": 82
+        },
+        {
+          "id": 10,
+          "name": "Google APIs",
+          "level": 75
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Tools & Platforms",
+      "icon": "tools",
+      "description": "Essential tools for modern web development",
+      "skills": [
+        {
+          "id": 1,
+          "name": "Git & GitHub",
+          "level": 88
+        },
+        {
+          "id": 2,
+          "name": "VS Code",
+          "level": 92
+        },
+        {
+          "id": 3,
+          "name": "Cursor",
+          "level": 88
+        },
+        {
+          "id": 4,
+          "name": "Vercel",
+          "level": 86
+        },
+        {
+          "id": 5,
+          "name": "Docker",
+          "level": 70
+        },
+        {
+          "id": 6,
+          "name": "Chrome DevTools",
+          "level": 85
+        },
+        {
+          "id": 7,
+          "name": "Adobe Photoshop",
+          "level": 75
+        },
+        {
+          "id": 8,
+          "name": "Adobe Illustrator",
+          "level": 70
+        },
+        {
+          "id": 9,
+          "name": "Strapi",
+          "level": 75
+        },
+        {
+          "id": 10,
+          "name": "npm & yarn",
+          "level": 85
+        }
+      ]
+    }
+  ]
+}

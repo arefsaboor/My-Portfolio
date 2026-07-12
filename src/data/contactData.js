@@ -45,11 +45,4 @@ export const contactMethods = [
     value: 'Berlin, Germany',
     note: 'Open to remote & worldwide projects',
   },
-  {
-    label: 'Phone',
-    kicker: 'Call me',
-    value: '+49 (0) 174 781 76 11',
-    href: 'tel:+4917478176611',
-    note: 'You can also WhatsApp me!',
-  },
 ];

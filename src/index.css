@@ -87,3 +87,19 @@
   }
 }
 
+@keyframes v2MarqueeScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.v2-marquee-track {
+  animation: v2MarqueeScroll 55s linear infinite;
+  width: max-content;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-marquee-track {
+    animation: none;
+  }
+}
+

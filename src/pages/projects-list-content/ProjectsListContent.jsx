@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { projects } from './sharedData';
 import DeviceShowcase from './DeviceShowcase';
 import LinkButtons from './LinkButtons';
+import CTASection from '../../components/CTASection';
 
 export default function ProjectsListContent() {
   return (
@@ -32,7 +33,7 @@ export default function ProjectsListContent() {
                         Live
                       </span>
                       <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-semibold uppercase tracking-wide rounded-full border border-teal-100">{p.category}</span>
-                      <span className="text-xs text-slate-400">{p.duration}</span>
+                      <span className="text-xs text-slate-400">{p.year}</span>
                     </div>
 
                     <span className="text-5xl sm:text-6xl lg:text-7xl font-light text-slate-200 leading-none">{String(i + 1).padStart(2, '0')}</span>
@@ -66,13 +67,14 @@ export default function ProjectsListContent() {
             ))}
           </div>
 
-          <div className="text-center mt-12 sm:mt-16 py-12 sm:py-14 px-6 sm:px-10 rounded-2xl border border-teal-100 bg-teal-50/40">
-            <h3 className="text-2xl sm:text-3xl font-light text-slate-900 mb-3">Have a project in mind?</h3>
-            <p className="text-slate-500 mb-8">Clean code meets beautiful design.</p>
-            <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-3 bg-slate-900 text-white font-medium rounded-lg hover:bg-teal-600 transition-colors">
-              Start a Project
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
-            </Link>
+          <div className="mt-12 sm:mt-16">
+            <CTASection
+              title="Have a Project in Mind?"
+              description="Whether you need a custom web application, design overhaul, or technical consultation — I'm here to help bring your vision to life."
+              primaryButtonText="Let's Talk"
+              primaryButtonHref="/contact"
+              variant="minimal"
+            />
           </div>
         </div>
       </section>

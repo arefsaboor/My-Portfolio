@@ -2,86 +2,50 @@
   "skills": [
     {
       "id": 1,
-      "title": "Visual Storyteller"
+      "title": "UX/UI Specialist"
     },
     {
       "id": 2,
-      "title": "Design Meets Code"
-    },
-    {
-      "id": 3,
-      "title": "Pixel-Perfect Craft"
-    },
-    {
-      "id": 4,
-      "title": "Beautiful Interfaces"
-    },
-    {
-      "id": 5,
-      "title": "Motion & Aesthetics"
-    },
-    {
-      "id": 6,
-      "title": "Creative Developer"
-    },
-    {
-      "id": 7,
       "title": "Design-First Code"
     },
     {
-      "id": 8,
-      "title": "Visual Excellence"
+      "id": 3,
+      "title": "Visual Storyteller"
     },
     {
-      "id": 9,
-      "title": "Graphic Designer"
+      "id": 4,
+      "title": "Creative Developer"
     },
     {
-      "id": 10,
-      "title": "Color & Composition"
+      "id": 5,
+      "title": "Pixel-Perfect Craft"
     },
     {
-      "id": 11,
-      "title": "Digital Storytelling"
+      "id": 6,
+      "title": "Design Meets Code"
     },
     {
-      "id": 12,
-      "title": "Aesthetic Mastery"
-    },
-    {
-      "id": 13,
-      "title": "Video Journalist"
-    },
-    {
-      "id": 14,
-      "title": "UI/UX Specialist"
-    },
-    {
-      "id": 15,
-      "title": "Visual Impact"
-    },
-    {
-      "id": 16,
-      "title": "Modern Design"
-    },
-    {
-      "id": 17,
-      "title": "Brand Storyteller"
-    },
-    {
-      "id": 18,
-      "title": "Creative Technologist"
-    },
-    {
-      "id": 19,
+      "id": 7,
       "title": "Frontend / Backend"
     },
     {
-      "id": 20,
-      "title": "Node.js / Express.js"
+      "id": 8,
+      "title": "Beautiful Interfaces"
     },
     {
-      "id": 21,
+      "id": 9,
+      "title": "Visual Excellence"
+    },
+    {
+      "id": 10,
+      "title": "Graphic Designer"
+    },
+    {
+      "id": 11,
+      "title": "Creative Technologist"
+    },
+    {
+      "id": 12,
       "title": "React.js / Next.js"
     }
   ]

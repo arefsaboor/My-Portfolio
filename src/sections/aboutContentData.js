@@ -38,7 +38,7 @@ export const timelineItems = [
     meta: 'Ready for New Opportunities',
     title: 'Seeking My First Tech Role',
     description:
-      "Looking for a position where I can bring my unique combination: professional-grade design skills, storytelling ability, and modern web development expertise. I don't just code websites—I craft experiences that captivate.",
+      'Looking for a position where I can bring a unique combination of professional-grade design skills, storytelling ability, and modern full-stack development expertise. Based in Berlin, open to full-time roles and remote work.',
     tags: [],
     current: true,
   },

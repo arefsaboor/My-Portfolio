@@ -18,10 +18,6 @@ function Hero() {
     return () => clearInterval(interval);
   }, [titles.length]);
 
-  const smoothScrollTo = (targetId) => {
-    smoothScrollToId(targetId);
-  };
-
   // Handle CV button click - now shows modal on all devices
   const handleCVClick = () => {
     setIsCVModalOpen(true);
@@ -424,7 +420,8 @@ function Hero() {
             style={{
               paddingTop: 'clamp(0.5rem, 1.2vh, 1rem)',
               paddingBottom: 'clamp(0.5rem, 1.2vh, 1rem)',
-              background: 'linear-gradient(to right, rgba(17, 24, 39, 0.92) 0%, rgba(17, 24, 39, 0.65) 60%, rgba(17, 24, 39, 0.25) 80%, transparent 95%, transparent 100%)',
+              paddingRight: 'clamp(2rem, 5vw, 5rem)',
+              background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.9) 55%, rgba(17, 24, 39, 0.6) 75%, rgba(17, 24, 39, 0.2) 90%, transparent 100%)',
             }}
           >
             <h2 className="text-white leading-none tracking-wide" style={{ fontSize: 'clamp(2.25rem, 6.5vw, 4.5rem)' }}>
@@ -436,16 +433,19 @@ function Hero() {
               <span className="hidden md:inline text-teal-400 mx-2" style={{ fontSize: '1.2em', lineHeight: 0 }}>&middot;</span>
               <span className="block md:inline">Full Stack Developer</span>
             </p>
+            <span className="inline-flex items-center gap-2 mt-3">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-green-400/90 text-sm font-light tracking-wide">Open to Work</span>
+            </span>
           </div>
         </div>
+
         {/* Tagline - hidden on mobile to save space over the photo */}
         <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
           <img src={bulbIcon} alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
-          <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.85) 50%, rgba(17, 24, 39, 0.6) 70%, rgba(17, 24, 39, 0.3) 85%, transparent 95%, transparent 100%)' }}>
-            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '600px' }}>
-              A Journalist turned Web Developer!<br />
-              I don't just build websites, I create visual experiences<br />
-              that tell stories and captivate audiences.
+          <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', paddingRight: 'clamp(2rem, 5vw, 5rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.9) 55%, rgba(17, 24, 39, 0.6) 75%, rgba(17, 24, 39, 0.2) 90%, transparent 100%)' }}>
+            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '380px' }}>
+              Crafting designs that visually speak on screens and giving visual identity to ideas, products and brands in the digital world.
             </p>
           </div>
         </div>
@@ -463,7 +463,7 @@ function Hero() {
         {/* Call to Action Buttons */}
         <div className="flex flex-col items-start sm:flex-row gap-3 sm:gap-4" style={{ marginTop: 'clamp(1.5rem, 3vh, 2.5rem)', marginLeft: 'calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem))' }}>
           <button 
-            onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => smoothScrollToId('projects')}
             className="hero-cta-button"
             aria-label="View my projects"
           >
@@ -477,12 +477,25 @@ function Hero() {
           >
             View Resume
           </button>
+
+          <a
+            href="https://github.com/arefsaboor"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hero-cta-button-secondary inline-flex items-center gap-2"
+            aria-label="View GitHub profile"
+          >
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+            </svg>
+            GitHub
+          </a>
         </div>
         </div>
 
         {/* Scroll Indicator - Mobile */}
         <button 
-          onClick={() => smoothScrollTo('about')}
+          onClick={() => smoothScrollToId('about')}
           className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
         >
@@ -497,7 +510,7 @@ function Hero() {
 
         {/* Scroll Indicator - Desktop */}
         <button 
-          onClick={() => smoothScrollTo('about')}
+          onClick={() => smoothScrollToId('about')}
           className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
         >

@@ -99,10 +99,10 @@ const Contact = () => {
             <div className="px-6 sm:px-12 lg:pl-16 lg:pr-12 py-12 lg:py-20 flex flex-col justify-between">
               <div>
                 <h1 className="font-light text-slate-900 tracking-tight leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.5rem, 4.5vw, 3.25rem)' }}>
-                  Let's Work <span className="font-medium italic">Together</span>
+                  Let's Build <span className="font-medium italic">Together</span>
                 </h1>
                 <p className="text-lg text-slate-500 leading-relaxed mb-10">
-                  Share a bit about your product, audience and challenges &mdash; the more context you give, the better I can suggest a solution that fits.
+                  Whether it's a web application, design system, or technical challenge—I'm ready to collaborate. Share your vision and let's create something exceptional.
                 </p>
 
                 <div className="space-y-6">

@@ -2,7 +2,6 @@ import AboutPhoto from '../assets/AboutHero-Portrait.jpg';
 import { smoothScrollToId } from '../utils/smoothScroll';
 
 const heroContent = {
-  tagline: "I don't just build websites, I create visual experiences that tell stories and captivate audiences.",
   journey:
     '"I am a Video Journalist and a former Bundeswehr employee. After a change of career I recently joined the competitive world of Web Designing/Development. As a Self-Skilled Graphic Designer, I enthusiastically combine visual design into interactive, responsive user experiences."',
 };
@@ -35,7 +34,7 @@ export default function AboutHero({ isVisible }) {
         <div className="h-[62vh] sm:h-[68vh] lg:h-auto">
           <img
             src={AboutPhoto}
-            alt="Aref Saboor"
+            alt="Aref Saboor, UX/UI Designer and Full Stack Developer based in Berlin"
             className="w-full h-full object-cover"
             style={{ objectPosition: '50% 18%' }}
           />
@@ -55,8 +54,7 @@ export default function AboutHero({ isVisible }) {
 
             <MyStoryButton className="lg:hidden mb-10" />
 
-            <p className="text-lg text-slate-500 leading-relaxed mb-6 border-t border-slate-200 pt-6">{heroContent.tagline}</p>
-            <p className="text-slate-600 leading-relaxed italic mb-10">{heroContent.journey}</p>
+            <p className="text-slate-600 leading-relaxed italic mb-10 border-t border-slate-200 pt-6">"A former Bundeswehr video journalist who built a second career in design and development. I combine years of professional visual storytelling with modern full-stack skills — building interfaces that look as good as they perform."</p>
 
             <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-6 mb-10 border-t border-slate-200 pt-6">
               <Fact label="Background">
