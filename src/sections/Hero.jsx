@@ -284,6 +284,13 @@ function Hero() {
           transform: translateY(0);
         }
         
+        /* Hide GitHub button on mobile to prevent overlap with hero image */
+        @media (max-width: 767px) {
+          .hero-cta-button-secondary:has(svg) {
+            display: none !important;
+          }
+        }
+        
         .scroll-border {
           width: 3.5rem;
           height: 5rem;
@@ -482,7 +489,7 @@ function Hero() {
             href="https://github.com/arefsaboor"
             target="_blank"
             rel="noopener noreferrer"
-            className="hero-cta-button-secondary inline-flex items-center gap-2"
+            className="hidden md:inline-flex hero-cta-button-secondary items-center gap-2"
             aria-label="View GitHub profile"
           >
             <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
