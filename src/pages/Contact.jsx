@@ -3,27 +3,19 @@ import SocialIconLink from '../components/SocialIconLink';
 import FormStatus from '../components/FormStatus';
 import { contactMethods, socialLinks } from '../data/contactData';
 import { usePageMeta } from '../utils/usePageMeta';
+import './contact.css';
 
-const methodIcons = {
-  Email: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-    </svg>
-  ),
-  Location: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-    </svg>
-  ),
-  Phone: (
-    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-    </svg>
-  ),
-};
+/* Markup transcribed literally from the approved concept
+   (public/design-concepts/portfolio-contact.html) — same elements, same class
+   names, same order. The form's submit, honeypot and status handling are the
+   page's existing logic, untouched. */
 
-const inputClass = 'w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:bg-white outline-none transition-all text-slate-900 placeholder-slate-400';
+// A real sequence, so the numbering carries information.
+const NEXT_STEPS = [
+  { n: '01', title: 'You write', note: 'A few lines about the role or the work. No cover letter needed.' },
+  { n: '02', title: 'I reply',   note: 'Usually within 24 hours, in English or German.' },
+  { n: '03', title: 'We talk',   note: 'A call, or a coffee if you are in Berlin.' },
+];
 
 const Contact = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -40,8 +32,8 @@ const Contact = () => {
   });
 
   usePageMeta(
-    "Contact Aref Saboor | Let's Work Together",
-    'Get in touch with Aref Saboor for your next web design or development project. Based in Berlin, available for remote and worldwide work.'
+    'Contact Aref Saboor | Design & Development',
+    'Write to Aref Saboor about a role, collaboration, or thoughtful digital product. Based in Berlin and available for remote work.'
   );
 
   useEffect(() => {
@@ -92,99 +84,133 @@ const Contact = () => {
   };
 
   return (
-    <>
-      <div className="bg-white">
-        <section className={`pt-28 lg:pt-32 transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] lg:min-h-[calc(100vh-8rem)]">
-            <div className="px-6 sm:px-12 lg:pl-16 lg:pr-12 py-12 lg:py-20 flex flex-col justify-between">
-              <div>
-                <h1 className="font-light text-slate-900 tracking-tight leading-[1.05] mb-6" style={{ fontSize: 'clamp(2.5rem, 4.5vw, 3.25rem)' }}>
-                  Let's Build <span className="font-medium italic">Together</span>
-                </h1>
-                <p className="text-lg text-slate-500 leading-relaxed mb-10">
-                  Whether it's a web application, design system, or technical challenge—I'm ready to collaborate. Share your vision and let's create something exceptional.
+    <main className="pf-contact">
+      <section
+        className="ct textured"
+        style={{
+          background: 'var(--paper)',
+          opacity: isVisible ? 1 : 0,
+          transition: 'opacity .7s ease'
+        }}
+      >
+        <div className="shell">
+
+          {/* Three direct grid children. Stacked on phones; from 1040px the
+              headline takes the left column (over the contact details) and the
+              paragraph the right (over the form), so both sit on the same
+              vertical grid lines as the columns beneath them. */}
+          <header className="ct-head op-head">
+            <p className="eyebrow">Contact / Berlin</p>
+            <div className="op-cols">
+              <h1 className="ct-title op-title">A conversation can begin simply.</h1>
+              <div className="op-aside">
+                <p className="op-say">
+                  If you are considering a role, collaboration, or piece of work that values
+                  clear thinking and careful execution, write to me. A few honest lines are enough.
                 </p>
+                <p className="op-say">
+                  I reply in English or German, usually within a day.
+                </p>
+              </div>
+            </div>
+          </header>
 
-                <div className="space-y-6">
-                  {contactMethods.map((m) => (
-                    <div key={m.label} className="flex items-start gap-4 border-t border-slate-200 pt-5">
-                      <span className="w-10 h-10 shrink-0 rounded-full bg-white border border-slate-200 flex items-center justify-center text-teal-600">
-                        {methodIcons[m.label]}
-                      </span>
+          <div className="ct-split">
+
+            <aside className="ct-aside">
+              {contactMethods.map((method) => (
+                <div key={method.label} className="ct-method">
+                  <p className="ct-kick">{method.kicker}</p>
+                  {method.href ? (
+                    <a className="ct-val" href={method.href}>{method.value}</a>
+                  ) : (
+                    <p className="ct-val">{method.value}</p>
+                  )}
+                  <p className="ct-note">{method.note}</p>
+                </div>
+              ))}
+
+              <div className="ct-next">
+                <p className="ct-kick">What happens next</p>
+                <ol className="ct-steps">
+                  {NEXT_STEPS.map((step) => (
+                    <li key={step.n}>
+                      <span className="numchip">{step.n}</span>
                       <div>
-                        <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">{m.kicker}</p>
-                        {m.href ? (
-                          <a href={m.href} className="text-slate-900 font-semibold hover:text-teal-600 transition-colors">{m.value}</a>
-                        ) : (
-                          <p className="text-slate-900 font-semibold">{m.value}</p>
-                        )}
-                        <p className="text-sm text-slate-400 mt-0.5">{m.note}</p>
+                        <b>{step.title}</b>
+                        <span>{step.note}</span>
                       </div>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </div>
 
-              <div className="pt-10 lg:pt-0">
-                <p className="text-xs font-semibold text-slate-900 uppercase tracking-wide mb-4">Find me here</p>
-                <div className="flex gap-3">
+              <div className="ct-else">
+                <p className="ct-kick">Elsewhere</p>
+                <div className="ct-socs">
                   {socialLinks.map((link) => (
-                    <SocialIconLink key={link.label} link={link} className="w-10 h-10 rounded-full border border-slate-200 bg-white flex items-center justify-center text-slate-500 hover:text-teal-600 hover:border-teal-300 hover:-translate-y-0.5 transition-all" />
+                    <SocialIconLink key={link.label} link={link} />
                   ))}
                 </div>
               </div>
-            </div>
+            </aside>
 
-            <div className="px-6 sm:px-12 lg:px-12 py-12 lg:py-20 flex items-center">
-              <div className="w-full max-w-2xl mx-auto">
-                <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-8 sm:p-10">
-                  <h2 className="text-2xl font-light text-slate-900 mb-1">Send a Message</h2>
-                  <p className="text-slate-500 mb-8">I'll get back to you as soon as possible.</p>
-
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <FormStatus status={status} />
-                    <input
-                      type="text"
-                      name="website"
-                      value={formData.website}
-                      onChange={handleChange}
-                      tabIndex={-1}
-                      autoComplete="off"
-                      aria-hidden="true"
-                      className="absolute -left-[9999px] w-px h-px overflow-hidden"
-                    />
-                    <div>
-                      <label htmlFor="name" className="block text-sm font-semibold text-slate-900 mb-2">Name</label>
-                      <input type="text" id="name" name="name" value={formData.name} onChange={handleChange} required className={inputClass} placeholder="Your name" />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="block text-sm font-semibold text-slate-900 mb-2">Email</label>
-                      <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required className={inputClass} placeholder="you@example.com" />
-                    </div>
-                    <div>
-                      <label htmlFor="message" className="block text-sm font-semibold text-slate-900 mb-2">Message</label>
-                      <textarea id="message" name="message" value={formData.message} onChange={handleChange} required rows="6" className={`${inputClass} resize-none`} placeholder="Tell me about your project..." />
-                    </div>
-                    <button
-                      type="submit"
-                      disabled={status.submitting}
-                      className={`group w-full inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-slate-900 text-white font-medium rounded-lg transition-all duration-300 ${status.submitting ? 'opacity-60 cursor-not-allowed' : 'hover:bg-teal-600 hover:-translate-y-0.5 hover:shadow-lg'}`}
-                    >
-                      {status.submitting ? 'Sending...' : 'Send Message'}
-                      {!status.submitting && (
-                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                        </svg>
-                      )}
-                    </button>
-                  </form>
-                </div>
+            <div className="ct-form">
+              <div className="ct-form-head">
+                <h2 className="ct-form-title">Write a message</h2>
+                <span className="ct-req mono">All fields required</span>
               </div>
+
+              <form onSubmit={handleSubmit}>
+                <FormStatus status={status} />
+
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', overflow: 'hidden' }}
+                />
+
+                <div className="ct-fields">
+                  <div>
+                    <label className="ct-label" htmlFor="name">Your name</label>
+                    <input className="ct-input" id="name" name="name" type="text"
+                      value={formData.name} onChange={handleChange} required placeholder="Your name" />
+                  </div>
+                  <div>
+                    <label className="ct-label" htmlFor="email">Your email</label>
+                    <input className="ct-input" id="email" name="email" type="email"
+                      value={formData.email} onChange={handleChange} required placeholder="you@example.com" />
+                  </div>
+                  <div>
+                    <label className="ct-label" htmlFor="message">Your message</label>
+                    <textarea className="ct-input" id="message" name="message" rows="6"
+                      value={formData.message} onChange={handleChange} required
+                      placeholder="A role, a collaboration, an idea, or a question…" />
+                  </div>
+                </div>
+
+                <button className="ct-send" type="submit" disabled={status.submitting}
+                  style={status.submitting ? { cursor: 'not-allowed', opacity: 0.6 } : undefined}>
+                  {status.submitting ? 'Sending…' : 'Send Message'}
+                  {!status.submitting && (
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+                      strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    </svg>
+                  )}
+                </button>
+              </form>
             </div>
+
           </div>
-        </section>
-      </div>
-    </>
+        </div>
+      </section>
+    </main>
   );
 };
 

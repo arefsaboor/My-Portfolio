@@ -95,11 +95,12 @@ function Loader({ onComplete }) {
           position: fixed;
           inset: 0;
           z-index: 9999;
+          overflow: hidden;   /* the blurred blobs are wider than the viewport */
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          background: linear-gradient(to bottom right, #0f172a 0%, #134e4a 50%, #164e63 100%);
+          background: linear-gradient(140deg, #08191A 0%, #0C2A2C 48%, #123B3D 100%);
         }
 
         .loader-overlay.fade-out {
@@ -110,14 +111,14 @@ function Loader({ onComplete }) {
         .loader-bg-pattern {
           position: absolute;
           inset: 0;
-          opacity: 0.2;
+          opacity: 0.28;
           pointer-events: none;
         }
 
         .loader-blob {
           position: absolute;
           border-radius: 50%;
-          mix-blend-mode: multiply;
+          mix-blend-mode: screen;
           filter: blur(64px);
           animation: blob 7s infinite ease-in-out;
         }
@@ -127,7 +128,7 @@ function Loader({ onComplete }) {
           left: 25%;
           width: 24rem;
           height: 24rem;
-          background-color: #2dd4bf;
+          background-color: #2E7A7D;
         }
 
         .loader-blob-2 {
@@ -135,7 +136,7 @@ function Loader({ onComplete }) {
           right: 25%;
           width: 24rem;
           height: 24rem;
-          background-color: #22d3ee;
+          background-color: #3E9295;
           animation-delay: 2s;
         }
 
@@ -144,24 +145,18 @@ function Loader({ onComplete }) {
           left: 50%;
           width: 24rem;
           height: 24rem;
-          background-color: #c084fc;
+          background-color: #928EA5;
           animation-delay: 4s;
         }
 
         .loader-gradient-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+          background:
+            repeating-linear-gradient(to right,  rgba(255,255,255,.05) 0 1px, transparent 1px 34px),
+            repeating-linear-gradient(to bottom, rgba(255,255,255,.04) 0 1px, transparent 1px 34px),
+            linear-gradient(to top, rgba(8,25,26,.55) 0%, rgba(8,25,26,.22) 50%, transparent 100%);
           pointer-events: none;
-        }
-
-        .loader-globe {
-          width: clamp(120px, 20vw, 180px);
-          height: clamp(120px, 20vw, 180px);
-          margin-bottom: clamp(2rem, 4vh, 3rem);
-          filter: brightness(0) invert(1);
-          position: relative;
-          z-index: 10;
         }
 
         .loader-text-container {
@@ -182,10 +177,10 @@ function Loader({ onComplete }) {
         .loader-text {
           position: absolute;
           font-size: clamp(2rem, 5vw, 3.5rem);
-          font-weight: 400;
-          color: white;
+          font-weight: 300;
+          color: #F2F7F6;
           text-align: center;
-          font-family: system-ui, -apple-system, sans-serif;
+          font-family: Epilogue, system-ui, -apple-system, sans-serif;
           letter-spacing: 0.02em;
           padding: 0;
           margin: 0;
@@ -201,7 +196,7 @@ function Loader({ onComplete }) {
           width: 0.75rem;
           height: 0.75rem;
           border-radius: 50%;
-          background-color: white;
+          background-color: #3E9295;
           flex-shrink: 0;
         }
 

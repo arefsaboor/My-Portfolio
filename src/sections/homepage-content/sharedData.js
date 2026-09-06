@@ -11,6 +11,9 @@ import portfolioMobile from '../../assets/Portfolio-Site-Screenshots/Home-Mobile
 import bestsellersDesktop from '../../assets/bestsellers-screenshots/bestsellers-desktop.webp';
 import bestsellersTablet from '../../assets/bestsellers-screenshots/bestsellers-tablet.webp';
 import bestsellersMobile from '../../assets/bestsellers-screenshots/bestsellers-mobile.webp';
+import arefsaboorComDesktop from '../../assets/arefsaboor-com-screenshots/arefsaboor-com-desktop.webp';
+import arefsaboorComTablet from '../../assets/arefsaboor-com-screenshots/arefsaboor-com-tablet.webp';
+import arefsaboorComMobile from '../../assets/arefsaboor-com-screenshots/arefsaboor-com-mobile.webp';
 import icon1 from '../../assets/svg-icons/1-Node.svg';
 import icon2 from '../../assets/svg-icons/2-Next.js.svg';
 import icon3 from '../../assets/svg-icons/3-Vite.svg';
@@ -94,6 +97,7 @@ const thumbByName = {
   'Portfolio': portfolioDesktop,
   'Nirvan': nirvanDesktop,
   'Bestsellers': bestsellersDesktop,
+  'arefsaboor.com': arefsaboorComDesktop,
 };
 
 const screensByName = {
@@ -101,22 +105,39 @@ const screensByName = {
   'Portfolio': { desktop: portfolioDesktop, tablet: portfolioTablet, mobile: portfolioMobile },
   'Nirvan': { desktop: nirvanDesktop, tablet: nirvanTablet, mobile: nirvanMobile },
   'Bestsellers': { desktop: bestsellersDesktop, tablet: bestsellersTablet, mobile: bestsellersMobile },
+  'arefsaboor.com': { desktop: arefsaboorComDesktop, tablet: arefsaboorComTablet, mobile: arefsaboorComMobile },
+};
+
+// Same display order as the Projects page (see projectsHeroData.js), so a
+// project carries the same number on the homepage, the carousel and the archive.
+const FEATURED = ['arefsaboor.com', 'Bestsellers'];
+const rank = (p) => {
+  const i = FEATURED.indexOf(p.name);
+  return i === -1 ? FEATURED.length : i;
 };
 
 export const featuredProjects = [...projectsData.projects]
-  .sort((a, b) => {
-    if (a.name === 'Bestsellers' && b.name !== 'Bestsellers') return -1;
-    if (b.name === 'Bestsellers' && a.name !== 'Bestsellers') return 1;
-    return a.id - b.id;
-  })
+  // arefsaboor.com gets its own section on this page (WritingSiteBridge), so it
+  // is not repeated as a project card here. It stays 01 in the Projects archive.
+  .filter((p) => p.name !== 'arefsaboor.com')
+  .sort((a, b) => rank(a) - rank(b) || a.id - b.id)
   .map((p) => ({
     id: p.id,
     name: p.name,
     subtitle: p.subtitle,
+    category: p.category,
+    role: p.role,
+    year: p.year,
     description: p.description,
+    challenge: p.challenge,
+    solution: p.solution,
+    highlights: p.highlights,
     tags: p.tags,
     technologies: p.technologies,
     liveUrl: p.liveUrl,
+    vercelUrl: p.vercelUrl,
+    githubUrl: p.githubUrl,
+    figmaUrl: p.figmaUrl,
     thumb: thumbByName[p.name],
     screens: screensByName[p.name],
   }));

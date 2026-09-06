@@ -1,233 +1,311 @@
 import { useState } from 'react';
+import ExternalIcon from '../../components/ExternalIcon';
+import WritingSiteBridge from '../WritingSiteBridge';
 import { Link } from 'react-router-dom';
-import skillsData from '../../data/skills.json';
-import CTASection from '../../components/CTASection';
-import { techIcons, aboutStats, featuredProjects } from './sharedData';
+import { featuredProjects } from './sharedData';
+import './homepage.css';
 
-function Heading({ eyebrow, children }) {
-  return (
-    <div className="mb-12">
-      <p className="text-xs font-medium uppercase tracking-[0.3em] text-slate-400 mb-4">{eyebrow}</p>
-      <h2 className="font-light text-slate-900 tracking-tight" style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}>{children}</h2>
-    </div>
-  );
-}
+/* A literal transcription of the four page sections in
+ * arefsaboor.com/public/design-concepts/portfolio-homepage.html.
+ *
+ * Same class names, same inline styles, same numbers. Nothing here goes
+ * through tailwind.config.js — the styling lives in homepage.css, moved
+ * across byte-for-byte. Where the concept hardcoded four project cards this
+ * maps over featuredProjects; the markup it emits per card is identical.
+ *
+ * To change the design: change the concept page first, then move it again.
+ */
 
-function TechIconBadge({ icon }) {
-  return (
-    <div className="rounded-lg p-4 flex flex-col items-center gap-2 w-24 flex-shrink-0 border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors">
-      <img src={icon.src} alt={icon.alt} className="w-8 h-8" loading="lazy" />
-      <span className="text-[10px] text-slate-500 font-medium text-center">{icon.name}</span>
-    </div>
-  );
-}
-
-const deviceTabs = [
-  { id: 'desktop', label: 'Desktop' },
-  { id: 'tablet', label: 'Tablet' },
-  { id: 'mobile', label: 'Mobile' },
+const disciplines = [
+  {
+    mark: '01',
+    title: 'I make products understandable.',
+    text: 'User flows, interface hierarchy and visual systems that make a complicated product feel considered from the first interaction.',
+    detail: 'UX/UI Design · Figma · Design Systems',
+  },
+  {
+    mark: '02',
+    title: 'I turn the design into the real thing.',
+    text: 'Responsive, accessible frontend work with the same attention to detail that shaped the interface in the first place.',
+    detail: 'React · Next.js · TypeScript · Tailwind CSS',
+  },
+  {
+    mark: '03',
+    title: 'I can take it beyond the screen.',
+    text: 'When a product needs data, authentication, payments or an admin workflow, I can build the system behind the interface too.',
+    detail: 'Node.js · PostgreSQL · Prisma · Stripe · Firebase',
+  },
 ];
 
-function DeviceShowcase({ project }) {
-  const [device, setDevice] = useState('desktop');
+/* The archive's device plate, ported from ProjectsListContent so the homepage
+   cards read the same: real browser chrome on desktop, a camera dot on tablet,
+   a notch on phone. The plate keeps its box whatever is inside it and the image
+   is object-fit:contain, so switching view never crops or reflows the row. */
+/* The laptop's screen slot takes the screenshot's own aspect ratio, so no
+   capture is ever letterboxed or cropped. A ref callback rather than onLoad:
+   the shots are preloaded, so by the time React attaches a handler the image
+   is already complete and onLoad would never fire. */
+function setShotRatio(img) {
+  if (!img) return;
+  const apply = () => {
+    const af = img.closest('.af');
+    if (af && img.naturalWidth) af.style.setProperty('--shot-ar', img.naturalWidth / img.naturalHeight);
+  };
+  if (img.complete) apply();
+  else img.addEventListener('load', apply, { once: true });
+}
 
+const VIEWS = [['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Mobile']];
+
+const LINKS = [
+  ['liveUrl', 'Visit Live'],
+  ['vercelUrl', 'Live Vercel'],
+  ['githubUrl', 'GitHub'],
+  ['figmaUrl', 'Figma'],
+];
+
+function LinkRow({ project, className = 'pj-links' }) {
   return (
-    <div>
-      <div className="flex w-full gap-1 p-2 rounded-lg mb-8 border border-slate-200 bg-slate-50 hover:bg-white transition-colors">
-        {deviceTabs.map((d) => (
+    <div className={className}>
+      {LINKS.filter(([key]) => project[key]).map(([key, label]) => (
+        <a className="linkline" key={label} href={project[key]} target="_blank" rel="noopener noreferrer">
+          {label}<ExternalIcon />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+function DevicePlate({ project }) {
+  const [view, setView] = useState('desktop');
+  const url = (project.liveUrl || project.vercelUrl || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+  return (
+    <div className="pj-shots">
+      <div className="pj-views" role="tablist" aria-label={`${project.name} screenshots`}>
+        {VIEWS.map(([key, label]) => (
           <button
-            key={d.id}
-            onClick={() => setDevice(d.id)}
-            className={`flex-1 px-4 py-3 rounded-md text-xs font-bold uppercase tracking-wider transition-all ${
-              device === d.id ? 'bg-slate-900 text-white shadow-md' : 'text-slate-500 hover:text-slate-700 hover:bg-slate-100'
-            }`}
+            key={key}
+            role="tab"
+            aria-selected={view === key}
+            className={`pj-view mono${view === key ? ' on' : ''}`}
+            onClick={() => setView(key)}
           >
-            {d.label}
+            {label}
           </button>
         ))}
       </div>
-
-      <div className="h-auto flex items-center justify-center group">
-        {device === 'desktop' && (
-          <div className="w-full rounded-xl p-3 border border-slate-200 bg-slate-50 shadow-lg group-hover:shadow-2xl transition-all duration-300 origin-center">
-            <div className="flex items-center gap-3 px-4 py-3 bg-white rounded-lg mb-2">
-              <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded-full bg-red-400/70" />
-                <span className="w-3 h-3 rounded-full bg-amber-400/70" />
-                <span className="w-3 h-3 rounded-full bg-green-400/70" />
+      <figure className="pj-plate">
+        <div className="pj-plate-in">
+          <div className="pj-dev-wrap">
+            {view === 'desktop' && (
+              <div className="af af-lap">
+                <div className="af-lid">
+                  <div className="af-bar">
+                    <span className="af-dot" /><span className="af-dot" /><span className="af-dot" />
+                    <span className="af-url mono">{url}</span>
+                  </div>
+                  <div className="af-screen"><img src={project.screens.desktop} alt={`${project.name} on desktop`} loading="lazy" decoding="async" ref={setShotRatio} /></div>
+                </div>
+                <div className="af-base" />
               </div>
-              <div className="flex-1 text-xs text-slate-400 bg-slate-50 rounded px-3 py-1 truncate font-mono">{project.liveUrl?.replace('https://', '')}</div>
-            </div>
-            <img src={project.screens.desktop} alt={`${project.name} desktop view`} className="w-full h-auto rounded-lg border border-slate-200" loading="lazy" />
+            )}
+            {view === 'tablet' && (
+              <div className="af af-tab">
+                <div className="af-body">
+                  <span className="af-cam" />
+                  <div className="af-screen"><img src={project.screens.tablet} alt={`${project.name} on tablet`} loading="lazy" decoding="async" /></div>
+                </div>
+              </div>
+            )}
+            {view === 'mobile' && (
+              <div className="af af-pho">
+                <div className="af-body">
+                  <span className="af-notch" />
+                  <div className="af-screen"><img src={project.screens.mobile} alt={`${project.name} on mobile`} loading="lazy" decoding="async" /></div>
+                </div>
+              </div>
+            )}
           </div>
-        )}
-        {device === 'tablet' && (
-          <div className="bg-slate-900 rounded-[2rem] p-2 shadow-2xl group-hover:shadow-3xl transition-all duration-300 origin-center">
-            <div className="relative flex items-center justify-center">
-              <span className="absolute top-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-slate-600 ring-2 ring-slate-700 z-10" />
-              <img src={project.screens.tablet} alt={`${project.name} tablet view`} className="h-[500px] w-auto object-contain rounded-2xl" loading="lazy" />
-            </div>
-          </div>
-        )}
-        {device === 'mobile' && (
-          <div className="bg-slate-900 rounded-[2.2rem] p-2 shadow-2xl group-hover:shadow-3xl transition-all duration-300 origin-center relative">
-            <span className="absolute top-3 left-1/2 -translate-x-1/2 w-10 h-2.5 rounded-full bg-black z-10" />
-            <span className="absolute -left-[2px] top-[28%] w-[3px] h-8 bg-slate-700 rounded-r" />
-            <span className="absolute -right-[2px] top-[24%] w-[3px] h-11 bg-slate-700 rounded-l" />
-            <div className="relative flex items-center justify-center">
-              <img src={project.screens.mobile} alt={`${project.name} mobile view`} className="h-[500px] w-auto object-contain rounded-[1.6rem]" loading="lazy" />
-            </div>
-            <span className="absolute bottom-2 left-1/2 -translate-x-1/2 w-20 h-1 rounded-full bg-slate-600" />
-          </div>
-        )}
-      </div>
+        </div>
+      </figure>
     </div>
   );
 }
 
 export default function HomepageContent() {
   return (
-    <div className="bg-white">
+    <main className="pf-home">
 
-      {/* About */}
-      <section id="about" className="py-20 md:py-28 lg:py-32">
-        <div className="max-w-[1100px] mx-auto px-6 sm:px-8 lg:px-12">
-          <Heading eyebrow="Who I Am">Design-First Developer</Heading>
-          <div className="rounded-xl p-10 border border-slate-200 bg-slate-50/50 mb-8">
-            <p className="text-xl text-slate-600 leading-relaxed mb-4">
-              I&apos;m a <strong className="text-slate-800">video journalist</strong> and <strong className="text-slate-800">self-learned graphic designer</strong> who discovered the power of combining visual arts with code.
-            </p>
-            <p className="text-xl text-slate-600 leading-relaxed">Combining <strong className="text-slate-800">visual design intuition</strong> with modern <strong className="text-slate-800">full-stack development</strong> skills.</p>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-            {aboutStats.map((s) => (
-              <div key={s.label} className="rounded-lg p-6 text-center border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors">
-                <div className="text-2xl font-light text-slate-900">{s.value}</div>
-                <div className="text-xs text-slate-500 mt-1">{s.label}</div>
+      {/* ══ STATEMENT ══ */}
+      <section id="about" className="textured sec" style={{ background: 'var(--paper)' }}>
+        <div className="shell">
+          <div className="card-lg stmt op-head">
+            {/* the opener label: a tinted plate with its own hairline, then a
+                deliberate drop before the two columns begin */}
+            <p className="eyebrow">A design-first developer</p>
+
+            <div className="op-cols">
+              <h2 className="d op-title">
+                I use design to ask the right questions—then code to make the answer work.
+              </h2>
+
+              <div className="op-aside">
+                <p className="op-say">
+                  A background in visual journalism and graphic design, brought to digital products.
+                </p>
+                <p className="op-say">
+                  Years behind a camera and in a cutting room taught me to look before I build:
+                  to ask what a thing is for, what it is competing with for attention, and what
+                  can be taken away without losing the point.
+                </p>
+                <p className="op-say">
+                  I still work that way. The design question and the engineering question get
+                  answered together rather than in sequence — which is usually why the finished
+                  thing holds up.
+                </p>
+                <Link to="/about" className="linkline op-link">
+                  More about my approach <span style={{ color: 'var(--accent)' }}>→</span>
+                </Link>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Skills */}
-      <section className="py-20 md:py-28 lg:py-32">
-        <div className="max-w-[1200px] mx-auto px-6 sm:px-8 lg:px-12">
-          <Heading eyebrow="What I Bring">Technical Expertise</Heading>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {skillsData.categories.map((cat) => (
-              <div key={cat.id} className="rounded-xl p-8 border border-slate-200 bg-slate-50/50 hover:bg-slate-100/50 transition-colors">
-                <h3 className="text-xl font-light text-slate-900 mb-1">{cat.title}</h3>
-                <p className="text-sm text-slate-500 mb-5">{cat.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {cat.skills.map((s) => (
-                    <span key={s.id} className="text-sm font-medium text-slate-700 px-4 py-2 rounded-full bg-slate-100 border border-slate-200">{s.name}</span>
-                  ))}
+      {/* ══ RECENT WORKS ══ */}
+      <section id="projects" className="textured sec" style={{ background: 'var(--band)', borderTop: '1px solid var(--rule)' }}>
+        <div className="shell-wide">
+          <div className="op-head sec-gap">
+            <p className="eyebrow">Recent Works</p>
+            <div className="op-cols">
+              <h2 className="d op-title">A closer look at what I build.</h2>
+              <div className="op-aside">
+                <p className="op-say">
+                  A short selection rather than an archive. Each one is a working product with
+                  its own constraints — payments and accounts, bilingual publishing, a public
+                  API, a design system carried through to the code.
+                </p>
+                <p className="op-say">
+                  Every entry below sets out what the problem was, what I decided, and what it
+                  took to build — not just the screen it ended up as.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="proj-stack">
+            {featuredProjects.map((project, i) => (
+              <article className={`pj-row${i % 2 ? ' flip' : ''}`} key={project.id}>
+                <div className="pj-row-head">
+                  <p className="pj-rn mono">
+                    <span className="numchip">{String(i + 1).padStart(2, '0')}</span> {project.category}
+                  </p>
+                  <p className="pj-role mono">{project.role} · {project.year}</p>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
 
-        {/* Tech logos marquee - full width, between two horizontal lines */}
-        <div className="w-full border-t border-b border-slate-200 py-10 mt-16 overflow-hidden">
-          <div className="flex gap-5 v2-marquee-track">
-            <div className="flex gap-5 flex-shrink-0">
-              {techIcons.map((icon) => <TechIconBadge key={`a-${icon.name}`} icon={icon} />)}
-            </div>
-            <div className="flex gap-5 flex-shrink-0">
-              {techIcons.map((icon) => <TechIconBadge key={`b-${icon.name}`} icon={icon} />)}
-            </div>
-          </div>
-        </div>
-      </section>
+                <div className="pj-row-id">
+                  <h3 className="pj-rname">{project.name}</h3>
+                  <p className="pj-rsub">{project.subtitle}</p>
+                </div>
 
-      {/* Projects */}
-      <section id="projects" className="py-20 md:py-28 lg:py-32">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
-          <Heading eyebrow="Portfolio">Featured Projects</Heading>
-          <div className="space-y-20 lg:space-y-32">
-            {featuredProjects.map((p, idx) => {
-              const projectNum = String(idx + 1).padStart(2, '0');
-              
-              return (
-                <div key={p.id} className="relative">
-                  {/* Accent line between projects */}
-                  {idx > 0 && <div className="absolute -top-10 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />}
-                  
-                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                    {/* Info Section */}
-                    <div>
-                      <div className="mb-6 flex items-center gap-4">
-                        <span className="text-6xl sm:text-7xl font-light text-slate-200 leading-none">{projectNum}</span>
-                        <div>
-                          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-900 mb-1 hover:text-teal-600 transition-colors cursor-default">{p.name}</h3>
-                          <p className="text-base text-slate-500">{p.subtitle}</p>
-                        </div>
+                <div className="pj-row-mid">
+                  <DevicePlate project={project} />
+                  <div className="pj-read">
+                    <p className="pj-lead">{project.description}</p>
+                    <div className="pj-qa">
+                      <div>
+                        <p className="pj-k">The question</p>
+                        <p>{project.challenge}</p>
                       </div>
-
-                      {/* Accent line */}
-                      <div className="w-12 h-1 bg-teal-500/60 rounded-full mb-6" />
-
-                      {/* Project description */}
-                      <p className="text-slate-600 leading-relaxed mb-8">{p.description}</p>
-
-                      <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Built With</p>
-                      <div className="flex flex-wrap gap-2 mb-10">
-                        {p.technologies.map((t) => (
-                          <span key={t} className="text-xs font-medium text-slate-700 px-3.5 py-2 rounded-lg bg-slate-100 border border-slate-200 hover:border-teal-300 hover:bg-slate-50 transition-all cursor-default">{t}</span>
-                        ))}
-                      </div>
-
-                      <a
-                        href={p.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-teal-600 hover:translate-x-1 transition-all group shadow-sm hover:shadow-md"
-                      >
-                        <span>View Live Project</span>
-                        <svg className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
-                      </a>
-                    </div>
-
-                    {/* Device Showcase */}
-                    <div className="relative group">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-teal-500/10 to-slate-300/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="relative rounded-2xl overflow-hidden">
-                        <DeviceShowcase project={p} />
+                      <div>
+                        <p className="pj-k">The response</p>
+                        <p>{project.solution}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+
+                <div className="pj-row-foot">
+                  <div>
+                    <p className="pj-k">What is in the work</p>
+                    <ul className="pj-hl">
+                      {project.highlights.slice(0, 4).map((h) => (
+                        <li key={h}><span aria-hidden="true">—</span><span>{h}</span></li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="pj-k">Built with</p>
+                    <p className="pj-tech mono">{project.technologies.join(' · ')}</p>
+                    <LinkRow project={project} className="pj-links foot" />
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
-        </div>
-        <div className="text-center mt-16 lg:mt-20">
-          <Link
-            to="/projects"
-            className="inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-teal-600 transition-colors group text-lg"
-          >
-            View All Projects
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </Link>
+
+          <div className="sec-gap-top" style={{ display: 'flex', justifyContent: 'center' }}>
+            <Link to="/projects" className="linkline" style={{ borderBottomColor: 'var(--accent)' }}>
+              Explore all projects <span style={{ color: 'var(--accent)' }}>→</span>
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Contact CTA */}
-      <section className="py-20 md:py-28 lg:py-32">
-        <div className="max-w-4xl mx-auto px-6 sm:px-8">
-          <CTASection
-            eyebrow="GET IN TOUCH"
-            title="Let's Work Together"
-            description="Have a project, a role, or just want to connect? I'm currently open to new opportunities and would love to hear from you."
-            primaryButtonText="Start a Conversation"
-            primaryButtonHref="/contact"
-          />
+      {/* ══ ANOTHER PRACTICE — the writing site ══ */}
+      <WritingSiteBridge />
+
+      {/* ══ HOW I CONTRIBUTE ══ */}
+      <section className="textured sec" style={{ background: 'var(--paper)', borderTop: '1px solid var(--rule)' }}>
+        <div className="shell">
+          <div className="op-head sec-gap-sm">
+            <p className="eyebrow">How I contribute</p>
+            <div className="op-cols">
+              <h2 className="d op-title">Useful at the beginning, and still useful at launch.</h2>
+              <div className="op-aside">
+                <p className="op-say">
+                  Three things I am usually asked to do. They overlap more than the labels
+                  suggest — the judgement that shapes an interface is the same one that decides
+                  what the API should return.
+                </p>
+                <p className="op-say">
+                  Being able to work across all three is what keeps a decision from being handed
+                  over the wall and quietly reinterpreted.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {disciplines.map((d) => (
+              <article key={d.mark} className="disc">
+                <span className="numchip mono" style={{ background: 'var(--inset)', color: 'var(--accent)', border: '1px solid var(--rule)' }}>{d.mark}</span>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '11px' }}>
+                  <h3 className="disc-t">{d.title}</h3>
+                  <p className="t-body" style={{ margin: 0, maxWidth: '580px', fontWeight: 300, lineHeight: 1.65, color: 'var(--soft)' }}>{d.text}</p>
+                </div>
+                <p className="mono tech" style={{ margin: 0, fontSize: '12px', lineHeight: 1.8, color: 'var(--muted)' }}>{d.detail}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
-    </div>
+
+      {/* ══ OPEN TO OPPORTUNITIES ══ */}
+      <section className="textured sec" style={{ background: 'var(--wash)', borderTop: '1px solid var(--rule)' }}>
+        <div className="shell">
+          <div className="card-lg cta">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <p className="eyebrow">Open to opportunities</p>
+              <h2 className="d cta-t" style={{ maxWidth: '700px' }}>Let’s make something clear, useful and well-made.</h2>
+            </div>
+            <Link to="/contact" className="btn" style={{ flexShrink: 0, background: 'var(--ink)', color: '#fff', boxShadow: 'var(--sh-md)' }}>
+              Start a conversation <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" style={{ width: 15, height: 15 }}><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }

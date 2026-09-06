@@ -1,81 +1,70 @@
 import AboutPhoto from '../assets/AboutHero-Portrait.jpg';
-import { smoothScrollToId } from '../utils/smoothScroll';
+import ExternalIcon from '../components/ExternalIcon';
 
-const heroContent = {
-  journey:
-    '"I am a Video Journalist and a former Bundeswehr employee. After a change of career I recently joined the competitive world of Web Designing/Development. As a Self-Skilled Graphic Designer, I enthusiastically combine visual design into interactive, responsive user experiences."',
-};
-
-function Fact({ label, children }) {
+/* A literal transcription of the hero in the About design concept.
+ * Class names, values and copy are the concept's; the styling lives in
+ * src/pages/about.css, moved across byte-for-byte.
+ *
+ * The layout: from 1040px this is a two-row grid — the name takes row 1 in the
+ * right column, the portrait spans rows 1–3 in the left column and stretches,
+ * so the image is exactly as tall as the whole content block, name included.
+ * Below that it stacks: name, portrait, copy, cards.
+ */
+export default function AboutHero() {
   return (
-    <div>
-      <p className="text-xs text-slate-400 uppercase tracking-wide mb-1">{label}</p>
-      <p className="text-xs font-semibold text-slate-900 leading-snug">{children}</p>
-    </div>
-  );
-}
+    <section className="ab-hero textured" style={{ background: 'var(--paper)' }}>
+      <div className="shell">
+        <div className="ab-split">
 
-function MyStoryButton({ className = '' }) {
-  return (
-    <button
-      onClick={() => smoothScrollToId('about-story')}
-      className={`inline-flex items-center gap-2 text-sm font-semibold text-slate-900 uppercase tracking-wide hover:text-teal-600 transition-colors ${className}`}
-    >
-      My Story
-      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" /></svg>
-    </button>
-  );
-}
+          <h1 className="ab-name"><b>Aref</b> Saboor</h1>
 
-export default function AboutHero({ isVisible }) {
-  return (
-    <section id="about-hero" className="bg-white pt-20 lg:pt-0">
-      <div className={`flex flex-col lg:grid lg:grid-cols-2 lg:min-h-screen transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="h-[62vh] sm:h-[68vh] lg:h-auto">
-          <img
-            src={AboutPhoto}
-            alt="Aref Saboor, UX/UI Designer and Full Stack Developer based in Berlin"
-            className="w-full h-full object-cover"
-            style={{ objectPosition: '50% 18%' }}
-          />
-        </div>
+          <figure className="ab-plate">
+            <img src={AboutPhoto} alt="Aref Saboor, photographed in Berlin" />
+          </figure>
 
-        <div className="flex items-center px-6 sm:px-12 lg:px-16 lg:border-l border-slate-200 py-10 lg:pt-32 lg:pb-10">
-          <div className="max-w-lg w-full">
-            <h1 className="leading-none tracking-tight whitespace-nowrap mb-3" style={{ fontSize: 'clamp(2rem, 6vw, 4.5rem)' }}>
-              <span className="font-bold text-slate-900">Aref </span>
-              <span className="font-thin text-slate-900">Saboor</span>
-            </h1>
-            <p className="font-thin text-slate-500 mb-8 whitespace-nowrap" style={{ fontSize: 'clamp(0.8125rem, 2.4vw, 1.625rem)' }}>
-              UX/UI Designer
-              <span className="text-teal-600 mx-2" style={{ fontSize: '1.2em', lineHeight: 0 }}>&middot;</span>
-              Full Stack Developer
+          <div className="ab-body">
+            <p className="ab-lead">
+              Before I began designing interfaces, I learned to pay attention through a camera and through books.
+            </p>
+            <p className="ab-sub">
+              I spent years as a video journalist — including work with the <strong>Bundeswehr</strong> — and
+              earned my living as a graphic designer, before training as a developer. That work taught me to
+              prepare thoroughly, compose carefully, and take responsibility for details.
+            </p>
+            <p className="ab-sub">
+              I also write. Essays in Persian and English live at{' '}
+              <a className="ab-site" href="https://arefsaboor.com" target="_blank" rel="noreferrer">
+                arefsaboor.com<ExternalIcon />
+              </a>{' '}
+              — my official site, and where the habit of looking closely comes from. It shapes how I read a
+              brief: stay with a problem longer, look for its structure, distrust the first easy answer.
             </p>
 
-            <MyStoryButton className="lg:hidden mb-10" />
-
-            <p className="text-slate-600 leading-relaxed italic mb-10 border-t border-slate-200 pt-6">"A former Bundeswehr video journalist who built a second career in design and development. I combine years of professional visual storytelling with modern full-stack skills — building interfaces that look as good as they perform."</p>
-
-            <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-6 mb-10 border-t border-slate-200 pt-6">
-              <Fact label="Background">
-                Writer,<span className="hidden xl:inline"> </span><br className="xl:hidden" />
-                Journalist<br />
-                &amp; Graphic Designer
-              </Fact>
-              <Fact label="Training">
-                1-Year<span className="hidden xl:inline"> </span><br className="xl:hidden" />
-                Intensive<br />
-                Web Development
-              </Fact>
-              <Fact label="Focus">
-                Design Driven<br />
-                Developer<span className="hidden xl:inline"> </span><br className="xl:hidden" />
-                (Frontend)
-              </Fact>
+            <div className="ab-facts">
+              <div className="ab-fact">
+                <p>Based in</p>
+                <p>Berlin, Germany<br />Open to New<br />Opportunities</p>
+              </div>
+              <div className="ab-fact">
+                <p>Background</p>
+                <p>Video Journalism<br />&amp; Graphic Design</p>
+              </div>
+              <div className="ab-fact">
+                <p>Practice</p>
+                <p>UX/UI Design<br />&amp; Full-Stack<br />Development</p>
+              </div>
+              <div className="ab-fact">
+                <p>I also write</p>
+                <p>
+                  Essays In<br />Persian &amp; English<br />
+                  <a className="ab-site" href="https://arefsaboor.com" target="_blank" rel="noreferrer">
+                    arefsaboor.com<ExternalIcon />
+                  </a>
+                </p>
+              </div>
             </div>
-
-            <MyStoryButton className="hidden lg:inline-flex" />
           </div>
+
         </div>
       </div>
     </section>

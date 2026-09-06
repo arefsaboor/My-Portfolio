@@ -10,5 +10,7 @@ export const zIndex = {
   navDropdown: 60,
   burgerButton: 50,
   sidebarOverlay: 100,
-  sidebar: 110
+  sidebar: 110,
+  // above the sidebar: a modal is the topmost surface on the page
+  modal: 200
 };

@@ -38,11 +38,11 @@ function Hero() {
         Currently highlighting: {titles[currentIndex]?.title}
       </div>
 
-      {/* Background Image with Responsive Positioning - WebP optimized */}
+      {/* Single outpainted hero photograph; no masks or duplicate layers. */}
       <div 
         className="hero-background absolute inset-0 z-0 w-full h-full"
         style={{
-          backgroundImage: 'url(/IMAGE_002.webp)',
+          backgroundImage: 'url(/IMAGE_002-hero-outpainted.png)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'scroll',
@@ -50,360 +50,311 @@ function Hero() {
         role="img"
         aria-label="Portfolio hero background"
       ></div>
+      <div className="hero-visual-overlay" aria-hidden="true" />
       
       <style>{`
-        /* Base: Mobile-first approach - content at bottom */
+        /* ── MOBILE FIRST ─────────────────────────────────────────────
+           Base is the phone. Every min-width block below adds to it.
+           This block used to be inverted: desktop values sat in the base
+           and eight max-width queries clawed them back for phones. */
         #home {
-          padding-bottom: clamp(2.5rem, 5vh, 4rem);
+          --hero-side-space: clamp(1.5rem, 3vw, 5rem);
+          --hero-content-width: min(340px, calc(100vw - 3rem));
+          --hero-grid: repeating-linear-gradient(to right, rgba(94,234,212,.10) 0 1px, transparent 1px 34px),
+                       repeating-linear-gradient(to bottom, rgba(94,234,212,.08) 0 1px, transparent 1px 34px);
+          position: relative;
+          isolation: isolate;
+          display: flex;
+          align-items: flex-end;
+          height: 100svh;
+          min-height: min(600px, 100svh);
           overflow: hidden;
+          background-color: #081516;
+          padding-bottom: clamp(2.5rem, 5vh, 4rem);
         }
-        
-        .hero-background {
-          background-position: 65% 20% !important;
-        }
-        
-        /* Desktop: Large screens 1536px+ - content nearly centered (slightly below) */
-        @media (min-width: 1536px) {
-          #home {
-            height: 100vh !important;
-            align-items: center !important;
-            padding-top: 14vh;
-            padding-bottom: 0;
-          }
-          
-          .hero-background {
-            background-position: 75% 18% !important;
-          }
-          
-          .hero-main-container {
-            margin-top: 0;
-          }
-        }
-        
-        /* Medium desktop screens - nearly centered */
-        @media (min-width: 1024px) and (max-width: 1535px) {
-          #home {
-            align-items: center !important;
-            padding-top: 12vh;
-            padding-bottom: 0;
-          }
-          
-          .hero-main-container {
-            margin-top: 0;
-          }
-        }
-        
-        /* Intermediate desktop sizes */
-        @media (min-width: 1400px) and (max-width: 1535px) {
-          .hero-background {
-            background-position: 70% 18% !important;
-          }
-        }
-        
-        @keyframes scrollIndicator {
-          0%, 100% {
-            transform: translateY(0);
-          }
-          50% {
-            transform: translateY(12px);
-          }
-        }
-        
-        .scroll-indicator-animate {
-          animation: scrollIndicator 2s ease-in-out infinite;
+        /* a phone held sideways is shorter than 600px — let the hero be the
+           viewport there instead of pushing its own content off-screen */
+        @media (orientation: landscape) and (max-height: 620px) {
+          #home { min-height: 0; }
         }
 
-        /* Hide desktop scroll indicator until layout switches */
-        .desktop-scroll-indicator {
-          display: none !important;
+        .hero-background {
+          background-size: cover !important;
+          background-position: 77% top !important;
+          background-repeat: no-repeat !important;
         }
-        
-        /* Show mobile scroll indicator until layout switches */
-        .mobile-scroll-indicator {
-          display: flex !important;
+        .hero-visual-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background: linear-gradient(180deg,
+            rgba(2,17,19,.64) 0%, rgba(2,17,19,.18) 13%, rgba(2,17,19,.08) 30%,
+            rgba(2,17,19,.08) 50%, rgba(2,17,19,.58) 62%, rgba(2,17,19,.88) 78%, rgba(2,17,19,.94) 100%);
         }
-        
-        @media (min-width: 1536px) {
-          .desktop-scroll-indicator {
-            display: flex !important;
-          }
-          
-          .mobile-scroll-indicator {
-            display: none !important;
-          }
+        .hero-visual-overlay::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: var(--hero-grid);
+          opacity: .5;
+          -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 28%, transparent 54%, #000 76%);
+          mask-image: linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 28%, transparent 54%, #000 76%);
         }
-        
-        /* Fluid sizing with clamp() */
-        .hero-content-wrapper {
-          padding-left: clamp(1.5rem, 3vw, 5rem);
-          padding-right: clamp(1.5rem, 3vw, 5rem);
+        .hero-visual-overlay::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background-image: repeating-linear-gradient(to right, rgba(8,36,40,.12) 0 1px, transparent 1px 34px),
+                            repeating-linear-gradient(to bottom, rgba(8,36,40,.09) 0 1px, transparent 1px 34px);
+          opacity: .24;
+          -webkit-mask-image: linear-gradient(90deg, transparent 66%, rgba(0,0,0,.25) 86%, rgba(0,0,0,.5) 100%);
+          mask-image: linear-gradient(90deg, transparent 66%, rgba(0,0,0,.25) 86%, rgba(0,0,0,.5) 100%);
         }
-        
+
+        /* ── hero content ───────────────────────────────────────────
+           A two-column grid: icons in a fixed 30px gutter, every piece of text
+           in the second column. That is what makes the arrow, bulb and globe
+           share one edge while the rotating line, the name, the role, the
+           tagline and the location share another. Rows with no icon leave the
+           gutter empty. Actions come last, below everything. */
+        .hero-wrap {
+          display: grid; grid-template-columns: 22px 1fr; column-gap: 12px;
+          align-items: start; width: 100%; max-width: var(--hero-content-width);
+        }
+        .hero-wrap > .ico { width: 22px; height: 20px; display: flex; align-items: center; justify-content: flex-start; }
+        .hero-wrap > .ico img, .hero-wrap > .ico svg { width: 16px; height: 16px; display: block; }
+        .hero-wrap > .txt { min-width: 0; }
+        .h-skill { min-height: 22px; }
+        .h-name {
+          margin: 10px 0 0; line-height: 1; letter-spacing: .02em; color: #fff;
+          font-size: clamp(1.55rem, 7.2vw, 2rem); white-space: nowrap;
+        }
+        /* a wrapping flex row: each role stays whole and the line breaks
+           between them, never through "Full Stack Developer" */
+        .h-role {
+          margin: 12px 0 0; font-weight: 300; color: #5eead4;
+          font-size: clamp(0.8125rem, 2vw, 1.5rem);
+          display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .5rem;
+        }
+        .h-role > span { white-space: nowrap; }
+        .h-role-sep { line-height: 0; font-size: 1.2em; }
+        .h-say { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.5; max-width: 25ch; }
+        .h-loc { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.62; }
+        .r-say { margin-top: 16px; } .r-loc { margin-top: 10px; }
+        /* one row, always: the two buttons share the column and shrink
+           together rather than stacking */
+        .hero-acts { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 18px; grid-column: 2; }
+        .hero-acts > * { flex: 0 1 auto; min-width: 0; white-space: nowrap; }
+
+        .hero-animated-box {
+          background: transparent !important;
+          min-width: 8rem; max-width: 100%; min-height: 22px;
+        }
+        .hero-animated-text { font-size: 0.8rem; text-overflow: ellipsis; }
+
         .hero-main-container {
           display: flex;
           justify-content: space-between;
           align-items: flex-end;
+          gap: 16px;
           width: 100%;
           max-width: 100vw;
           box-sizing: border-box;
           margin: 0 auto;
-          padding-left: clamp(1.5rem, 3vw, 5rem);
-          padding-right: clamp(1.5rem, 3vw, 5rem);
+          padding-left: var(--hero-side-space);
+          padding-right: var(--hero-side-space);
         }
-        
-        @media (min-width: 1024px) {
-          .hero-main-container {
-            max-width: 1800px;
-          }
-        }
-        
-        .hero-icon {
-          width: clamp(1.25rem, 2vw, 2.5rem);
-          height: clamp(1.25rem, 2vw, 2.5rem);
-          flex-shrink: 0;
-        }
-        
-        .hero-content-gap {
-          gap: clamp(0.75rem, 2vw, 2rem);
-        }
-        
-        .hero-content-row-gap {
-          margin-bottom: clamp(0.5rem, 1vh, 1rem);
-        }
-        
-        .hero-content-box {
-          padding-left: clamp(0.75rem, 2vw, 1.5rem);
-          padding-right: clamp(0.75rem, 2vw, 1.5rem);
-          max-width: 100%;
-          overflow: hidden;
-        }
-        
-        .hero-animated-box {
-          min-width: clamp(9rem, 30vw, 18.75rem);
-          max-width: 100%;
-          min-height: clamp(1.5rem, 4vh, 4rem);
-        }
-        
-        @media (max-width: 375px) {
-          .hero-animated-box {
-            min-width: 8rem;
-          }
-        }
-        
-        .hero-animated-text {
-          font-size: clamp(0.875rem, 1.5vw, 1.25rem);
-          text-overflow: ellipsis;
-        }
-        
-        @media (max-width: 375px) {
-          .hero-animated-text {
-            font-size: 0.8rem;
-          }
-        }
-        
-        .hero-main-heading {
-          font-size: clamp(1.125rem, 4vw, 3rem);
-        }
-        
-        @media (max-width: 375px) {
-          .hero-main-heading {
-            font-size: 1rem;
-          }
-        }
-        
+
+        /* ── scroll indicator ─────────────────────────────────────── */
         .scroll-text {
-          font-size: 0.875rem;
+          font-size: 0.625rem;
           text-transform: uppercase;
           letter-spacing: 0.05em;
           color: #5eead4;
           text-shadow: 0 0 15px rgba(94, 234, 212, 0.6);
         }
-        
-        @media (max-width: 768px) {
-          .scroll-text {
-            font-size: 0.625rem;
-          }
-        }
-        
-        .hero-cta-button {
-          min-height: clamp(1.5rem, 4vh, 4rem);
-          min-width: 150px;
-          padding-left: clamp(1.5rem, 2vw, 1.5rem);
-          padding-right: clamp(1.5rem, 2vw, 1.5rem);
-          background: #5eead4;
-          color: #0a3d35;
-          font-size: clamp(0.875rem, 1.5vw, 1.125rem);
-          font-weight: 500;
-          border-radius: 9999px;
-          border: none;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .hero-cta-button:hover {
-          background: #0d9488;
-          color: white;
-          transform: translateY(-1px);
-        }
-        
-        .hero-cta-button:active {
-          transform: translateY(0);
-        }
-        
-        .hero-cta-button-secondary {
-          min-height: clamp(1.5rem, 4vh, 4rem);
-          min-width: 150px;
-          padding-top: 0;
-          padding-bottom: 0;
-          padding-left: clamp(1.5rem, 2vw, 1.5rem);
-          padding-right: clamp(1.5rem, 2vw, 1.5rem);
-          background: transparent;
-          color: white;
-          font-size: clamp(0.875rem, 1.5vw, 1.125rem);
-          font-weight: 500;
-          line-height: 1;
-          border-radius: 9999px;
-          border: 1px solid #5eead4;
-          cursor: pointer;
-          transition: all 0.3s ease;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-        }
-        
-        .hero-cta-button-secondary:hover {
-          background: rgba(5, 46, 44, 0.8);
-          border-color: #14b8a6;
-          transform: translateY(-1px);
-        }
-        
-        .hero-cta-button-secondary:active {
-          transform: translateY(0);
-        }
-        
-        /* Hide GitHub button on mobile to prevent overlap with hero image */
-        @media (max-width: 767px) {
-          .hero-cta-button-secondary:has(svg) {
-            display: none !important;
-          }
-        }
-        
         .scroll-border {
-          width: 3.5rem;
-          height: 5rem;
+          width: 2.5rem;
+          height: 3.75rem;
           border-width: 1px;
           border-color: #5eead4;
           box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
         }
-        
-        @media (max-width: 768px) {
-          .scroll-border {
-            width: 2.5rem;
-            height: 3.75rem;
-          }
-        }
-        
         .scroll-dot {
-          width: 0.25rem;
-          height: 0.875rem;
-          margin-top: 0.25rem;
+          width: 0.2rem;
+          height: 0.625rem;
+          margin-top: 0.2rem;
           background-color: #5eead4;
           box-shadow: 0 0 18px rgba(94, 234, 212, 0.7);
         }
-        
-        @media (max-width: 768px) {
-          .scroll-dot {
-            width: 0.2rem;
-            height: 0.625rem;
-            margin-top: 0.2rem;
-          }
-        }
-        
         .scroll-arrow {
-          width: 1.5rem;
-          height: 1.5rem;
-          margin-bottom: 0.25rem;
+          width: 1rem;
+          height: 1rem;
+          margin-bottom: 0.15rem;
           color: #5eead4;
           filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.6));
         }
-        
-        @media (max-width: 768px) {
-          .scroll-arrow {
-            width: 1rem;
-            height: 1rem;
-            margin-bottom: 0.15rem;
-          }
-        }
-        
-        .scroll-gap {
-          gap: 0.5rem;
-        }
-        
-        @media (max-width: 768px) {
-          .scroll-gap {
-            gap: 0.35rem;
-          }
-        }
-        
+        .scroll-gap { gap: 0.35rem; }
         .scroll-indicator-wrapper {
+          display: none;
           cursor: pointer;
           transition: all 0.3s ease;
           background: none;
           border: none;
           padding: 0;
         }
-        
         .scroll-indicator-wrapper:hover .scroll-border {
           border-color: #fbbf24;
           box-shadow: 0 0 25px rgba(251, 191, 36, 0.4), 0 0 35px rgba(251, 146, 60, 0.3), 0 0 45px rgba(96, 165, 250, 0.2);
         }
-        
         .scroll-indicator-wrapper:hover .scroll-text {
           color: #fbbf24;
           text-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.3);
         }
-        
         .scroll-indicator-wrapper:hover .scroll-dot {
           background-color: #fbbf24;
           box-shadow: 0 0 15px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 146, 60, 0.4);
         }
-        
         .scroll-indicator-wrapper:hover .scroll-arrow {
           color: #fbbf24;
           filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.6)) drop-shadow(0 0 18px rgba(251, 146, 60, 0.4)) drop-shadow(0 0 24px rgba(96, 165, 250, 0.2));
         }
-        
-        .scroll-indicator-wrapper:active {
-          transform: scale(0.95);
+        .scroll-indicator-wrapper:active { transform: scale(0.95); }
+
+        /* ── buttons ──────────────────────────────────────────────── */
+        .hero-cta-button, .hero-cta-button-secondary {
+          padding: 8px 12px;
+          font-size: 11px;
+          font-weight: 500;
+          border-radius: 4px;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 32px;
+          /* colour only — nothing lifts, scales or moves on hover */
+          transition: background-color .18s ease, border-color .18s ease, color .18s ease;
         }
-        
-        /* Respect user's motion preferences */
-        @media (prefers-reduced-motion: reduce) {
-          .scroll-indicator-animate {
-            animation: none;
+        .hero-cta-button { background: #5eead4; color: #0a3d35; border: 1px solid #5eead4; }
+        .hero-cta-button:hover { background: #0d9488; border-color: #0d9488; color: #fff; }
+        .hero-cta-button-secondary {
+          background: transparent; color: #fff; line-height: 1;
+          border: 1px solid rgba(94, 234, 212, .45);
+        }
+        .hero-cta-button-secondary:hover {
+          background: rgba(5, 46, 44, .8);
+          border-color: rgba(94, 234, 212, .8);
+        }
+
+        @keyframes scrollIndicator {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(12px); }
+        }
+        .scroll-indicator-animate { animation: scrollIndicator 2s ease-in-out infinite; }
+
+        /* ── tall screens: the roomier rhythm ─────────────────────── */
+        @media (min-height: 780px) {
+          .h-name { margin-top: 16px; }
+          .h-say { line-height: 1.62; }
+          .r-say { margin-top: 26px; } .r-loc { margin-top: 14px; }
+          .hero-acts { margin-top: 24px; }
+        }
+
+        /* ── 360px and up: room for the indicator beside the buttons ── */
+        @media (min-width: 360px) {
+          .scroll-indicator-wrapper { display: flex; }
+        }
+
+        /* ── 376px and up ─────────────────────────────────────────── */
+        @media (min-width: 376px) {
+          .hero-animated-box {
+            min-width: clamp(9rem, 30vw, 18.75rem);
+            min-height: clamp(1.5rem, 4vh, 4rem);
           }
+          .hero-animated-text { font-size: clamp(0.875rem, 1.5vw, 1.25rem); }
+        }
+
+        /* ── 768px and up: the wide treatment ─────────────────────── */
+        @media (min-width: 768px) {
+          .hero-background {
+            background-position: center clamp(-52px, calc(76px - 10vh), -20px) !important;
+          }
+          .hero-visual-overlay {
+            background: linear-gradient(90deg, rgba(2,17,19,.68) 0%, rgba(2,17,19,.52) 25%, rgba(2,17,19,.27) 42%, rgba(2,17,19,.07) 54%, transparent 66%);
+          }
+          .hero-visual-overlay::before {
+            opacity: .62;
+            -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 32%, rgba(0,0,0,.72) 43%, transparent 62%);
+            mask-image: linear-gradient(90deg, #000 0%, #000 32%, rgba(0,0,0,.72) 43%, transparent 62%);
+          }
+          .hero-visual-overlay::after {
+            opacity: .52;
+            -webkit-mask-image: linear-gradient(90deg, transparent 48%, rgba(0,0,0,.08) 62%, rgba(0,0,0,.32) 76%, rgba(0,0,0,.72) 90%, #000 100%);
+            mask-image: linear-gradient(90deg, transparent 48%, rgba(0,0,0,.08) 62%, rgba(0,0,0,.32) 76%, rgba(0,0,0,.72) 90%, #000 100%);
+          }
+          .h-name { font-size: clamp(2rem, 5.6vw, 4rem); white-space: normal; }
+          .h-say { max-width: 48ch; }
+          #home { --hero-content-width: min(560px, clamp(45vw, calc(19.5vw + 255px), 62vw)); }
+          .hero-wrap { grid-template-columns: 30px 1fr; column-gap: 16px; }
+          .hero-wrap > .ico { width: 30px; height: 22px; }
+          .hero-wrap > .ico img, .hero-wrap > .ico svg { width: 20px; height: 20px; }
+          .hero-acts { flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+          .hero-acts > * { flex: 0 0 auto; }
+          .hero-cta-button, .hero-cta-button-secondary {
+            padding: 12px 20px;
+            font-size: 16px;
+            min-height: 42px;
+          }
+        }
+
+        /* ── 769px and up: the indicator at full size ─────────────── */
+        @media (min-width: 769px) {
+          .scroll-text { font-size: 0.875rem; }
+          .scroll-border { width: 3.5rem; height: 5rem; }
+          .scroll-dot { width: 0.25rem; height: 0.875rem; margin-top: 0.25rem; }
+          .scroll-arrow { width: 1.5rem; height: 1.5rem; margin-bottom: 0.25rem; }
+          .scroll-gap { gap: 0.5rem; }
+        }
+
+        /* ── 1024px and up: content lifts off the bottom edge ─────── */
+        @media (min-width: 1024px) {
+          .hero-background {
+            background-position: center clamp(-38px, calc(-22px - 8vw + 10.8vh), -22px) !important;
+          }
+          #home {
+            align-items: center;
+            padding-top: 12vh;
+            padding-bottom: 0;
+          }
+          .hero-main-container { max-width: 1800px; margin-top: 0; }
+        }
+
+        @media (min-width: 1536px) {
+          #home { height: 100vh; padding-top: 14vh; }
+        }
+
+        /* Respect the user's motion preferences */
+        @media (prefers-reduced-motion: reduce) {
+          .scroll-indicator-animate { animation: none; }
           * {
             animation-duration: 0.01ms !important;
             animation-iteration-count: 1 !important;
             transition-duration: 0.01ms !important;
           }
         }
-
-
       `}</style>
 
       {/* Main Container with Content and Scroll Indicator */}
       <div className="hero-main-container relative z-10">
-        {/* Hero Content */}
-        <div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginBottom: 'clamp(0.5rem, 1.2vh, 1rem)' }}>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="hero-icon text-white transition-transform hover:scale-110 duration-300" aria-hidden="true">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
-          </svg>
-          <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
+        <div className="hero-wrap">
+
+          <span className="ico">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2.5" stroke="currentColor" className="text-white" aria-hidden="true">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25" />
+            </svg>
+          </span>
+          <div className="txt h-skill relative hero-animated-box overflow-hidden flex items-center">
             {titles.map((item, index) => (
               <p
                 key={item.id}
@@ -419,106 +370,49 @@ function Hero() {
               </p>
             ))}
           </div>
-        </div>
-        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginBottom: 'clamp(1.25rem, 2.5vh, 2rem)' }}>
-          <span className="hero-icon flex-shrink-0" aria-hidden="true" />
-          <div
-            className="relative hero-content-box overflow-hidden flex flex-col border-l-2 border-teal-400/50"
-            style={{
-              paddingTop: 'clamp(0.5rem, 1.2vh, 1rem)',
-              paddingBottom: 'clamp(0.5rem, 1.2vh, 1rem)',
-              paddingRight: 'clamp(2rem, 5vw, 5rem)',
-              background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.9) 55%, rgba(17, 24, 39, 0.6) 75%, rgba(17, 24, 39, 0.2) 90%, transparent 100%)',
-            }}
-          >
-            <h2 className="text-white leading-none tracking-wide" style={{ fontSize: 'clamp(2.25rem, 6.5vw, 4.5rem)' }}>
+
+          <span />
+          <div className="txt">
+            <h2 className="h-name">
               <span className="font-bold">Aref </span>
               <span className="font-thin">Saboor</span>
             </h2>
-            <p className="text-white/90 font-thin" style={{ fontSize: 'clamp(1.125rem, 2.2vw, 1.625rem)', marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
-              <span className="block md:inline">UX/UI Designer</span>
-              <span className="hidden md:inline text-teal-400 mx-2" style={{ fontSize: '1.2em', lineHeight: 0 }}>&middot;</span>
-              <span className="block md:inline">Full Stack Developer</span>
-            </p>
-            <span className="inline-flex items-center gap-2 mt-3">
-              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-green-400/90 text-sm font-light tracking-wide">Open to Work</span>
-            </span>
-          </div>
-        </div>
-
-        {/* Tagline - hidden on mobile to save space over the photo */}
-        <div className="hidden md:flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(1rem, 2vh, 1.5rem)' }}>
-          <img src={bulbIcon} alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) saturate(100%) invert(82%) sepia(73%) saturate(955%) hue-rotate(353deg) brightness(103%) contrast(101%)' }} />
-          <div className="hero-content-box flex items-center border-l-2 border-teal-400/70" style={{ paddingTop: 'clamp(0.5rem, 1vh, 1rem)', paddingBottom: 'clamp(0.5rem, 1vh, 1rem)', paddingRight: 'clamp(2rem, 5vw, 5rem)', background: 'linear-gradient(to right, rgba(17, 24, 39, 0.95) 0%, rgba(17, 24, 39, 0.9) 55%, rgba(17, 24, 39, 0.6) 75%, rgba(17, 24, 39, 0.2) 90%, transparent 100%)' }}>
-            <p className="text-white/90 font-light leading-relaxed" style={{ fontSize: 'clamp(0.875rem, 1.5vw, 1.125rem)', maxWidth: '380px' }}>
-              Crafting designs that visually speak on screens and giving visual identity to ideas, products and brands in the digital world.
+            <p className="h-role">
+              <span>UX/UI Designer</span>
+              <span className="h-role-sep">&middot;</span>
+              <span>Full Stack Developer</span>
             </p>
           </div>
-        </div>
-        
-        {/* Based in Berlin - moved below description */}
-        <div className="flex items-center hero-content-gap hero-content-row-gap" style={{ marginTop: 'clamp(0.5rem, 1.5vh, 1rem)' }}>
-          <img src="/globe.svg" alt="" aria-hidden="true" className="hero-icon transition-transform hover:scale-110 duration-300" style={{ filter: 'brightness(0) invert(1)' }} />
-          <div className="relative hero-content-box hero-animated-box overflow-hidden flex items-center border-l-2 border-teal-400/50" style={{ background: 'linear-gradient(to right, rgba(17, 24, 39, 0.9) 0%, rgba(17, 24, 39, 0.6) 60%, rgba(17, 24, 39, 0.2) 75%, transparent 90%, transparent 100%)' }}>
-            <p className="hero-animated-text text-white font-normal whitespace-nowrap">
-              Based in Berlin
-            </p>
+
+          <span className="ico r-say">
+            <img src={bulbIcon} alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
+          </span>
+          <p className="txt h-say r-say">
+            Crafting designs that visually speak on screens.
+          </p>
+
+          <span className="ico r-loc">
+            <img src="/globe.svg" alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
+          </span>
+          <p className="txt h-loc r-loc">Based in Berlin</p>
+
+          <div className="hero-acts">
+            <button onClick={() => smoothScrollToId('projects')} className="hero-cta-button" aria-label="View my projects">
+              Recent Works
+            </button>
+            <button onClick={handleCVClick} className="hero-cta-button-secondary" aria-label="Preview CV">
+              View Resume
+            </button>
           </div>
-        </div>
-        
-        {/* Call to Action Buttons */}
-        <div className="flex flex-col items-start sm:flex-row gap-3 sm:gap-4" style={{ marginTop: 'clamp(1.5rem, 3vh, 2.5rem)', marginLeft: 'calc(clamp(1.25rem, 2vw, 2.5rem) + clamp(0.75rem, 2vw, 2rem))' }}>
-          <button 
-            onClick={() => smoothScrollToId('projects')}
-            className="hero-cta-button"
-            aria-label="View my projects"
-          >
-            Recent Works
-          </button>
-          
-          <button
-            onClick={handleCVClick}
-            className="hero-cta-button-secondary"
-            aria-label="Preview CV"
-          >
-            View Resume
-          </button>
 
-          <a
-            href="https://github.com/arefsaboor"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hidden md:inline-flex hero-cta-button-secondary items-center gap-2"
-            aria-label="View GitHub profile"
-          >
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-            </svg>
-            GitHub
-          </a>
-        </div>
         </div>
 
-        {/* Scroll Indicator - Mobile */}
-        <button 
+        {/* Scroll indicator — one button; it used to be duplicated as a
+            "mobile" and a "desktop" copy with identical markup, each hidden
+            by CSS at the other's widths. */}
+        <button
           onClick={() => smoothScrollToId('about')}
-          className="mobile-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
-          aria-label="Scroll to next section"
-        >
-          <span className="scroll-text font-light">Scroll</span>
-          <div className="scroll-border border-teal-400/30 rounded-full flex flex-col items-center justify-between" style={{ paddingTop: '0.5rem', paddingBottom: '0.5rem' }}>
-            <div className="scroll-dot bg-teal-400 rounded-full"></div>
-            <svg className="scroll-arrow text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-        </button>
-
-        {/* Scroll Indicator - Desktop */}
-        <button 
-          onClick={() => smoothScrollToId('about')}
-          className="desktop-scroll-indicator scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
+          className="scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
           aria-label="Scroll to next section"
         >
           <span className="scroll-text font-light">Scroll</span>

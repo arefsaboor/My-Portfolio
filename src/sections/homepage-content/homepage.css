@@ -1,0 +1,380 @@
+/* MOVED, not rebuilt — lifted byte-for-byte from
+   arefsaboor.com/public/design-concepts/portfolio-homepage.html. Only edit is
+   a scope prefix (.pf-home page / .pf-footer footer / both for shared bits).
+   MOBILE FIRST: base = one column; min-width queries add the rest.
+   Excluded: the hero (Aref's own CSS, in Hero.jsx) and concept-page chrome.
+   To change the design: edit the concept, then re-run the move. */
+.pf-home {
+  color: var(--body);
+  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+.pf-footer {
+  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.65;
+}
+:root {
+  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
+  --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
+
+  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
+     fine grain over a drafting grid. Both live ONLY on the page grounds and
+     bands. Every long passage of text sits on a clean filled card, so nothing
+     is ever read through the texture. */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+
+  --sh-sm:0 1px 2px rgba(12,42,44,.05);
+  --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
+  --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
+
+  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+}
+.pf-home * {box-sizing:border-box}
+.pf-home .textured {position:relative; isolation:isolate}
+.pf-home .textured::before {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grain); background-blend-mode:multiply; opacity:.9;
+}
+.pf-home .textured::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grid);
+}
+.pf-home .textured > * {position:relative; z-index:1}
+.pf-home .shell, .pf-footer .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
+.pf-home .shell-wide, .pf-footer .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
+.pf-home .mono, .pf-footer .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
+/* Section label — a tinted plate rather than a bare tracked line, so every
+   section on every page opens the same way. The old 26px accent dash is
+   gone; the plate is the mark now. */
+.pf-home .eyebrow {
+  display:inline-block; margin:0; padding:7px 12px 6px;
+  background:var(--inset); border:1px solid var(--rule-2);
+  font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent);
+}
+.pf-home .eyebrow::before {content:none}
+.pf-home h2.d {margin:0; font-size:60px; font-weight:300; letter-spacing:-.026em; line-height:1.08; color:var(--ink); text-wrap:balance}
+.pf-home h3.d {margin:0; font-size:48px; font-weight:300; letter-spacing:-.03em; line-height:1.1; color:var(--ink)}
+.pf-home .card {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-md)}
+.pf-home .card-lg {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg)}
+.pf-home .numchip {
+  display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px;
+  padding:0 9px; background:var(--accent); color:#fff; font-size:12px; letter-spacing:.04em;
+  justify-self:start; align-self:start; width:fit-content; flex-shrink:0;
+}
+.pf-home .linkline {display:inline-flex; align-items:center; gap:11px; font-size:14px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:7px}
+.pf-home .disc .tech {align-self:end; text-align:right}
+.pf-home .ext-i, .pf-footer .ext-i {width:12px; height:12px; flex-shrink:0; opacity:.85}
+.pf-footer .f-col a {display:inline-flex; align-items:center; gap:7px; width:fit-content}
+.pf-footer .f-chip.is-link .ext-i {width:11px; height:11px}
+.pf-footer {background:var(--paper); border-top:1px solid var(--rule); padding:clamp(56px,8vw,104px) 0 clamp(40px,5vw,56px)}
+.pf-footer a {text-decoration:none}
+.pf-footer .f-pages {display:grid; grid-template-columns:1fr; gap:48px; align-items:stretch}
+.pf-footer .f-left {display:flex; flex-direction:column; gap:32px}
+.pf-footer .f-right {display:flex; flex-direction:column; gap:0}
+.pf-footer .f-cols {display:grid; grid-template-columns:repeat(2,1fr); gap:30px 20px}
+/* three groups in a two-column grid leaves the third one hanging alone with a
+   dead half-row beside it — so on phones it spans and splits in two instead */
+.pf-footer .f-cols > :nth-child(3) {grid-column:1 / -1}
+.pf-footer .f-cols > :nth-child(3) .f-lk {display:grid; grid-template-columns:repeat(2,1fr); gap:13px 20px}
+.pf-footer .f-beyond {margin-top:auto; padding-top:clamp(32px,4vw,40px); border-top:1px solid var(--rule)}
+.pf-footer .f-av {margin:0; display:inline-flex; align-items:center; gap:11px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--accent)}
+.pf-footer .f-av i {width:7px; height:7px; background:var(--accent); display:block; flex-shrink:0}
+.pf-footer .f-nm {margin:0; font-weight:300; letter-spacing:-.032em; line-height:1; color:var(--ink); font-size:clamp(2rem,5.4vw,3.25rem)}
+.pf-footer .f-nm b {font-weight:700}
+.pf-footer .f-say {margin:0; max-width:42ch; font-size:15px; font-weight:300; line-height:1.85; color:var(--soft)}
+.pf-footer .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-footer .f-lk {display:flex; flex-direction:column; gap:13px; font-size:15px}
+.pf-footer .f-lk a, .pf-footer .f-inl a, .pf-footer .f-btn {color:var(--body)}
+.pf-footer .f-lk a:hover, .pf-footer .f-inl a:hover, .pf-footer .f-btn:hover {color:var(--accent)}
+/* Resume is a button (it opens the preview) but has to read as a link */
+.pf-footer .f-btn {appearance:none; background:none; border:0; padding:0; margin:0;
+  font:inherit; line-height:inherit; text-align:left; width:fit-content; cursor:pointer}
+.pf-footer .f-ex {color:var(--accent)}
+.pf-footer .f-inl {display:flex; flex-wrap:wrap; gap:14px 24px; font-size:15px; color:var(--soft)}
+.pf-footer .f-socs {display:flex; align-items:center; gap:20px}
+.pf-footer .f-socs a {color:var(--muted); display:inline-flex}
+.pf-footer .f-socs a:hover {color:var(--ink)}
+.pf-footer .f-socs svg {width:18px; height:18px; fill:currentColor}
+.pf-footer .f-site {color:var(--accent)}
+.pf-footer .f-site svg {width:20px; height:20px}
+.pf-footer .f-colo {margin-top:clamp(40px,5vw,56px); padding-top:32px; border-top:1px solid var(--rule);
+  display:flex; flex-direction:column; gap:10px; font-size:12px; color:var(--muted)}
+.pf-footer .f-colo a {color:var(--accent)}
+.pf-home .btn {display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:15px 24px; font-size:15px; font-weight:500; transition:all .2s ease}
+.pf-home .shell, .pf-footer .shell, .pf-home .shell-wide, .pf-footer .shell-wide {padding:0 20px}
+.pf-home .sec, .pf-footer .sec {padding:clamp(56px, 9vw, 128px) 0}
+.pf-home h2.d {font-size:clamp(1.75rem, 6.4vw, 3.75rem)}
+.pf-home h3.d {font-size:clamp(1.6rem, 5.6vw, 3rem)}
+.pf-home .stmt {padding:24px 20px; display:block}
+
+/* ── Section opener, proposed identity ────────────────────────────────
+   The label becomes a tinted plate with its own hairline rather than a bare
+   line of tracked caps, then a deliberate drop before the columns start.
+   MOBILE FIRST: one column; the two-column split arrives at 900px. */
+.pf-home .op-link {align-self:flex-start; margin-top:8px; border-bottom-color:var(--accent)}
+.pf-home .cta {padding:24px 20px; display:flex; flex-direction:column; align-items:flex-start; gap:24px}
+.pf-home .cta .btn {width:100%}
+.pf-home .disc {
+  display:grid; grid-template-columns:1fr; gap:12px; padding:20px 18px; align-items:start;
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--rule);
+  box-shadow:var(--sh-sm); transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.pf-home .disc:hover {border-left-color:var(--accent); box-shadow:var(--sh-md); transform:translateY(-1px)}
+.pf-home .disc .tech {text-align:left; align-self:auto}
+.pf-footer .f-social {flex-wrap:wrap}
+@media (prefers-reduced-motion: reduce) {
+  .pf-home * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+}
+@media(min-width:720px) {
+  .pf-footer .f-cols {grid-template-columns:repeat(3,1fr); gap:32px}
+  .pf-footer .f-lk {gap:15px}
+  .pf-footer .f-cols > :nth-child(3) {grid-column:auto}
+  .pf-footer .f-cols > :nth-child(3) .f-lk {display:flex; gap:15px}
+  .pf-footer .f-colo {flex-direction:row; align-items:center; justify-content:space-between; gap:24px}
+}
+@media(min-width:1040px) {
+  .pf-footer .f-pages {grid-template-columns:.82fr 1.18fr; gap:0}
+  .pf-footer .f-left {border-right:1px solid var(--rule); padding-right:clamp(40px,5vw,72px)}
+  .pf-footer .f-right {padding-left:clamp(40px,5vw,72px)}
+  .pf-footer .f-cols {gap:40px}
+}
+@media(min-width:600px) {
+  .pf-home .shell, .pf-footer .shell, .pf-home .shell-wide, .pf-footer .shell-wide {padding:0 32px}
+  .pf-home .stmt {padding:32px 32px}
+  .pf-home .cta {padding:32px 32px}
+  .pf-home .cta .btn {width:auto}
+}
+@media(min-width:900px) {
+  .pf-home .shell, .pf-footer .shell, .pf-home .shell-wide, .pf-footer .shell-wide {padding:0 40px}
+  .pf-home .stmt {padding:48px}
+    .pf-home .cta {flex-direction:row; align-items:flex-end; justify-content:space-between; gap:40px; padding:48px}
+  .pf-home .disc {grid-template-columns:78px 1fr .72fr; gap:32px; padding:32px 24px}
+  .pf-home .disc .tech {text-align:right; align-self:end}
+}
+@media(min-width:1200px) {
+  .pf-home .shell, .pf-footer .shell, .pf-home .shell-wide, .pf-footer .shell-wide {padding:0 48px}
+  .pf-home .stmt {padding:64px}
+  .pf-home .cta {gap:56px; padding:56px 64px}
+  .pf-home .disc {gap:32px; padding:32px 32px}
+}
+
+/* Interest marks in the footer. The source files mix filled and stroke-only
+   paths, so `mask-image` renders the stroke-only ones as solid blocks;
+   brightness(0) flattens both to black and opacity tints it to sit with the
+   muted label text beside it. */
+.pf-footer .f-inl {gap:24px 64px}
+.pf-footer .f-inl > * {display:inline-flex; align-items:center; gap:12px}
+.pf-footer .f-ico {width:28px; height:28px; flex-shrink:0; filter:brightness(0); opacity:.42}
+.pf-footer .f-inl a:hover .f-ico {opacity:.7}
+
+/* ── "Another practice" — the writing-site bridge ──────────────────────────
+   Built on the page's own vocabulary: eyebrow + .d heading in the same
+   asymmetric header the Contact and Projects pages use, then one raised card
+   holding the screenshot with a caption rail beneath it. Mobile first. */
+.pf-home .wb-head {display:block;
+  padding-bottom:clamp(40px,5.5vw,72px); border-bottom:1px solid var(--rule)}
+.pf-home .wb-intro {display:flex; flex-direction:column; gap:24px}
+.pf-home .wb-cols {display:grid; grid-template-columns:1fr; gap:24px}
+.pf-home .wb-cols p {margin:0; font-size:16px; font-weight:300; line-height:1.75; color:var(--soft)}
+
+.pf-home .wb-plate {display:block; margin-top:clamp(32px,4vw,56px); text-decoration:none; color:inherit}
+.pf-home .wb-plate figure {margin:0; background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg)}
+.pf-home .wb-shot {overflow:hidden; background:#08191A}
+.pf-home .wb-shot img {display:block; width:100%; height:auto; transition:transform .7s ease}
+.pf-home .wb-plate:hover .wb-shot img {transform:scale(1.008)}
+.pf-home .wb-cap {display:grid; grid-template-columns:1fr; gap:16px; padding:24px; border-top:1px solid var(--rule)}
+.pf-home .wb-cap-nm {margin:0; font-size:16px; font-weight:500; color:var(--ink)}
+.pf-home .wb-cap-sub {margin:6px 0 0; font-size:14px; font-weight:300; color:var(--muted)}
+
+@media(min-width:720px) {
+  .pf-home .wb-cols {grid-template-columns:repeat(2,1fr); gap:40px}
+  .pf-home .wb-cap {grid-template-columns:1fr auto; align-items:center; padding:24px 32px}
+}
+@media(min-width:1040px) {
+
+}
+
+/* ── fluid spacing + type, lifted out of inline styles ──────────────────
+   These were literal pixel values on the elements themselves, so no media
+   query could reach them: a 390px phone was rendering 128px section padding
+   and a 48px heading. Base (phone) is the clamp floor; it grows with the
+   viewport up to the original desktop value. */
+.pf-home .sec-gap, .pf-home .sec-gap-sm {padding-bottom:clamp(40px,5.5vw,72px);
+  border-bottom:1px solid var(--rule); margin-bottom:clamp(40px,5.5vw,72px)}
+/* the standing intro paragraph under a section heading */
+.pf-home .sec-lead {margin:0; max-width:62ch; font-size:clamp(1rem,1.7vw,1.12rem);
+  font-weight:300; line-height:1.8; color:var(--soft)}
+
+.pf-home .sec-gap-top {margin-top:clamp(32px,6vw,64px)}
+.pf-home .proj-stack {display:flex; flex-direction:column; gap:clamp(32px,6vw,56px)}
+.pf-home .t-lead {font-size:clamp(1rem,3.2vw,1.125rem)}
+.pf-home .t-sub {font-size:clamp(1.0625rem,3.4vw,1.1875rem)}
+.pf-home .t-body {font-size:clamp(.9375rem,3vw,1rem)}
+.pf-home h3.disc-t {margin:0; font-weight:300; letter-spacing:-.02em; color:var(--ink);
+  font-size:clamp(1.375rem,4.8vw,1.875rem); line-height:1.15}
+.pf-home h2.cta-t {line-height:1.06}
+@media(min-width:900px) {
+  .pf-home h2.d {line-height:.98}
+  .pf-home h3.d {line-height:1}
+  .pf-home h2.cta-t {line-height:.96}
+}
+
+/* Touch targets. The icon links were 18-20px squares — fine for a cursor,
+   under half the 44px a finger needs. The padding grows the hit area without
+   moving the icons, so the row looks identical. */
+@media (hover: none) and (pointer: coarse) {
+  .pf-footer .f-socs {gap:6px; margin:-13px}
+  .pf-footer .f-socs a {padding:13px}
+  .pf-footer .f-lk a, .pf-footer .f-btn {padding-top:5px; padding-bottom:7px}
+  .pf-footer .f-colo a, .pf-footer .f-inl a {display:inline-block; padding:4px 0}
+}
+
+/* ══ SELECTED WORK cards ══════════════════════════════════════════════
+   The archive card treatment from /projects, ported onto the homepage so both
+   surfaces read the same: role/year meta, the device chrome (browser bar,
+   tablet camera, phone notch) and the question/response narrative.
+
+   Copies of the `.pf-projects` rules in src/pages/projects.css, rescoped to
+   `.pf-home`. The duplication matches how this codebase is already organised —
+   eyebrow, h2.d, numchip, shell, mono and the colour tokens are each defined
+   separately in homepage.css, projects.css, about.css and contact.css.
+   Editing one card style means editing both files. */
+.pf-home .pj-tech {margin:16px 0 0; padding-top:15px; border-top:1px solid var(--rule);
+  font-size:11px; line-height:1.9; color:var(--muted); letter-spacing:.01em}
+.pf-home .pj-links {display:flex; flex-wrap:wrap; gap:22px; margin-top:16px}
+.pf-home .pj-row {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg);
+  padding:clamp(22px,3.2vw,40px); margin-top:clamp(24px,3.6vw,48px); scroll-margin-top:144px}
+.pf-home .pj-row-head {display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
+  padding-bottom:18px; border-bottom:1px solid var(--rule)}
+.pf-home .pj-rn {display:flex; align-items:center; gap:12px; margin:0; font-size:10px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--accent)}
+.pf-home .pj-role {margin:0; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted)}
+.pf-home .pj-row-id {padding:24px 0 0}
+.pf-home .pj-rname {margin:0; font-size:clamp(1.9rem,5.6vw,3.2rem); font-weight:300; letter-spacing:-.04em;
+  line-height:1; color:var(--ink); word-break:break-word}
+.pf-home .pj-rsub {margin:12px 0 0; font-size:clamp(1rem,1.9vw,1.2rem); font-weight:300; line-height:1.55; color:var(--soft)}
+.pf-home .pj-row-mid {display:grid; grid-template-columns:1fr; gap:clamp(22px,3vw,40px); padding:24px 0 0; align-items:stretch}
+.pf-home .pj-plate {margin:0; border:1px solid var(--rule); background:var(--inset); padding:9px;
+  box-shadow:var(--sh-sm); display:flex; overflow:hidden}
+.pf-home .pj-plate img {display:block; width:100%; height:100%; object-fit:contain; object-position:center}
+.pf-home .pj-read {display:flex; flex-direction:column; gap:20px; min-width:0}
+.pf-home .pj-lead {margin:0; font-size:15.5px; font-weight:300; line-height:1.75; color:var(--body)}
+.pf-home .pj-qa {display:grid; grid-template-columns:1fr; gap:20px; padding-top:20px; border-top:1px solid var(--rule)}
+.pf-home .pj-qa p:not(.pj-k) {margin:0; font-size:13.5px; font-weight:300; line-height:1.7; color:var(--soft)}
+.pf-home .pj-k {margin:0 0 9px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-home .pj-row-foot {display:grid; grid-template-columns:1fr; gap:24px; margin-top:24px; padding-top:24px; border-top:1px solid var(--rule)}
+.pf-home .pj-hl {list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px}
+.pf-home .pj-hl li {display:grid; grid-template-columns:auto 1fr; gap:13px; font-size:13.5px; font-weight:300;
+  line-height:1.65; color:var(--body)}
+.pf-home .pj-hl li span[aria-hidden] {color:var(--accent)}
+.pf-home .pj-links.foot {margin-top:20px}
+/* ── per-row device switcher ───────────────────────────────────────────────
+   Added after the concept: each project has Desktop, Tablet and Mobile shots, and the archive was only showing the desktop one. Same control vocabulary
+   as the carousel's numbered nav (.pj-dotbtn) so it reads as one system. */
+.pf-home .pj-shots {display:flex; flex-direction:column; min-width:0}
+.pf-home .pj-views {display:flex; align-items:center; gap:24px;
+  padding-bottom:8px; margin-bottom:16px; border-bottom:1px solid var(--rule)}
+.pf-home .pj-view {position:relative; border:0; background:none; cursor:pointer;
+  padding:6px 1px; font-family:inherit; font-size:10px; font-weight:500; letter-spacing:.18em;
+  text-transform:uppercase; color:var(--muted); line-height:normal; transition:color .2s ease}
+.pf-home .pj-view:hover {color:var(--soft)}
+.pf-home .pj-view.on {color:var(--accent)}
+.pf-home .pj-view.on::after {content:''; position:absolute; left:0; right:0; bottom:-9px;
+  height:1px; background:var(--accent)}
+.pf-home .pj-shots .pj-plate {align-self:stretch}
+/* The image is taken out of flow so its intrinsic height cannot drive the
+   plate: a portrait phone shot is 780x1688 and was stretching the row from
+   932px to 1864px. The plate now keeps the box the row gives it, and every
+   shot is contained inside it — so switching device never reflows anything. */
+/* 4:3 rather than 16:10 — a portrait tablet or phone shot in a 16:10 box was
+   reduced to a narrow strip. At 4:3 the desktop shot still reads large and the
+   portrait ones gain ~20% height, while the box stays constant across views. */
+.pf-home .pj-plate-in {position:relative; width:100%; min-width:0; aspect-ratio:4/3}
+.pf-home .pj-plate-in img {position:absolute; inset:0; width:100%; height:100%;
+  object-fit:contain; object-position:center}
+/* ── archive device frames ─────────────────────────────────────────────────
+   The archive showed bare screenshots on a mat; they now sit in the same
+   laptop / tablet / phone shells as the carousel so they read as devices.
+   Each shell has a fixed aspect and `max-width/max-height:100%`, so it scales
+   to fit the plate box whatever the orientation — the plate never changes
+   size, and the shot inside is `contain`, so nothing is ever cropped. */
+.pf-home .pj-dev-wrap {position:absolute; inset:0; display:flex}
+.pf-home .af {margin:auto; max-width:100%; max-height:100%; display:flex; flex-direction:column}
+.pf-home .af-lap {width:100%}
+.pf-home .af-lap .af-screen {flex:none; aspect-ratio:var(--shot-ar, 1.6)}
+.pf-home .af-tab {aspect-ratio:.758; height:100%}
+.pf-home .af-pho {aspect-ratio:.474; height:100%}
+.pf-home .af-lid {flex:1; min-height:0; display:flex; flex-direction:column;
+  background:linear-gradient(160deg,#1B3B3E,#0C2A2C); border-radius:10px 10px 0 0; padding:5px 5px 0}
+.pf-home .af-bar {flex-shrink:0; display:flex; align-items:center; gap:5px;
+  background:#123032; border-radius:7px 7px 0 0; padding:6px 9px}
+.pf-home .af-dot {width:6px; height:6px; border-radius:50%; background:#3D6265; flex-shrink:0}
+.pf-home .af-url {flex:1; min-width:0; margin-left:6px; padding:3px 8px; border-radius:4px;
+  background:#0C2A2C; color:#7E9A9C; font-size:8px; letter-spacing:.02em;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.pf-home .af-base {flex-shrink:0; height:11px; border-radius:0 0 11px 11px;
+  background:linear-gradient(#1B3B3E,#0C2A2C); box-shadow:inset 0 1px 2px rgba(255,255,255,.09)}
+.pf-home .af-body {flex:1; min-height:0; position:relative;
+  background:linear-gradient(#1B3B3E,#0C2A2C)}
+.pf-home .af-tab .af-body {border-radius:16px}
+.pf-home .af-pho .af-body {border-radius:20px}
+.pf-home .af-cam {position:absolute; top:3px; left:50%; transform:translateX(-50%);
+  width:4px; height:4px; border-radius:50%; background:#08191A; z-index:2}
+.pf-home .af-notch {position:absolute; top:3px; left:50%; transform:translateX(-50%);
+  width:34px; height:7px; border-radius:99px; background:#08191A; z-index:2}
+.pf-home .af-screen {flex:1; min-height:0; position:relative; overflow:hidden; background:#fff}
+.pf-home .af-tab .af-screen {position:absolute; inset:7px; border-radius:9px}
+.pf-home .af-pho .af-screen {position:absolute; inset:5px; border-radius:15px}
+.pf-home .af-screen img {position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:top center}
+@media (min-width:560px) {
+  .pf-home .pj-qa {grid-template-columns:repeat(2,1fr)}
+}
+@media (min-width:900px) {
+  .pf-home .pj-row-foot {grid-template-columns:1.15fr .85fr; gap:clamp(32px,4vw,64px)}
+}
+@media (min-width:1040px) {
+  .pf-home .pj-row-mid {grid-template-columns:1.08fr .92fr}
+  .pf-home .pj-row.flip .pj-plate {order:2}
+  .pf-home .pj-qa {padding-top:22px}
+}
+
+/* Section opener — the full-bleed hairline borrowed from arefsaboor.com.
+   The heading and its lead stay inside the shell; only the rule runs edge to
+   edge. Contained by the app's overflow-x guard, so it adds no page scroll. */
+.pf-home .sec-gap, .pf-home .sec-gap-sm, .pf-home .wb-head {
+  position:relative; border-bottom:0;
+}
+.pf-home .sec-gap::after, .pf-home .sec-gap-sm::after, .pf-home .wb-head::after {
+  content:""; position:absolute; left:50%; bottom:0;
+  width:100vw; max-width:100vw; height:1px; transform:translateX(-50%);
+  background:color-mix(in srgb, var(--ink) 13%, transparent); pointer-events:none;
+}
+
+/* ── Section opener ───────────────────────────────────────────────────
+   label plate → hairline → drop → two columns (title left, lead right).
+   MOBILE FIRST: one column; the split arrives at 900px. */
+.pf-home .op-head {display:block}
+.pf-home .op-head > .eyebrow + * {
+  margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);
+  border-top:1px solid color-mix(in srgb, var(--ink) 13%, transparent);
+}
+.pf-home .op-cols {display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); align-items:start}
+.pf-home .op-title {max-width:18ch}
+.pf-home .op-aside {display:flex; flex-direction:column; gap:16px; min-width:0}
+.pf-home .op-say {margin:0; max-width:52ch; font-size:clamp(.9375rem,1.5vw,1rem);
+  font-weight:300; line-height:1.75; color:var(--soft)}
+@media(min-width:900px) {
+  .pf-home .op-cols {grid-template-columns:1.08fr .92fr; gap:clamp(40px,4.5vw,72px)}
+}

@@ -1,0 +1,82 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Grid system — arefsaboor.de
+
+   Two numbers doing two different jobs, which is the whole point:
+
+     --cell   32px   the VISIBLE drafting mesh (defined in index.css with the
+                     texture it draws). Was 34px. 32 = 4x8 = 2x16, so it
+                     composes with the spacing scale; 34 = 2x17 composed with
+                     nothing, which is why grid work against it kept producing
+                     17px line-heights and 34px buttons.
+
+     --gu      8px   the SPACING base. The working step is 16px — exactly half
+                     a cell — so every spacing value lands on a mesh line
+                     (16 = half cell, 32 = one cell, 64 = two cells).
+
+   Type is deliberately NOT snapped to the grid: body line-height stays a
+   ratio (1.6–1.75). Snapping leading to a fixed pixel step is a print idea
+   that breaks with fluid web type.
+
+   THIS FILE DEFINES TOKENS AND OPT-IN UTILITIES ONLY.
+   It never restyles a component owned by a page stylesheet. That is the rule
+   that matters: the previous attempt was an override layer imported last, so
+   it silently won every conflict and the pages lost their layouts. Because
+   nothing here overrides anything, import order does not matter.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* spacing scale — 8pt base, 16 is the step you reach for */
+  --gu:    8px;
+  --sp-1:  8px;
+  --sp-2:  16px;
+  --sp-3:  24px;
+  --sp-4:  32px;   /* one cell  */
+  --sp-6:  48px;
+  --sp-8:  64px;   /* two cells */
+  --sp-12: 96px;
+  --sp-16: 128px;
+
+  /* column grid */
+  --grid-cols: 12;
+  --grid-gutter: var(--sp-4);
+}
+
+/* ── opt-in 12-column grid ─────────────────────────────────────────────────
+   Twelve columns, not thirty-four: `grid-column: span 4` is readable and
+   maintainable; `grid-column: 23 / span 12` is not. Usage:
+       <div class="grid12"><div class="col-4">…</div><div class="col-8">…</div></div> */
+.grid12 {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+  column-gap: var(--grid-gutter);
+}
+
+.grid12 > .col-1 { grid-column: span 1; }
+.grid12 > .col-2 { grid-column: span 2; }
+.grid12 > .col-3 { grid-column: span 3; }
+.grid12 > .col-4 { grid-column: span 4; }
+.grid12 > .col-5 { grid-column: span 5; }
+.grid12 > .col-6 { grid-column: span 6; }
+.grid12 > .col-7 { grid-column: span 7; }
+.grid12 > .col-8 { grid-column: span 8; }
+.grid12 > .col-9 { grid-column: span 9; }
+.grid12 > .col-10 { grid-column: span 10; }
+.grid12 > .col-11 { grid-column: span 11; }
+.grid12 > .col-12 { grid-column: span 12; }
+
+.grid12 > .start-1 { grid-column-start: 1; }
+.grid12 > .start-2 { grid-column-start: 2; }
+.grid12 > .start-3 { grid-column-start: 3; }
+.grid12 > .start-4 { grid-column-start: 4; }
+.grid12 > .start-5 { grid-column-start: 5; }
+.grid12 > .start-6 { grid-column-start: 6; }
+.grid12 > .start-7 { grid-column-start: 7; }
+.grid12 > .start-8 { grid-column-start: 8; }
+.grid12 > .start-9 { grid-column-start: 9; }
+.grid12 > .start-10 { grid-column-start: 10; }
+.grid12 > .start-11 { grid-column-start: 11; }
+.grid12 > .start-12 { grid-column-start: 12; }
+
+/* Debug: add `grid-guides` to <body> to see the mesh against the shell edges. */
+body.grid-guides .shell,
+body.grid-guides .shell-wide { outline: 1px dashed rgba(220, 38, 38, .55); outline-offset: 0; }

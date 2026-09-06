@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import cvPdf from '../assets/Aref-Saboor_Resume_2026.pdf';
 import cvImage from '../assets/Aref-Saboor_Resume_2026.jpg';
+import { zIndex } from '../data/navigation';
 
 function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -13,6 +15,7 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const [lastDistance, setLastDistance] = useState(0);
   const [lastCenter, setLastCenter] = useState({ x: 0, y: 0 });
   const imageContainerRef = useRef(null);
+  const closeButtonRef = useRef(null);
 
   // Detect if device is mobile on mount
   useEffect(() => {
@@ -44,15 +47,24 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     }
   }, [isOpen]);
 
-  // Prevent body scroll when modal is open
+  // Prevent body scroll while the modal is open, then put back whatever the
+  // page had before — hard-coding 'unset' here used to release the nav
+  // drawer's own scroll lock as a side effect.
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    if (!isOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = previous; };
+  }, [isOpen]);
+
+  // Move focus into the dialog on open and hand it back on close.
+  useEffect(() => {
+    if (!isOpen) return;
+    const restoreTo = document.activeElement;
+    const id = setTimeout(() => closeButtonRef.current?.focus(), 60);
     return () => {
-      document.body.style.overflow = 'unset';
+      clearTimeout(id);
+      if (restoreTo instanceof HTMLElement) restoreTo.focus();
     };
   }, [isOpen]);
 
@@ -155,28 +167,35 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     }
   };
 
-  return (
+  /* Rendered through a portal into <body>. The modal used to live inside
+     <section id="home">, which sets `isolation: isolate` and so opens its own
+     stacking context — that trapped the overlay's z-index inside the hero and
+     let the fixed navbar (z 50, a sibling of the hero's whole subtree) paint
+     straight over the dialog. No z-index on the dialog itself could win that;
+     it had to leave the hero. */
+  return createPortal(
     <div 
-      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${
-        isAnimating ? 'bg-black/80 backdrop-blur-sm' : 'bg-black/0 backdrop-blur-none'
+      className={`fixed inset-0 flex items-center justify-center p-4 transition-all duration-300 ${
+        isAnimating ? 'bg-[#08191A]/85 backdrop-blur-sm' : 'bg-[#08191A]/0 backdrop-blur-none'
       }`}
+      style={{ zIndex: zIndex.modal }}
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="CV Preview"
     >
       <div 
-        className={`relative w-full max-w-6xl h-[90vh] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${
+        className={`relative w-full max-w-6xl h-[90vh] bg-white rounded-lg shadow-2xl flex flex-col overflow-hidden transition-all duration-300 ${
           isAnimating ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 sm:p-6 bg-gradient-to-r from-teal-600 to-cyan-600 text-white">
+        <div className="flex items-center justify-between p-4 sm:p-6 bg-[#0C2A2C] text-[#F2F7F6]">
           {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-white text-teal-600 font-semibold rounded-full hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base"
+            className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F2F7F6] text-[#0C2A2C] font-semibold rounded-md hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base"
             aria-label="Download CV"
           >
             <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,6 +206,7 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
           
           {/* Close Button */}
           <button
+            ref={closeButtonRef}
             onClick={onClose}
             className="p-2 hover:bg-white/20 rounded-full transition-colors duration-200"
             aria-label="Close preview"
@@ -198,7 +218,7 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
         </div>
 
         {/* CV Viewer - Image for mobile, iframe for desktop */}
-        <div className="flex-1 overflow-auto bg-gray-100">
+        <div className="flex-1 overflow-auto bg-[#E6EDED]">
           {isMobile ? (
             // Mobile: Show zoomable image
             <div 
@@ -232,20 +252,21 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
         </div>
 
         {/* Footer Hint */}
-        <div className="p-3 bg-gray-50 text-center text-sm text-gray-600 border-t border-gray-200">
+        <div className="p-3 bg-[#F5F8F8] text-center text-sm text-[#40575A] border-t border-[#E9EEEE]">
           {isMobile ? (
             <p className="text-xs">
               Pinch to zoom • Drag with two fingers to pan
             </p>
           ) : (
             <p className="flex items-center justify-center gap-2">
-              <kbd className="px-2 py-1 bg-white rounded border border-gray-300 text-xs font-mono">Esc</kbd>
+              <kbd className="px-2 py-1 bg-white rounded border border-[#DEE5E5] text-xs font-mono">Esc</kbd>
               <span>to close</span>
             </p>
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

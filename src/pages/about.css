@@ -1,0 +1,362 @@
+/* MOVED, not rebuilt — lifted byte-for-byte from
+   arefsaboor.com/public/design-concepts/portfolio-about.html. The only edit is
+   a `.pf-about ` scope prefix per selector, so these generic class names cannot
+   leak into the rest of the site. No value, colour, unit or spacing changed.
+
+   MOBILE FIRST: base rules are the phone layout; min-width queries add the
+   larger ones. Plain CSS — never passes through tailwind.config.js, so it
+   hot-reloads and survives a stale dev-server config. */
+.pf-about {
+  color: var(--body);
+  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+:root {
+  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
+  --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
+
+  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
+     fine grain over a drafting grid. Both live ONLY on the page grounds and
+     bands. Every long passage of text sits on a clean filled card, so nothing
+     is ever read through the texture. */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+
+  --sh-sm:0 1px 2px rgba(12,42,44,.05);
+  --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
+  --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
+
+  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+}
+.pf-about * {box-sizing:border-box}
+.pf-about .textured {position:relative; isolation:isolate}
+.pf-about .textured::before {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grain); background-blend-mode:multiply; opacity:.9;
+}
+.pf-about .textured::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grid);
+}
+.pf-about .textured > * {position:relative; z-index:1}
+.pf-about .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
+.pf-about .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
+.pf-about .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
+/* Section label — a tinted plate rather than a bare tracked line, so every
+   section on every page opens the same way. The old 26px accent dash is
+   gone; the plate is the mark now. */
+.pf-about .eyebrow {
+  display:inline-block; margin:0; padding:7px 12px 6px;
+  background:var(--inset); border:1px solid var(--rule-2);
+  font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent);
+}
+.pf-about .eyebrow::before {content:none}
+.pf-about h2.d {margin:0; font-size:60px; font-weight:300; letter-spacing:-.026em; line-height:.98; color:var(--ink); text-wrap:balance}
+.pf-about h3.d {margin:0; font-size:48px; font-weight:300; letter-spacing:-.03em; line-height:1; color:var(--ink)}
+.pf-about .card {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-md)}
+.pf-about .card-lg {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg)}
+.pf-about .inset {background:var(--inset); border:1px solid var(--rule-2)}
+.pf-about .numchip {
+  display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px;
+  padding:0 9px; background:var(--accent); color:#fff; font-size:12px; letter-spacing:.04em;
+}
+.pf-about .screenframe {background:var(--inset); border:1px solid var(--rule-2); padding:10px; box-shadow:inset 0 1px 3px rgba(12,42,44,.07)}
+.pf-about .tabs {display:flex; gap:22px; padding:2px 4px 12px; font-size:11px; font-weight:600; letter-spacing:.16em; text-transform:uppercase}
+.pf-about .tabs .on {color:var(--ink); border-bottom:2px solid var(--accent); padding-bottom:8px}
+.pf-about .tabs .off {color:#9AA9AB; padding-bottom:8px}
+.pf-about .linkline {display:inline-flex; align-items:center; gap:11px; font-size:14px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:7px}
+.pf-about .bullets {display:flex; flex-direction:column; gap:10px}
+.pf-about .bullets div {display:flex; gap:12px; font-size:14px; line-height:1.55; color:var(--body)}
+.pf-about .bullets span {color:var(--accent)}
+.pf-about .demo-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .disc .tech {align-self:end; text-align:right}
+.pf-about .ext-i {width:12px; height:12px; flex-shrink:0; opacity:.85}
+.pf-about .f-col a {display:inline-flex; align-items:center; gap:7px; width:fit-content}
+.pf-about .f-chip.is-link .ext-i {width:11px; height:11px}
+.pf-about .pf-footer {background:var(--paper); border-top:1px solid var(--rule); padding:clamp(56px,8vw,104px) 0 clamp(40px,5vw,56px)}
+.pf-about .pf-footer a {text-decoration:none}
+.pf-about .f-pages {display:grid; grid-template-columns:1fr; gap:48px; align-items:stretch}
+.pf-about .f-left {display:flex; flex-direction:column; gap:32px}
+.pf-about .f-right {display:flex; flex-direction:column; gap:0}
+.pf-about .f-cols {display:grid; grid-template-columns:1fr; gap:40px}
+.pf-about .f-beyond {margin-top:auto; padding-top:clamp(32px,4vw,40px); border-top:1px solid var(--rule)}
+.pf-about .f-av {margin:0; display:inline-flex; align-items:center; gap:11px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--accent)}
+.pf-about .f-av i {width:7px; height:7px; background:var(--accent); display:block; flex-shrink:0}
+.pf-about .f-nm {margin:0; font-weight:300; letter-spacing:-.032em; line-height:1; color:var(--ink); font-size:clamp(2rem,5.4vw,3.25rem)}
+.pf-about .f-nm b {font-weight:700}
+.pf-about .f-say {margin:0; max-width:42ch; font-size:15px; font-weight:300; line-height:1.85; color:var(--soft)}
+.pf-about .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .f-lk {display:flex; flex-direction:column; gap:15px; font-size:15px}
+.pf-about .f-lk a, .pf-about .f-inl a {color:var(--body)}
+.pf-about .f-lk a:hover, .pf-about .f-inl a:hover {color:var(--accent)}
+.pf-about .f-ex {color:var(--accent)}
+.pf-about .f-inl {display:flex; flex-wrap:wrap; gap:14px 32px; font-size:15px; color:var(--soft)}
+.pf-about .f-socs {display:flex; align-items:center; gap:20px}
+.pf-about .f-socs a {color:var(--muted); display:inline-flex}
+.pf-about .f-socs a:hover {color:var(--ink)}
+.pf-about .f-socs svg {width:18px; height:18px; fill:currentColor}
+.pf-about .f-site {color:var(--accent)}
+.pf-about .f-site svg {width:20px; height:20px}
+.pf-about .f-colo {margin-top:clamp(40px,5vw,56px); padding-top:32px; border-top:1px solid var(--rule);
+  display:flex; flex-direction:column; gap:10px; font-size:12px; color:var(--muted)}
+.pf-about .f-colo a {color:var(--accent)}
+.pf-about .btn {display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:15px 24px; font-size:15px; font-weight:500; transition:all .2s ease}
+.pf-about .shell, .pf-about .shell-wide {padding:0 20px}
+.pf-about .sec {padding:clamp(56px, 9vw, 128px) 0}
+.pf-about h2.d {font-size:clamp(1.75rem, 6.4vw, 3.75rem)}
+.pf-about h3.d {font-size:clamp(1.6rem, 5.6vw, 3rem)}
+.pf-about .stmt {padding:24px 20px; display:grid; grid-template-columns:1fr; gap:22px; align-items:start}
+.pf-about .stmt-foot {margin-top:24px; padding-top:20px; border-top:1px solid var(--rule); display:flex; flex-direction:column; align-items:flex-start; gap:20px}
+.pf-about .proj {padding:16px; display:grid; grid-template-columns:1fr; gap:24px; align-items:start}
+.pf-about .proj .shot, .pf-about .proj.flip .shot {order:1}
+.pf-about .proj .read, .pf-about .proj.flip .read {order:2}
+.pf-about .screenframe img {height:190px !important}
+.pf-about .cta {padding:24px 20px; display:flex; flex-direction:column; align-items:flex-start; gap:24px}
+.pf-about .cta .btn {width:100%}
+.pf-about .disc {
+  display:grid; grid-template-columns:1fr; gap:12px; padding:20px 18px; align-items:start;
+  background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--rule);
+  box-shadow:var(--sh-sm); transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.pf-about .disc:hover {border-left-color:var(--accent); box-shadow:var(--sh-md); transform:translateY(-1px)}
+.pf-about .disc .tech {text-align:left; align-self:auto}
+.pf-about .f-social {flex-wrap:wrap}
+.pf-about .ab-hero {padding:max(clamp(32px,5vw,56px), var(--nav-clear)) 0 clamp(40px,6vw,72px)}  /* clears the fixed Navbar below 1040px, where this hero is not centred. */
+.pf-about .ab-split {display:grid; grid-template-columns:1fr; gap:24px}
+.pf-about .ab-name {position:absolute; width:1px; height:1px; padding:0; margin:-1px;
+  overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border-width:0}
+.pf-about .ab-name b {font-weight:700}
+.pf-about .ab-plate {margin:0; border:1px solid var(--rule); background:var(--card); padding:10px; box-shadow:var(--sh-lg)}
+.pf-about .ab-plate img {display:block; width:100%; height:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 14%}
+.pf-about .ab-body {display:flex; flex-direction:column}
+.pf-about .ab-lead {margin:0; padding-top:22px; border-top:1px solid var(--rule); font-size:clamp(1.05rem,3.4vw,1.45rem); font-weight:300; line-height:1.45; letter-spacing:-.012em; color:var(--ink)}
+.pf-about .ab-sub {margin:16px 0 0; font-size:15px; font-weight:300; line-height:1.78; color:var(--soft)}
+.pf-about .ab-sub strong {color:var(--ink); font-weight:500}
+.pf-about .ab-site {display:inline-flex; align-items:baseline; gap:6px; color:var(--ink); font-weight:500; text-decoration:none}
+.pf-about .ab-site:hover {color:var(--accent)}
+.pf-about .ab-site .ext-i {width:12px; height:12px; flex-shrink:0; align-self:center; opacity:.9}
+.pf-about .ab-facts {margin-top:24px; display:grid; grid-template-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule)}
+.pf-about .ab-fact {background:var(--card); padding:16px 18px}
+.pf-about .ab-fact p:first-child {margin:0 0 7px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .ab-fact p:last-child {margin:0; font-size:14px; line-height:1.55; color:var(--ink)}
+.pf-about .tl {display:grid; grid-template-columns:1fr; gap:14px; align-items:start; background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--rule); box-shadow:var(--sh-sm); padding:22px 20px; transition:all .2s ease}
+.pf-about .tl:hover {border-left-color:var(--accent); box-shadow:var(--sh-md); transform:translateY(-1px)}
+.pf-about .tl-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:var(--ink)}
+.pf-about .tl-meta {margin:5px 0 0; font-size:11px; color:var(--muted)}
+.pf-about .tl-now {margin:9px 0 0; display:inline-flex; align-items:center; gap:7px; font-size:10px; letter-spacing:.17em; text-transform:uppercase; color:var(--accent)}
+.pf-about .tl-now i {width:6px; height:6px; background:var(--accent); display:block}
+.pf-about .tl-title {margin:0; font-size:clamp(1.3rem,2.6vw,1.75rem); font-weight:300; letter-spacing:-.02em; color:var(--ink)}
+.pf-about .tl-desc {margin:11px 0 0; max-width:62ch; font-size:15px; font-weight:300; line-height:1.7; color:var(--soft)}
+.pf-about .tl-tags {margin:14px 0 0; font-size:11px; line-height:2; color:var(--muted)}
+.pf-about .tl-tags span {color:var(--accent); margin:0 6px}
+.pf-about .creds {display:grid; grid-template-columns:1fr; gap:16px}
+.pf-about .cred {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-md); padding:24px}
+.pf-about .cred-top {display:flex; align-items:center; justify-content:space-between}
+.pf-about .cred-ico {width:52px; height:52px; display:flex; align-items:center; justify-content:center; background:var(--inset); border:1px solid var(--rule-2)}
+.pf-about .cred-ico img {width:26px; height:26px; object-fit:contain}
+.pf-about .cred-title {margin:8px 0 0; font-size:clamp(1.25rem,2.4vw,1.6rem); font-weight:300; letter-spacing:-.02em; color:var(--ink)}
+.pf-about .cred-desc {margin:12px 0 0; font-size:14.5px; font-weight:300; line-height:1.7; color:var(--soft)}
+.pf-about .skills {display:grid; grid-template-columns:1fr; gap:0; border-top:1px solid var(--rule)}
+.pf-about .sk {padding:24px 0; border-bottom:1px solid var(--rule)}
+.pf-about .sk-title {margin:0; font-size:16px; font-weight:600; color:var(--ink)}
+.pf-about .sk-desc {margin:7px 0 0; font-size:13.5px; font-weight:300; line-height:1.6; color:var(--muted)}
+.pf-about .sk-list {margin:16px 0 0; padding:0; list-style:none; display:flex; flex-wrap:wrap; gap:8px 18px}
+.pf-about .sk-list li {font-size:14px; color:var(--soft)}
+@media (prefers-reduced-motion: reduce) {
+  .pf-about * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+}
+@media(min-width:720px) {
+  .pf-about .f-cols {grid-template-columns:repeat(3,1fr); gap:32px}
+  .pf-about .f-colo {flex-direction:row; align-items:center; justify-content:space-between; gap:24px}
+}
+@media(min-width:1040px) {
+  .pf-about .f-pages {grid-template-columns:.82fr 1.18fr; gap:0}
+  .pf-about .f-left {border-right:1px solid var(--rule); padding-right:clamp(40px,5vw,72px)}
+  .pf-about .f-right {padding-left:clamp(40px,5vw,72px)}
+  .pf-about .f-cols {gap:40px}
+}
+@media(min-width:600px) {
+  .pf-about .shell, .pf-about .shell-wide {padding:0 32px}
+  .pf-about .stmt {padding:32px 32px}
+  .pf-about .proj {padding:20px}
+  .pf-about .cta {padding:32px 32px}
+  .pf-about .cta .btn {width:auto}
+  .pf-about .screenframe img {height:250px !important}
+}
+@media(min-width:900px) {
+  .pf-about .shell, .pf-about .shell-wide {padding:0 40px}
+  .pf-about .stmt {grid-template-columns:.72fr 1.28fr; gap:48px; padding:48px}
+  .pf-about .stmt-foot {flex-direction:row; align-items:flex-end; justify-content:space-between; gap:32px; margin-top:32px; padding-top:24px}
+  .pf-about .proj {grid-template-columns:1.15fr .85fr; gap:40px; padding:32px}
+  .pf-about .proj.flip {grid-template-columns:.85fr 1.15fr}
+  .pf-about .proj .shot {order:1}
+  .pf-about .proj .read {order:2}
+  .pf-about .proj.flip .shot {order:2}
+  .pf-about .proj.flip .read {order:1}
+  .pf-about .screenframe img {height:320px !important}
+  .pf-about .cta {flex-direction:row; align-items:flex-end; justify-content:space-between; gap:40px; padding:48px}
+  .pf-about .disc {grid-template-columns:78px 1fr .72fr; gap:32px; padding:32px 24px}
+  .pf-about .disc .tech {text-align:right; align-self:end}
+}
+@media(min-width:1200px) {
+  .pf-about .shell, .pf-about .shell-wide {padding:0 48px}
+  .pf-about .stmt {gap:64px; padding:64px 64px}
+  .pf-about .proj {gap:48px; padding:32px}
+  .pf-about .screenframe img {height:380px !important}
+  .pf-about .cta {gap:56px; padding:56px 64px}
+  .pf-about .disc {gap:32px; padding:32px 32px}
+}
+@media(min-width:560px) {
+  .pf-about .ab-facts {grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1040px) {
+  .pf-about .ab-hero {min-height:100svh; display:flex; align-items:center; padding:clamp(48px,6vw,88px) 0}
+  .pf-about .ab-split {grid-template-columns:.72fr 1.28fr; grid-template-rows:auto 1fr; column-gap:clamp(32px,4vw,64px); row-gap:24px; width:100%}
+  .pf-about .ab-name {position:static; width:auto; height:auto; padding:0; margin:0;
+    overflow:visible; clip:auto; white-space:normal;
+    font-size:clamp(2.25rem,8vw,3.75rem); font-weight:300; letter-spacing:-.032em;
+    line-height:1; color:var(--ink); grid-column:2; grid-row:1}
+  .pf-about .ab-plate {grid-column:1; grid-row:1 / 3; align-self:stretch; display:flex}
+  .pf-about .ab-plate img {aspect-ratio:auto; flex:1; min-height:0}
+  .pf-about .ab-body {grid-column:2; grid-row:2}
+  .pf-about .ab-facts {margin-top:auto; padding-top:0; grid-template-columns:repeat(4,1fr)}
+  .pf-about .ab-sub:last-of-type {margin-bottom:32px}
+}
+@media(min-width:720px) {
+  .pf-about .tl {grid-template-columns:52px 178px 1fr; gap:24px; padding:24px 24px}
+  .pf-about .creds {grid-template-columns:repeat(3,1fr)}
+  .pf-about .skills {grid-template-columns:repeat(2,1fr); column-gap:48px}
+}
+@media(min-width:1040px) {
+  .pf-about .tl {grid-template-columns:52px 200px 1fr; gap:32px; padding:32px 32px}
+  .pf-about .skills {grid-template-columns:repeat(4,1fr); column-gap:32px}
+}
+
+/* ── Areas of contribution ─────────────────────────────────────────────────
+   Was four columns of unbounded words: the items had no edge, so they read as
+   one run of text and wrapped at arbitrary points ("UI / UX Design  Figma").
+   Each area now opens under its own hairline, and each skill is a chip on the
+   inset ground — the same filled-panel language the cards use — so a token is
+   a discrete object and can never split across a line. */
+.pf-about .skills {border-top:0; column-gap:32px}
+.pf-about .sk {padding:24px 0 32px; border-top:1px solid var(--rule); border-bottom:0}
+.pf-about .sk-title {font-size:15px; letter-spacing:-.005em}
+.pf-about .sk-desc {margin:8px 0 0; max-width:34ch}
+.pf-about .sk-list {margin:20px 0 0; gap:8px}
+.pf-about .sk-list li {
+  display:inline-flex; align-items:center; white-space:nowrap;
+  padding:8px 11px; border-radius:4px;
+  background:var(--inset); border:1px solid var(--rule-2);
+  font-size:12.5px; line-height:1; color:var(--body);
+  transition:border-color .2s ease, color .2s ease;
+}
+.pf-about .sk-list li:hover {border-color:var(--rule); color:var(--ink)}
+
+/* ── Skills, inverted ──────────────────────────────────────────────────────
+   The section was light chips on a light band — everything at one value, so
+   nothing carried. It is now the page's dark beat.
+
+   Two things matter here:
+   1. It keeps the `.textured` class, so the mesh comes from the SAME rule as
+      every other section (32px tile, phased to calc(50% + 16px)). Drawing a
+      private gradient here is what put the lines out of step and made a
+      visible seam at the section edge. Only the ink is swapped, via --pf-grid.
+   2. The areas run as horizontal rows, not narrow columns: label and blurb on
+      the left, chips flowing across the full width — so a group's tools read
+      as one line of thought instead of a cramped three-per-line stack. */
+.pf-about .sk-band {
+  background:#08191A; border-top:1px solid #123032;
+  /* Re-ink the mesh for a dark ground. This must override `--grid`, not
+     `--pf-grid`: the winning rule here is `.pf-about .textured::after` in this
+     same file, which reads `--grid`. index.css's `--pf-grid` rule loses on
+     specificity, so setting it had no effect at all. Geometry is untouched —
+     background-size and the calc(50% + 16px) phase still come from index.css,
+     so this band stays in step with every other section. */
+  --grid:
+    repeating-linear-gradient(to right,  rgba(255,255,255,.035) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.028) 0 1px, transparent 1px 32px);
+}
+/* the grain is tuned for light grounds; it only muddies a dark one */
+.pf-about .sk-band::before {display:none}
+
+/* dark field: the plate flips rather than punching a light hole in it */
+.pf-about .sk-band .eyebrow {color:#5EEAD4; background:rgba(94,234,212,.10);
+  border-color:rgba(94,234,212,.35)}
+.pf-about .sk-band h2.d {color:#F2F7F6}
+
+/* horizontal register: one row per area */
+.pf-about .sk-band .skills {display:flex; flex-direction:column; gap:0}
+.pf-about .sk-band .sk {padding:26px 0; border-top:1px solid rgba(255,255,255,.13); border-bottom:0}
+.pf-about .sk-band .sk-title {color:#F2F7F6}
+.pf-about .sk-band .sk-desc {color:#8FA8A8; max-width:38ch}
+.pf-about .sk-band .sk-list {margin:18px 0 0; gap:8px}
+/* States swapped on purpose: the teal treatment is the resting state, and
+   hovering settles a chip back to the quiet one. */
+.pf-about .sk-band .sk-list li {
+  background:rgba(94,234,212,.11); border-color:rgba(94,234,212,.5); color:#5EEAD4;
+}
+.pf-about .sk-band .sk-list li:hover {
+  background:rgba(255,255,255,.055); border-color:rgba(255,255,255,.16); color:#DCE6E5;
+}
+@media(min-width:900px) {
+  .pf-about .sk-band .sk {
+    display:grid; grid-template-columns:280px minmax(0,1fr); column-gap:56px; align-items:start;
+  }
+  /* .sk has three children, so auto-placement dropped the list into column 1.
+     Place them: label and blurb stack on the left, chips take the full right. */
+  .pf-about .sk-band .sk-title {grid-column:1; grid-row:1}
+  .pf-about .sk-band .sk-desc  {grid-column:1; grid-row:2}
+  .pf-about .sk-band .sk-list  {grid-column:2; grid-row:1 / 3; margin:0; align-content:flex-start}
+}
+
+/* ── the toolset marquee ── */
+.pf-about .tm {
+  position:relative; margin-top:clamp(40px,5vw,64px); padding-top:clamp(32px,4vw,48px);
+  border-top:1px solid rgba(255,255,255,.14); overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+          mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.pf-about .tm-track {
+  display:flex; align-items:center; gap:clamp(40px,5vw,72px);
+  width:max-content; margin:0; padding:0; list-style:none;
+  animation:tm-pan 46s linear infinite; will-change:transform;
+}
+.pf-about .tm:hover .tm-track {animation-play-state:paused}
+.pf-about .tm-track li {flex:0 0 auto; display:flex; align-items:center}
+.pf-about .tm-track img {
+  height:30px; width:auto; display:block;
+  filter:brightness(0) invert(1); opacity:.62; transition:opacity .2s ease;
+}
+.pf-about .tm-track li:hover img {opacity:1}
+@keyframes tm-pan {from {transform:translateX(0)} to {transform:translateX(-50%)}}
+@media (prefers-reduced-motion: reduce) {
+  .pf-about .tm-track {animation:none; flex-wrap:wrap; width:auto; justify-content:center}
+  .pf-about .tm {-webkit-mask-image:none; mask-image:none}
+}
+
+/* ── Section opener ───────────────────────────────────────────────────
+   label plate → hairline → drop → two columns (title left, lead right).
+   MOBILE FIRST: one column; the split arrives at 900px. */
+.pf-about .op-head {display:block}
+.pf-about .op-head > .eyebrow + * {
+  margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);
+  border-top:1px solid color-mix(in srgb, var(--ink) 13%, transparent);
+}
+.pf-about .op-cols {display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); align-items:start}
+.pf-about .op-title {max-width:18ch}
+.pf-about .op-aside {display:flex; flex-direction:column; gap:16px; min-width:0}
+.pf-about .op-say {margin:0; max-width:52ch; font-size:clamp(.9375rem,1.5vw,1rem);
+  font-weight:300; line-height:1.75; color:var(--soft)}
+@media(min-width:900px) {
+  .pf-about .op-cols {grid-template-columns:1.08fr .92fr; gap:clamp(40px,4.5vw,72px)}
+}

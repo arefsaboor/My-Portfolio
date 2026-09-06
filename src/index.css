@@ -3,6 +3,29 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+    /* Sampled from the hero portrait and lifted for a light ground — the same
+       values the design concept runs on, so the site and the concept cannot
+       drift apart. */
+    --portfolio-ink: #0C2A2C;    /* headings                    */
+    --portfolio-body: #40575A;   /* base text colour            */
+    --portfolio-paper: #FCFCFD;  /* page ground                 */
+    --portfolio-mist: #EFF2F2;   /* alternating band            */
+    --portfolio-teal: #1C464B;   /* accent — links, marks       */
+    --portfolio-lav: #928EA5;    /* the window light            */
+
+    /* Texture. arefsaboor.com uses warm ruled paper (feTurbulence grain plus
+       horizontal rules); this is its cold counterpart — fine grain over a 32px
+       drafting grid. It lives ONLY on page grounds and bands, never under a
+       reading surface: every long passage sits on a filled card, so nothing is
+       read through it. Grain 5%, grid 4% — body copy stays at 7.9:1. */
+    --pf-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --cell: 32px;   /* the drafting mesh, and the layout grid's cell */
+    --pf-grid: repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
+               repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
+  }
+
   * {
     scroll-behavior: smooth;
   }
@@ -23,9 +46,21 @@
     min-height: 100svh;
     overflow-x: hidden;
     overflow-y: auto;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: Epilogue, 'Helvetica Neue', Arial, sans-serif;
+    color: var(--portfolio-body);
+    background: var(--portfolio-paper);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    color: var(--portfolio-paper);
+    background: var(--portfolio-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--portfolio-teal);
+    outline-offset: 4px;
   }
 
   body.no-scroll {
@@ -36,6 +71,24 @@
   html.no-scroll {
     overflow: hidden !important;
   }
+}
+
+@layer components {
+  /* Put this on a section, not on a card. */
+  .textured { position: relative; isolation: isolate; }
+  .textured::before,
+  .textured::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .textured::before { background-image: var(--pf-grain); background-blend-mode: multiply; opacity: .9; }
+  .textured::after  { background-image: var(--pf-grid);
+                      background-size: var(--cell) var(--cell);
+                      background-position: calc(50% + 16px) 0; }
+  .textured > * { position: relative; z-index: 1; }
 }
 
 @layer utilities {
@@ -103,3 +156,13 @@
   }
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Fixed-Navbar clearance.
+   <Navbar /> is `position: fixed`, so it sits over every page and is not part
+   of the document flow. Measured settled height: a constant 102px at every
+   width from 360px to 1920px (the burger button's circle sets the lower edge
+   on small screens; the nav bar itself sets it on large). 128px gives 26px of
+   air beneath it. Unlayered on purpose, so a page stylesheet can read it
+   regardless of @layer order.
+   ───────────────────────────────────────────────────────────────────────── */
+:root { --nav-clear: 128px; }

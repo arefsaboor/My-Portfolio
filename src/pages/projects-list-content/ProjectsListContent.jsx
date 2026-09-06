@@ -1,112 +1,195 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { projects } from './sharedData';
-import DeviceShowcase from './DeviceShowcase';
-import LinkButtons from './LinkButtons';
-import CTASection from '../../components/CTASection';
+import ExternalIcon from '../../components/ExternalIcon';
+
+/* Markup transcribed literally from the approved concept
+   (public/design-concepts/portfolio-projects.html). Content is unchanged —
+   every field still comes from Projects.json via sharedData.js, in the same
+   Bestsellers-first order, with the same slug anchors. */
+
+const LINKS = [
+  ['liveUrl', 'Visit Live'],
+  ['vercelUrl', 'Live Vercel'],
+  ['githubUrl', 'GitHub'],
+  ['figmaUrl', 'Figma'],
+];
+
+function LinkRow({ project, className = 'pj-links' }) {
+  return (
+    <div className={className}>
+      {LINKS.filter(([key]) => project[key]).map(([key, label]) => (
+        <a className="linkline" key={label} href={project[key]} target="_blank" rel="noopener noreferrer">
+          {label}<ExternalIcon />
+        </a>
+      ))}
+    </div>
+  );
+}
+
+/* The laptop's screen slot takes the screenshot's own aspect ratio, so no
+   capture is ever letterboxed or cropped. A ref callback rather than onLoad:
+   the shots are preloaded, so by the time React attaches a handler the image
+   is already complete and onLoad would never fire. */
+function setShotRatio(img) {
+  if (!img) return;
+  const apply = () => {
+    const af = img.closest('.af');
+    if (af && img.naturalWidth) af.style.setProperty('--shot-ar', img.naturalWidth / img.naturalHeight);
+  };
+  if (img.complete) apply();
+  else img.addEventListener('load', apply, { once: true });
+}
+
+const VIEWS = [['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Mobile']];
+
+/* Each project was shot on all three devices; the row lets you switch between
+   them. The plate keeps its box whatever is inside it and the image is
+   `object-fit: contain`, so switching never crops the shot and never reflows
+   the row. */
+function DevicePlate({ project }) {
+  const [view, setView] = useState('desktop');
+  const url = (project.liveUrl || project.vercelUrl || '').replace(/^https?:\/\//, '').replace(/\/$/, '');
+  return (
+    <div className="pj-shots">
+      <div className="pj-views" role="tablist" aria-label={`${project.name} screenshots`}>
+        {VIEWS.map(([key, label]) => (
+          <button
+            key={key}
+            role="tab"
+            aria-selected={view === key}
+            className={`pj-view mono${view === key ? ' on' : ''}`}
+            onClick={() => setView(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      <figure className="pj-plate">
+        <div className="pj-plate-in">
+          <div className="pj-dev-wrap">
+            {view === 'desktop' && (
+              <div className="af af-lap">
+                <div className="af-lid">
+                  <div className="af-bar">
+                    <span className="af-dot" /><span className="af-dot" /><span className="af-dot" />
+                    <span className="af-url mono">{url}</span>
+                  </div>
+                  <div className="af-screen"><img src={project.screens.desktop} alt={`${project.name} on desktop`} loading="lazy" decoding="async" ref={setShotRatio} /></div>
+                </div>
+                <div className="af-base" />
+              </div>
+            )}
+            {view === 'tablet' && (
+              <div className="af af-tab">
+                <div className="af-body">
+                  <span className="af-cam" />
+                  <div className="af-screen"><img src={project.screens.tablet} alt={`${project.name} on tablet`} loading="lazy" decoding="async" /></div>
+                </div>
+              </div>
+            )}
+            {view === 'mobile' && (
+              <div className="af af-pho">
+                <div className="af-body">
+                  <span className="af-notch" />
+                  <div className="af-screen"><img src={project.screens.mobile} alt={`${project.name} on mobile`} loading="lazy" decoding="async" /></div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </figure>
+    </div>
+  );
+}
 
 export default function ProjectsListContent() {
   return (
-    <div className="bg-white min-h-screen">
-      <section className="py-16 sm:py-24 md:py-32 lg:py-40">
-        <div className="max-w-[1400px] mx-auto px-6 sm:px-8 lg:px-12">
-          <div className="mb-16 sm:mb-24">
-            <p className="text-xs font-medium uppercase tracking-[0.3em] text-slate-400 mb-5">My Work</p>
-            <h2 className="font-light text-slate-900 tracking-tight" style={{ fontSize: 'clamp(2.25rem, 5.5vw, 4.5rem)' }}>All Projects</h2>
-          </div>
+    <>
+      <section className="pj-archive textured" id="pj-archive">
+        <div className="shell-wide">
+          <header className="pj-head op-head">
+            <p className="eyebrow">Project archive / {String(projects.length).padStart(2, '0')} entries</p>
+            <div className="op-cols">
+              <h2 className="pj-htitle op-title">Five projects. Five different kinds of responsibility.</h2>
+              <div className="op-aside">
+                <p className="op-say">
+                  Each entry shows more than a finished screen: what had to be understood,
+                  what was built, and where design decisions meet technical ones.
+                </p>
+                <p className="op-say">
+                  They are ordered by what they demanded rather than by date — the constraint
+                  that shaped each one is the part worth reading.
+                </p>
+              </div>
+            </div>
+          </header>
 
-          <div className="space-y-20 lg:space-y-32">
-            {projects.map((p, i) => {
-              const projectNum = String(i + 1).padStart(2, '0');
-              
-              return (
-                <div
-                  key={p.id}
-                  id={p.slug}
-                  className="relative scroll-mt-28"
-                >
-                  {/* Accent line between projects */}
-                  {i > 0 && <div className="absolute -top-10 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />}
+          {projects.map((p, i) => (
+            <article className={`pj-row${i % 2 ? ' flip' : ''}`} id={p.slug} key={p.id}>
+              <div className="pj-row-head">
+                <p className="pj-rn mono">
+                  <span className="numchip">{String(i + 1).padStart(2, '0')}</span> {p.category}
+                </p>
+                <p className="pj-role mono">{p.role} · {p.year}</p>
+              </div>
 
-                  <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                    {/* Info Section */}
+              <div className="pj-row-id">
+                <h3 className="pj-rname">{p.name}</h3>
+                <p className="pj-rsub">{p.subtitle}</p>
+              </div>
+
+              <div className="pj-row-mid">
+                <DevicePlate project={p} />
+                <div className="pj-read">
+                  <p className="pj-lead">{p.description}</p>
+                  <div className="pj-qa">
                     <div>
-                      {/* Project Number, Title, Subtitle in a row */}
-                      <div className="mb-6 flex items-center gap-4">
-                        <span className="text-6xl sm:text-7xl font-light text-slate-200 leading-none">{projectNum}</span>
-                        <div>
-                          <h3 className="text-2xl sm:text-3xl lg:text-4xl font-light text-slate-900 mb-1 hover:text-teal-600 transition-colors cursor-default">{p.name}</h3>
-                          <p className="text-base text-slate-500">{p.subtitle}</p>
-                        </div>
-                      </div>
-
-                      {/* Accent line */}
-                      <div className="w-12 h-1 bg-teal-500/60 rounded-full mb-6" />
-
-                      {/* Project description */}
-                      <p className="text-slate-600 leading-relaxed mb-8">{p.description}</p>
-
-                      {/* Status badges */}
-                      <div className="flex flex-wrap items-center gap-2 mb-8">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 text-[11px] font-semibold uppercase tracking-wide rounded-full border border-green-100">
-                          <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                          Live
-                        </span>
-                        <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-semibold uppercase tracking-wide rounded-full border border-teal-100">{p.category}</span>
-                        <span className="text-xs text-slate-400">{p.year}</span>
-                      </div>
-
-                      {/* Built With */}
-                      <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-4">Built With</p>
-                      <div className="flex flex-wrap gap-2 mb-10">
-                        {p.technologies.map((t) => (
-                          <span key={t} className="text-xs font-medium text-slate-700 px-3.5 py-2 rounded-lg bg-slate-100 border border-slate-200 hover:border-teal-300 hover:bg-slate-50 transition-all cursor-default">{t}</span>
-                        ))}
-                      </div>
-
-                      {/* Highlights */}
-                      {p.highlights && p.highlights.length > 0 && (
-                        <>
-                          <p className="text-[11px] font-bold uppercase tracking-widest text-slate-400 mb-3">Highlights</p>
-                          <ul className="space-y-2 mb-8">
-                            {p.highlights.slice(0, 3).map((h) => (
-                              <li key={h} className="flex items-start gap-2.5 text-sm text-slate-600">
-                                <span className="flex-shrink-0 w-4 h-4 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center mt-0.5">
-                                  <svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>
-                                </span>
-                                <span>{h}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </>
-                      )}
-
-                      <LinkButtons project={p} tone="light" />
+                      <p className="pj-k">The question</p>
+                      <p>{p.challenge}</p>
                     </div>
-
-                    {/* Device Showcase */}
-                    <div className="relative group">
-                      <div className="absolute -inset-2 bg-gradient-to-r from-teal-500/10 to-slate-300/10 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      <div className="relative rounded-2xl overflow-hidden">
-                        <DeviceShowcase project={p} tone="light" />
-                      </div>
+                    <div>
+                      <p className="pj-k">The response</p>
+                      <p>{p.solution}</p>
                     </div>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
 
-          <div className="mt-12 sm:mt-16">
-            <CTASection
-              title="Have a Project in Mind?"
-              description="Whether you need a custom web application, design overhaul, or technical consultation — I'm here to help bring your vision to life."
-              primaryButtonText="Let's Talk"
-              primaryButtonHref="/contact"
-              variant="minimal"
-            />
+              <div className="pj-row-foot">
+                <div>
+                  <p className="pj-k">What is in the work</p>
+                  <ul className="pj-hl">
+                    {p.highlights.slice(0, 4).map((h) => (
+                      <li key={h}><span aria-hidden="true">—</span><span>{h}</span></li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <p className="pj-k">Built with</p>
+                  <p className="pj-tech mono">{p.technologies.join(' · ')}</p>
+                  <LinkRow project={p} className="pj-links foot" />
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="pj-end textured">
+        <div className="shell-wide">
+          <div className="pj-endgrid">
+            <div>
+              <p className="eyebrow">Next conversation</p>
+              <h2 className="pj-endtitle" style={{ marginTop: '18px' }}>
+                Tell me what needs to be understood, designed, or built.
+              </h2>
+            </div>
+            <a className="linkline" href="mailto:arefsaboor.m@gmail.com">
+              arefsaboor.m@gmail.com<ExternalIcon />
+            </a>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

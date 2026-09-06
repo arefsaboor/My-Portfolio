@@ -7,7 +7,7 @@
       "category": "Full-Stack Development",
       "role": "Full-Stack Developer",
       "year": "2026",
-      "description": "Created a digital Bookshelf (SPA) app with real-time book search and user authentication. Features integration with Google Books API for comprehensive book data, Firebase for authentication and database management, and a clean, intuitive interface for managing personal book collections.",
+      "description": "Live search against the Google Books API, and an account to keep what you find.",
       "challenge": "Build a seamless single-page application that handles real-time book searches, user authentication, and persistent data storage while maintaining excellent performance.",
       "solution": "Developed using React and Vite for fast build times, integrated Firebase for backend services including Auth and Firestore database, connected Google Books API for extensive book data, and styled with Tailwind CSS for a modern, responsive design.",
       "impact": [
@@ -20,7 +20,15 @@
       "vercelUrl": "https://books2shelf.vercel.app",
       "figmaUrl": "https://www.figma.com/proto/jlU2VAZVQMb3tscWV34pI8/Books2Shelf?page-id=0%3A1&node-id=2-4&p=f&viewport=323%2C292%2C0.04&t=Hr452RwEbnMrb9Uu-1&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=2%3A4",
       "githubUrl": "https://github.com/arefsaboor/books2shelf_arefsaboor",
-      "technologies": ["React", "Vite", "Tailwind CSS", "JavaScript", "Firebase", "Firestore", "Google Books API"],
+      "technologies": [
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "JavaScript",
+        "Firebase",
+        "Firestore",
+        "Google Books API"
+      ],
       "highlights": [
         "Single Page Application (SPA) architecture",
         "Google Books API integration for book data",
@@ -28,7 +36,12 @@
         "Real-time search functionality",
         "Deployed on Vercel with continuous integration"
       ],
-      "tags": ["Full-Stack", "React", "Firebase", "API Integration"]
+      "tags": [
+        "Full-Stack",
+        "React",
+        "Firebase",
+        "API Integration"
+      ]
     },
     {
       "id": 2,
@@ -37,7 +50,7 @@
       "category": "Frontend Development",
       "role": "Frontend Developer & Designer",
       "year": "2025",
-      "description": "Built a responsive Portfolio first in Framer (No-Code Designing) and then developed as SPA (Single Page Application) using React, Vite and Tailwind CSS. Features comprehensive skills & projects showcase with integrated contact functionality. Published on both Framer and Vercel for maximum reach.",
+      "description": "Designed in Framer, then rebuilt as a React SPA — the design tool was the sketch, not the shortcut.",
       "challenge": "Design and develop a modern, performant portfolio that effectively showcases work while being easy to update and maintain across multiple platforms.",
       "solution": "Started with Framer for rapid prototyping and design iterations, then translated the design into a custom React application with Vite for optimal performance, styled with Tailwind CSS for a polished, responsive interface.",
       "impact": [
@@ -49,8 +62,14 @@
       "liveUrl": "https://www.arefsaboor.de/",
       "framerUrl": "https://arefsaboor.framer.website",
       "vercelUrl": "https://arefsortfolio.vercel.app",
-      "githubUrl": "https://github.com/arefsaboor/My-Portfolio",
-      "technologies": ["React", "Vite", "Tailwind CSS", "JavaScript", "Framer", "Vercel"],
+      "technologies": [
+        "React",
+        "Vite",
+        "Tailwind CSS",
+        "JavaScript",
+        "Framer",
+        "Vercel"
+      ],
       "highlights": [
         "No-code design with Framer prototyping",
         "Single Page Application architecture",
@@ -58,7 +77,12 @@
         "Contact form with backend integration",
         "Published on multiple platforms"
       ],
-      "tags": ["Frontend", "React", "SPA", "Responsive Design"]
+      "tags": [
+        "Frontend",
+        "React",
+        "SPA",
+        "Responsive Design"
+      ]
     },
     {
       "id": 3,
@@ -67,7 +91,7 @@
       "category": "Frontend Development",
       "role": "UX Designer & Frontend Developer",
       "year": "2024-2025",
-      "description": "Crafted a beautiful High Fidelity Figma prototype (30+ screens) with comprehensive Design System, Reusable Components and Responsive Layout, then implemented from Figma to Code ensuring pixel-perfect UI. Built as a Mobile-First responsive website using HTML, CSS, JavaScript and JSON APIs with complete focus on user experience and accessibility.",
+      "description": "Thirty-plus screens designed in Figma with a full component system, then built pixel-for-pixel.",
       "challenge": "Design and develop a comprehensive wellness brand website that balances aesthetic beauty with functionality, ensuring pixel-perfect implementation from design to code while maintaining mobile-first responsiveness.",
       "solution": "Created an extensive Figma prototype with complete design system including reusable components, then meticulously translated the design into clean, semantic HTML/CSS/JavaScript code with JSON API integration for dynamic content.",
       "impact": [
@@ -81,7 +105,14 @@
       "figmaUrl": "https://www.figma.com/proto/rrjokG2q8eYdcXz6GFcth8/Batch_001_Block_3_Aref_Saboor_UX_Design_and_Produktentwicklung?page-id=2003%3A60&node-id=2731-1520&starting-point-node-id=2731%3A1520&t=lQJPFszJPjypsQhz-1",
       "caseStudyUrl": "https://www.behance.net/gallery/230927521/NIRVAN-Vedic-Yoga",
       "githubUrl": "https://github.com/arefsaboor/Nirvan",
-      "technologies": ["HTML5", "CSS3", "JavaScript", "JSON APIs", "Figma", "Design Systems"],
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "JSON APIs",
+        "Figma",
+        "Design Systems"
+      ],
       "highlights": [
         "High-Fidelity Figma prototype (30+ screens)",
         "Comprehensive Design System & Components",
@@ -89,7 +120,12 @@
         "Mobile-First responsive design",
         "Published UX case study on Behance"
       ],
-      "tags": ["UX Design", "Frontend", "Design Systems", "Mobile-First"]
+      "tags": [
+        "UX Design",
+        "Frontend",
+        "Design Systems",
+        "Mobile-First"
+      ]
     },
     {
       "id": 4,
@@ -98,7 +134,7 @@
       "category": "Full-Stack Development",
       "role": "Full-Stack Developer",
       "year": "2026",
-      "description": "Production-ready online bookstore built with Next.js App Router that feels like a premium SaaS storefront. Supports rich browsing, wishlists, reviews, secure Stripe checkout, and a full admin dashboard.",
+      "description": "A complete online bookstore on the Next.js App Router — real payments, real accounts, real admin. Not a demo shop.",
       "challenge": "Build an e-commerce bookstore that goes beyond a simple demo shop, with real payments, robust auth, reviews, and an admin back office — while keeping performance, accessibility, and DX high.",
       "solution": "Implemented a full-stack Next.js 15 App Router app with TypeScript, Prisma, and PostgreSQL. Integrated Stripe for payments and webhooks, NextAuth for auth, and Resend for transactional email. Added an admin dashboard for inventory, orders, coupons, and reports.",
       "impact": [
@@ -130,7 +166,53 @@
         "Admin dashboard for books, users, orders, coupons, and exportable reports",
         "Production deployment on Vercel with managed Postgres and performance-focused UX"
       ],
-      "tags": ["Full-Stack", "Next.js", "Stripe", "E-commerce"]
+      "tags": [
+        "Full-Stack",
+        "Next.js",
+        "Stripe",
+        "E-commerce"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "arefsaboor.com",
+      "subtitle": "A Bilingual Writing Site | English & Persian",
+      "category": "Full-Stack Development",
+      "role": "Designer & Full-Stack Developer",
+      "year": "2026",
+      "description": "A personal publication with its own editor, reader notes and email pipeline — written in two languages, in both reading directions.",
+      "challenge": "Publish essays in English and Persian from one codebase, without a third-party CMS or engagement service. That means two reading directions in the same design system, a writing surface I actually want to use, and comments, notes and email that stay under my own control.",
+      "solution": "Built on the Next.js App Router with TypeScript and Tailwind, backed by PostgreSQL. Persian lives in its own route tree with right-to-left typography rather than a translation layer. Reader engagement is written through server actions and batched into dedicated flush endpoints, and a private dashboard handles posts, comments and reader notes.",
+      "impact": [
+        "One codebase serving English and Persian, each with its own typography",
+        "Self-hosted commenting, notes and reactions with no third-party embed",
+        "Double opt-in email with verification and one-click unsubscribe",
+        "Articles readable as a paginated book and exportable to PDF"
+      ],
+      "liveUrl": "https://arefsaboor.com",
+      "technologies": [
+        "Next.js 16 (App Router)",
+        "React 19",
+        "TypeScript",
+        "Tailwind CSS 4",
+        "PostgreSQL",
+        "Server Actions",
+        "Vercel"
+      ],
+      "highlights": [
+        "Fully bilingual: a complete Persian route tree beside the English one, with right-to-left typography",
+        "Reader notes, comments, claps and likes, batched through dedicated flush endpoints",
+        "Email pipeline with address verification, notifications and one-click unsubscribe",
+        "A private writing dashboard for posts, comments and reader notes",
+        "Articles render as a paginated flip-book and export to PDF"
+      ],
+      "tags": [
+        "Full-Stack",
+        "Next.js",
+        "TypeScript",
+        "PostgreSQL",
+        "Bilingual"
+      ]
     }
   ]
 }

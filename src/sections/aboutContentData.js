@@ -1,54 +1,63 @@
 export const journeyIntro = {
-  badge: 'MY JOURNEY',
-  heading: 'From Storyteller to ',
-  headingHighlight: 'Interface Craftsman',
-  lead: "My path from military video journalist to web development wasn't typical—but it gave me something most developers lack: a professional eye for visual storytelling.",
+  badge: 'Professional path',
+  heading: 'From visual storytelling to ',
+  headingHighlight: 'product building',
+  lead: 'My path into technology was not conventional. It gave me a trained eye for communication, composition and clarity—skills I now apply to every interface and product decision.',
 };
 
 export const timelineItems = [
   {
     era: 'Bundeswehr',
-    meta: 'Structure & Discipline',
-    title: 'Discipline Oriented',
+    meta: 'Structure & Accountability',
+    title: 'A disciplined way of working',
     description:
-      'As a Video Journalist worked with Bundeswehr, learning the importance of structure, attention to detail, and disciplined execution—qualities that now define how I approach every line of code.',
+      'Working as a video journalist with the Bundeswehr taught me how to work carefully under clear constraints, prepare thoroughly and take responsibility for details.',
     tags: [],
     current: false,
   },
   {
     era: 'Video Journalism',
-    meta: 'Visual Communication Mastery',
-    title: 'Visual Storyteller',
+    meta: 'Visual Communication',
+    title: 'Professional visual storytelling',
     description:
-      'Worked professionally as a video journalist and graphic designer, mastering composition, color theory, typography, and the art of keeping audiences engaged through visual narratives.',
+      'Years in video journalism and graphic design sharpened my understanding of composition, typography, pacing and the responsibility of making information easy to follow.',
     tags: ['Adobe Suite Expert', 'Visual Design', 'Brand Identity'],
     current: false,
   },
   {
     era: 'Career Transition',
-    meta: '12-Month Intensive Training',
-    title: 'Full-Stack Development Weiterbildung',
+    meta: 'Product Design & Engineering',
+    title: 'A deliberate move into web development',
     description:
-      'Completed an intensive 12-month program covering product design, UX/UI principles, and full-stack development. Combined my design background with technical skills to become a developer who truly understands visual excellence.',
+      'I completed intensive training in product design and full-stack development, then combined it with my design background to build interfaces that are thoughtful in both form and function.',
     tags: ['HTML & CSS', 'JavaScript', 'React & Next.js', 'Node.js & Express', 'MongoDB & PostgreSQL', 'Tailwind CSS'],
     current: false,
   },
   {
-    era: 'Now',
-    meta: 'Ready for New Opportunities',
-    title: 'Seeking My First Tech Role',
+    era: 'arefsaboor.com',
+    meta: 'Designed, built and written',
+    title: 'A bilingual publication of my own',
     description:
-      'Looking for a position where I can bring a unique combination of professional-grade design skills, storytelling ability, and modern full-stack development expertise. Based in Berlin, open to full-time roles and remote work.',
+      'I designed and built arefsaboor.com end to end — a Persian and English writing site with its own editor, reader notes and email pipeline. It is the project where I answer to no brief but my own, and the one that keeps my design and engineering honest.',
+    tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Bilingual / RTL'],
+    current: false,
+  },
+  {
+    era: 'Now',
+    meta: 'Berlin · Open to opportunities',
+    title: 'Design-led development, now in practice',
+    description:
+      'I am looking for a team where I can contribute across design and development—bringing visual judgement, structured thinking and modern full-stack capability to work that matters.',
     tags: [],
     current: true,
   },
 ];
 
 export const differentIntro = {
-  badge: 'WHAT MAKES ME DIFFERENT',
-  heading: 'Beyond the ',
-  headingHighlight: 'Code',
-  lead: 'Where journalism meets modern web development.',
+  badge: 'What I bring to a team',
+  heading: 'More than a ',
+  headingHighlight: 'technical checklist',
+  lead: 'A professional background that makes design and engineering work better together.',
 };
 
 export const credentials = [

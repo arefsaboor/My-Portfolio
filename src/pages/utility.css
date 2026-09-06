@@ -1,0 +1,171 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   Utility pages — Impressum and 404.
+
+   Lifted byte-for-byte out of the approved design concept
+   (public/design-concepts/portfolio-utility.html) by the same CSS extractor
+   used for homepage.css, about.css, contact.css and projects.css. The ONLY
+   edit made to any declaration block is the `.pf-utility` scope prefix.
+
+   Zero dependency on tailwind.config.js. Mobile-first.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
+  --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
+
+  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
+     fine grain over a drafting grid. Both live ONLY on the page grounds and
+     bands. Every long passage of text sits on a clean filled card, so nothing
+     is ever read through the texture. */
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+
+  --sh-sm:0 1px 2px rgba(12,42,44,.05);
+  --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
+  --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
+
+  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+}
+.pf-utility * {box-sizing:border-box}
+.pf-utility {scroll-behavior:smooth}
+.pf-utility {
+  margin:0; background:var(--paper); color:var(--body);
+  font-family:Epilogue,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.65;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+}
+.pf-utility img {max-width:100%; display:block}
+.pf-utility a {color:var(--accent); text-decoration:none}
+.pf-utility a:hover {color:var(--ink)}
+.pf-utility .textured {position:relative; isolation:isolate}
+.pf-utility .textured::before {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grain); background-blend-mode:multiply; opacity:.9;
+}
+.pf-utility .textured::after {
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background-image:var(--grid);
+}
+.pf-utility .textured > * {position:relative; z-index:1}
+.pf-utility .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
+.pf-utility .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
+.pf-utility .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
+/* Section label — a tinted plate rather than a bare tracked line, so every
+   section on every page opens the same way. The old 26px accent dash is
+   gone; the plate is the mark now. */
+.pf-utility .eyebrow {
+  display:inline-block; margin:0; padding:7px 12px 6px;
+  background:var(--inset); border:1px solid var(--rule-2);
+  font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent);
+}
+.pf-utility .eyebrow::before {content:none}
+.pf-utility h2.d {margin:0; font-size:60px; font-weight:300; letter-spacing:-.026em; line-height:.98; color:var(--ink); text-wrap:balance}
+.pf-utility h3.d {margin:0; font-size:48px; font-weight:300; letter-spacing:-.03em; line-height:1; color:var(--ink)}
+.pf-utility .sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}
+.pf-utility .card {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-md)}
+.pf-utility .card-lg {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg)}
+.pf-utility .inset {background:var(--inset); border:1px solid var(--rule-2)}
+.pf-utility .numchip {
+  display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px;
+  padding:0 9px; background:var(--accent); color:#fff; font-size:12px; letter-spacing:.04em;
+}
+.pf-utility .linkline {display:inline-flex; align-items:center; gap:11px; font-size:14px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:7px}
+@media (prefers-reduced-motion: reduce) {
+  .pf-utility * {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+          }
+}
+.pf-utility .ext-i {width:12px; height:12px; flex-shrink:0; opacity:.85}
+.pf-utility .btn {display:inline-flex; align-items:center; justify-content:center; gap:10px; padding:15px 24px; font-size:15px; font-weight:500; transition:all .2s ease}
+.pf-utility .shell, .pf-utility .shell-wide {padding:0 20px}
+.pf-utility .sec {padding:clamp(56px, 9vw, 128px) 0}
+.pf-utility h2.d {font-size:clamp(1.75rem, 6.4vw, 3.75rem)}
+.pf-utility h3.d {font-size:clamp(1.6rem, 5.6vw, 3rem)}
+@media(min-width:600px) {
+  .pf-utility .shell, .pf-utility .shell-wide {padding:0 32px}
+}
+@media(min-width:900px) {
+  .pf-utility .shell, .pf-utility .shell-wide {padding:0 40px}
+}
+@media(min-width:1200px) {
+  .pf-utility .shell, .pf-utility .shell-wide {padding:0 48px}
+}
+:root {--nav-clear:128px}  /* measured: the fixed Navbar is a constant 102px tall */
+.pf-utility .ut-page {background:var(--paper); padding:var(--nav-clear) 0 clamp(56px,8vw,112px)}
+.pf-utility .ut-shell {width:100%; max-width:760px; margin:0 auto; padding:0 clamp(20px,5vw,32px)}
+.pf-utility .ut-back {margin-bottom:clamp(24px,4vw,40px)}
+.pf-utility .ut-back svg {width:16px; height:16px; transition:transform .2s ease}
+.pf-utility .ut-back:hover svg {transform:translateX(-3px)}
+.pf-utility .ut-head {padding-bottom:clamp(36px,5vw,64px); border-bottom:1px solid var(--rule)}
+.pf-utility .ut-title {margin:16px 0 0; font-size:clamp(2.1rem,6vw,3.4rem); font-weight:300;
+  letter-spacing:-.035em; line-height:1; color:var(--ink)}
+.pf-utility .ut-lead {margin:14px 0 0; font-size:clamp(1rem,1.7vw,1.1rem); font-weight:300;
+  line-height:1.7; color:var(--soft); max-width:56ch}
+.pf-utility .ut-secs {display:flex; flex-direction:column}
+.pf-utility .ut-sec {padding:clamp(24px,3.4vw,40px) 0; border-bottom:1px solid var(--rule-2)}
+.pf-utility .ut-sec:last-child {border-bottom:0}
+.pf-utility .ut-h {margin:0 0 14px; font-size:1.02rem; font-weight:600; letter-spacing:-.005em; color:var(--ink)}
+.pf-utility .ut-sec p {margin:0 0 9px; font-size:14.5px; font-weight:300; line-height:1.8; color:var(--body)}
+.pf-utility .ut-sec p:last-child {margin-bottom:0}
+.pf-utility .ut-name {font-weight:500; color:var(--ink)}
+.pf-utility .ut-lbl {color:var(--muted)}
+.pf-utility .ut-sec a {color:var(--accent); text-decoration:none; border-bottom:1px solid var(--rule);
+  transition:border-color .2s ease}
+.pf-utility .ut-sec a:hover {border-bottom-color:var(--accent)}
+.pf-utility .ut-sec a.brk {word-break:break-all}
+.pf-utility .nf {background:var(--paper); min-height:78svh; display:flex; align-items:center;
+  padding:var(--nav-clear) 0 clamp(56px,8vw,112px)}
+.pf-utility .nf-in {text-align:center}
+.pf-utility .nf-code {margin:0; font-size:11px; font-weight:700; letter-spacing:.3em;
+  text-transform:uppercase; color:var(--accent)}
+.pf-utility .nf-title {margin:20px 0 0; font-size:clamp(2.1rem,7vw,3.9rem); font-weight:300;
+  letter-spacing:-.04em; line-height:1; color:var(--ink); text-wrap:balance}
+.pf-utility .nf-lead {margin:18px auto 0; max-width:44ch; font-size:clamp(1rem,1.8vw,1.12rem);
+  font-weight:300; line-height:1.7; color:var(--soft)}
+.pf-utility .nf-btn {display:inline-flex; align-items:center; gap:12px; margin-top:32px;
+  background:var(--ink); color:#fff; border:1px solid var(--ink); border-radius:6px;
+  padding:14px 24px; font-family:inherit; font-size:15px; font-weight:500;
+  text-decoration:none; box-shadow:var(--sh-md); transition:all .2s ease}
+.pf-utility .nf-btn:hover {background:transparent; color:var(--ink)}
+.pf-utility .nf-btn svg {width:16px; height:16px; transition:transform .2s ease}
+.pf-utility .nf-btn:hover svg {transform:translateX(-3px)}
+
+/* ── environment compat (not a design change) ──────────────────────────────
+   Tailwind preflight sets `line-height: inherit` on buttons; the concept page
+   has no preflight and leaves them at the UA default. Buttons only — anchors
+   inherit in both, so they are deliberately not listed here. */
+.pf-utility button.linkline { line-height: normal; }
+
+/* Section opener — the full-bleed hairline borrowed from arefsaboor.com.
+   The heading and its lead stay inside the shell; only the rule runs edge to
+   edge. Contained by the app's overflow-x guard, so it adds no page scroll. */
+.pf-utility .ut-head {
+  position:relative; border-bottom:0;
+}
+.pf-utility .ut-head::after {
+  content:""; position:absolute; left:50%; bottom:0;
+  width:100vw; max-width:100vw; height:1px; transform:translateX(-50%);
+  background:color-mix(in srgb, var(--ink) 13%, transparent); pointer-events:none;
+}
+
+/* ── Section opener ───────────────────────────────────────────────────
+   label plate → hairline → drop → two columns (title left, lead right).
+   MOBILE FIRST: one column; the split arrives at 900px. */
+.pf-utility .op-head {display:block}
+.pf-utility .op-head > .eyebrow + * {
+  margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);
+  border-top:1px solid color-mix(in srgb, var(--ink) 13%, transparent);
+}
+.pf-utility .op-cols {display:grid; grid-template-columns:1fr; gap:clamp(28px,4vw,48px); align-items:start}
+.pf-utility .op-title {max-width:18ch}
+.pf-utility .op-aside {display:flex; flex-direction:column; gap:16px; min-width:0}
+.pf-utility .op-say {margin:0; max-width:52ch; font-size:clamp(.9375rem,1.5vw,1rem);
+  font-weight:300; line-height:1.75; color:var(--soft)}
+@media(min-width:900px) {
+  .pf-utility .op-cols {grid-template-columns:1.08fr .92fr; gap:clamp(40px,4.5vw,72px)}
+}
