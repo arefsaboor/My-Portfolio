@@ -36,7 +36,7 @@
 .pf-contact {scroll-behavior:smooth}
 .pf-contact {
   margin:0; background:var(--paper); color:var(--body);
-  font-family:Epilogue,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.65;
+  font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif; font-size:16px; line-height:1.65;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 .pf-contact img {max-width:100%; display:block}

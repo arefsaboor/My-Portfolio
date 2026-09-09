@@ -35,7 +35,7 @@
 .pf-projects {scroll-behavior:smooth}
 .pf-projects {
   margin:0; background:var(--paper); color:var(--body);
-  font-family:Epilogue,"Helvetica Neue",Arial,sans-serif; font-size:16px; line-height:1.65;
+  font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif; font-size:16px; line-height:1.65;
   -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
 .pf-projects img {max-width:100%; display:block}
@@ -154,6 +154,10 @@
 .pf-projects .pj-tech {margin:16px 0 0; padding-top:15px; border-top:1px solid var(--rule);
   font-size:11px; line-height:1.9; color:var(--muted); letter-spacing:.01em}
 .pf-projects .pj-links {display:flex; flex-wrap:wrap; gap:22px; margin-top:16px}
+.pf-projects .pj-links .linkline {border-bottom:0; padding-bottom:0}
+.pf-projects .pj-hero .pj-links {flex-wrap:nowrap; gap:clamp(6px,1.5vw,22px)}
+.pf-projects .pj-hero .pj-links .linkline {
+  gap:clamp(5px,.75vw,11px); white-space:nowrap; font-size:clamp(11px,3.6vw,14px)}
 .pf-projects .pj-nav {flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:12px;
   border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); padding:8px 0; margin-top:clamp(16px,2.4vw,24px)}
 .pf-projects .pj-arrow {display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px;
@@ -212,7 +216,7 @@
   .pf-projects .pj-endgrid {grid-template-columns:1fr auto}
 }
 @media(min-width:1040px) {
-  .pf-projects .pj-slide {grid-template-columns:1.45fr .85fr; gap:clamp(32px,3.4vw,48px); align-items:center}
+  .pf-projects .pj-slide {grid-template-columns:1.35fr .95fr; gap:clamp(32px,3.4vw,48px); align-items:center}
   .pf-projects .pj-htitle {font-size:clamp(2.2rem,3vw,2.7rem)}
   .pf-projects .pj-row-mid {grid-template-columns:1.08fr .92fr}
   .pf-projects .pj-row.flip .pj-plate {order:2}
@@ -278,8 +282,8 @@
 .pf-projects .af {margin:auto; max-width:100%; max-height:100%; display:flex; flex-direction:column}
 .pf-projects .af-lap {width:100%}
 .pf-projects .af-lap .af-screen {flex:none; aspect-ratio:var(--shot-ar, 1.6)}
-.pf-projects .af-tab {aspect-ratio:.758; height:100%}
-.pf-projects .af-pho {aspect-ratio:.474; height:100%}
+.pf-projects .af-tab {height:100%}
+.pf-projects .af-pho {height:100%}
 
 .pf-projects .af-lid {flex:1; min-height:0; display:flex; flex-direction:column;
   background:linear-gradient(160deg,#1B3B3E,#0C2A2C); border-radius:10px 10px 0 0; padding:5px 5px 0}
@@ -294,6 +298,8 @@
 
 .pf-projects .af-body {flex:1; min-height:0; position:relative;
   background:linear-gradient(#1B3B3E,#0C2A2C)}
+.pf-projects .af-tab .af-body, .pf-projects .af-pho .af-body {
+  display:flex; box-sizing:border-box; flex:none; height:100%}
 .pf-projects .af-tab .af-body {border-radius:16px}
 .pf-projects .af-pho .af-body {border-radius:20px}
 .pf-projects .af-cam {position:absolute; top:3px; left:50%; transform:translateX(-50%);
@@ -301,9 +307,13 @@
 .pf-projects .af-notch {position:absolute; top:3px; left:50%; transform:translateX(-50%);
   width:34px; height:7px; border-radius:99px; background:#08191A; z-index:2}
 
-.pf-projects .af-screen {flex:1; min-height:0; position:relative; overflow:hidden; background:#fff}
-.pf-projects .af-tab .af-screen {position:absolute; inset:7px; border-radius:9px}
-.pf-projects .af-pho .af-screen {position:absolute; inset:5px; border-radius:15px}
+.pf-projects .af-screen {flex:1; min-height:0; position:relative; overflow:hidden; background:#08191A}
+.pf-projects .af-tab .af-body {padding:7px}
+.pf-projects .af-tab .af-screen, .pf-projects .af-pho .af-screen {position:relative; flex:none; height:100%; width:auto;
+  aspect-ratio:var(--shot-ar, .75)}
+.pf-projects .af-tab .af-screen {border-radius:9px}
+.pf-projects .af-pho .af-body {padding:5px}
+.pf-projects .af-pho .af-screen {border-radius:15px}
 /* `contain`, not `cover`: cover crops whatever does not match the frame's
    aspect, which is how Nirvan's 16:9 shot lost its buttons. The desktop assets
    are all 16:10 and the screen area is close to it, so letterboxing is

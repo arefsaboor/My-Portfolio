@@ -180,7 +180,7 @@ function Loader({ onComplete }) {
           font-weight: 300;
           color: #F2F7F6;
           text-align: center;
-          font-family: Epilogue, system-ui, -apple-system, sans-serif;
+          font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
           letter-spacing: 0.02em;
           padding: 0;
           margin: 0;

@@ -4,6 +4,40 @@ import nodemailer from 'nodemailer';
 
 const MAX_NAME_LENGTH = 200;
 const MAX_MESSAGE_LENGTH = 5000;
+const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const RATE_LIMIT_MAX_REQUESTS = 5;
+const RATE_LIMIT_MAX_CLIENTS = 1000;
+const rateLimitClients = new Map();
+
+function getClientIp(req) {
+  const forwarded = req.headers['x-forwarded-for'];
+  const value = Array.isArray(forwarded) ? forwarded[0] : forwarded;
+  return value?.split(',')[0]?.trim() || req.socket?.remoteAddress || null;
+}
+
+function checkRateLimit(ip, now = Date.now()) {
+  if (!ip) return null;
+
+  for (const [clientIp, entry] of rateLimitClients) {
+    if (entry.resetAt <= now) rateLimitClients.delete(clientIp);
+  }
+
+  const current = rateLimitClients.get(ip);
+  if (!current) {
+    if (rateLimitClients.size >= RATE_LIMIT_MAX_CLIENTS) {
+      rateLimitClients.delete(rateLimitClients.keys().next().value);
+    }
+    rateLimitClients.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW_MS });
+    return null;
+  }
+
+  if (current.count >= RATE_LIMIT_MAX_REQUESTS) {
+    return Math.max(1, Math.ceil((current.resetAt - now) / 1000));
+  }
+
+  current.count += 1;
+  return null;
+}
 
 function escapeHtml(value) {
   return String(value)
@@ -26,6 +60,12 @@ export default async function handler(req, res) {
   // Pretend success so bots don't learn they were caught.
   if (website) {
     return res.status(200).json({ success: true, message: 'Email sent successfully!' });
+  }
+
+  const retryAfter = checkRateLimit(getClientIp(req));
+  if (retryAfter) {
+    res.setHeader('Retry-After', String(retryAfter));
+    return res.status(429).json({ error: 'Too many messages. Please try again later.' });
   }
 
   // Validate input

@@ -8,7 +8,7 @@
    hot-reloads and survives a stale dev-server config. */
 .pf-about {
   color: var(--body);
-  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;

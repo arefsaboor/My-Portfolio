@@ -256,7 +256,7 @@ function Hero() {
         .hero-writing-kicker {
           position: relative;
           z-index: 13;
-          font-family: "Epilogue", sans-serif;
+          font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
           font-size: clamp(1.75rem, 2.35vw, 2.3rem);
           font-style: italic;
           font-weight: 200;
@@ -281,7 +281,7 @@ function Hero() {
         }
         .hero-writing-domain {
           display: inline-flex;
-          font-family: "Epilogue", sans-serif;
+          font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
           font-size: clamp(1rem, 1.15vw, 1.15rem);
           font-weight: 200;
           letter-spacing: 0.2em;

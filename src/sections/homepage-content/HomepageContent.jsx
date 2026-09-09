@@ -113,7 +113,7 @@ function DevicePlate({ project }) {
               <div className="af af-tab">
                 <div className="af-body">
                   <span className="af-cam" />
-                  <div className="af-screen"><img src={project.screens.tablet} alt={`${project.name} on tablet`} loading="lazy" decoding="async" /></div>
+                  <div className="af-screen"><img src={project.screens.tablet} alt={`${project.name} on tablet`} loading="lazy" decoding="async" ref={setShotRatio} /></div>
                 </div>
               </div>
             )}
@@ -121,7 +121,7 @@ function DevicePlate({ project }) {
               <div className="af af-pho">
                 <div className="af-body">
                   <span className="af-notch" />
-                  <div className="af-screen"><img src={project.screens.mobile} alt={`${project.name} on mobile`} loading="lazy" decoding="async" /></div>
+                  <div className="af-screen"><img src={project.screens.mobile} alt={`${project.name} on mobile`} loading="lazy" decoding="async" ref={setShotRatio} /></div>
                 </div>
               </div>
             )}

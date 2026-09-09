@@ -1,15 +1,16 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { heroProjects } from './projectsHeroData';
 import { smoothScrollToId } from '../utils/smoothScroll';
 import ExternalIcon from '../components/ExternalIcon';
 
 /* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-projects.html). The carousel's behaviour is
-   unchanged from the previous version of this file: clone-based infinite track,
-   5500ms auto-advance, hover-to-hold on the nav strip, full preload before
-   reveal, and the instant snap from clone to real slide on transition end. */
+   (public/design-concepts/portfolio-projects.html). The carousel uses a
+   clone-based infinite track, 5500ms auto-advance while it is onscreen,
+   hover-to-hold on the nav strip, full preload before reveal, and a guarded
+   snap from each clone to its matching real slide. */
 
 const AUTO_MS = 5500;
+const SNAP_FALLBACK_MS = 1400;
 
 export default function ProjectsHero({ isVisible = true }) {
   // Clone-based infinite track: [last, 0, 1, 2, 3, first]
@@ -20,6 +21,8 @@ export default function ProjectsHero({ isVisible = true }) {
   const [hasTransition, setHasTransition] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [isInViewport, setIsInViewport] = useState(true);
+  const heroRef = useRef(null);
 
   // Which real slide is active (for the numbered nav)
   const activeSlide = ((trackPos - 1) % SLIDE_COUNT + SLIDE_COUNT) % SLIDE_COUNT;
@@ -47,16 +50,45 @@ export default function ProjectsHero({ isVisible = true }) {
     }
   }, [hasTransition]);
 
-  // Continuous auto-advance — always forward
+  // Do not spend carousel state changes while the hero is offscreen. Browsers
+  // may throttle an offscreen CSS transition and omit transitionend entirely,
+  // which previously let the track advance beyond its final clone into white
+  // space. The rendered slide itself remains visible when returning.
   useEffect(() => {
-    if (isPaused || !isVisible) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const id = setInterval(() => {
+    const hero = heroRef.current;
+    if (!hero || !('IntersectionObserver' in window)) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInViewport(entry.isIntersecting && entry.intersectionRatio >= 0.05),
+      { threshold: 0.05 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
+  // Auto-advance only when the carousel can actually be seen. A timeout is
+  // restarted after each completed move, preventing queued interval ticks.
+  useEffect(() => {
+    if (isPaused || !isVisible || !isInViewport || !imagesLoaded) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    const id = window.setTimeout(() => {
       setHasTransition(true);
-      setTrackPos(p => p + 1);
+      setTrackPos(p => Math.min(p + 1, SLIDE_COUNT + 1));
     }, AUTO_MS);
-    return () => clearInterval(id);
-  }, [isPaused, isVisible]);
+    return () => window.clearTimeout(id);
+  }, [SLIDE_COUNT, imagesLoaded, isInViewport, isPaused, isVisible, trackPos]);
+
+  // transitionend is the fast path; this is the guarantee. If the browser
+  // suppresses that event while scrolling, snap the clone back before another
+  // auto-advance can run.
+  useEffect(() => {
+    if (trackPos !== 0 && trackPos !== SLIDE_COUNT + 1) return undefined;
+    const id = window.setTimeout(() => {
+      setHasTransition(false);
+      setTrackPos(trackPos === 0 ? SLIDE_COUNT : 1);
+    }, SNAP_FALLBACK_MS);
+    return () => window.clearTimeout(id);
+  }, [SLIDE_COUNT, trackPos]);
 
   // Snap from clone positions to real positions without visible animation
   const handleTransitionEnd = (e) => {
@@ -70,17 +102,17 @@ export default function ProjectsHero({ isVisible = true }) {
     }
   };
 
-  const go = (n) => { setHasTransition(true); setTrackPos(n); };
+  const go = (n) => {
+    setHasTransition(true);
+    setTrackPos(Math.max(0, Math.min(n, SLIDE_COUNT + 1)));
+  };
 
   return (
-    <section className="pj-hero textured" id="projects-hero">
+    <section ref={heroRef} className="pj-hero textured" id="projects-hero">
       <h1 className="sr-only">Selected projects by Aref Saboor</h1>
 
       <div className="shell pj-topbar">
         <p className="eyebrow" style={{ margin: 0 }}>Recent Works / 2024—2026</p>
-        <p className="mono" style={{ margin: 0, fontSize: '10px', letterSpacing: '.18em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-          Auto-advancing · hover to hold
-        </p>
       </div>
 
       <div
@@ -189,7 +221,7 @@ export default function ProjectsHero({ isVisible = true }) {
           onClick={() => smoothScrollToId('projects-list')}
           style={{ border: 0, background: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
         >
-          Explore the project archive
+          Explore Projects
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ width: '15px', height: '15px' }}>
             <path d="M12 5v14M19 12l-7 7-7-7" />
           </svg>

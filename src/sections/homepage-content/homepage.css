@@ -6,13 +6,13 @@
    To change the design: edit the concept, then re-run the move. */
 .pf-home {
   color: var(--body);
-  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 .pf-footer {
-  font-family: Epilogue, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
   line-height: 1.65;
 }
 :root {
@@ -253,6 +253,7 @@
 .pf-home .pj-tech {margin:16px 0 0; padding-top:15px; border-top:1px solid var(--rule);
   font-size:11px; line-height:1.9; color:var(--muted); letter-spacing:.01em}
 .pf-home .pj-links {display:flex; flex-wrap:wrap; gap:22px; margin-top:16px}
+.pf-home .pj-links .linkline {border-bottom:0; padding-bottom:0}
 .pf-home .pj-row {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg);
   padding:clamp(22px,3.2vw,40px); margin-top:clamp(24px,3.6vw,48px); scroll-margin-top:144px}
 .pf-home .pj-row-head {display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
@@ -313,8 +314,8 @@
 .pf-home .af {margin:auto; max-width:100%; max-height:100%; display:flex; flex-direction:column}
 .pf-home .af-lap {width:100%}
 .pf-home .af-lap .af-screen {flex:none; aspect-ratio:var(--shot-ar, 1.6)}
-.pf-home .af-tab {aspect-ratio:.758; height:100%}
-.pf-home .af-pho {aspect-ratio:.474; height:100%}
+.pf-home .af-tab {height:100%}
+.pf-home .af-pho {height:100%}
 .pf-home .af-lid {flex:1; min-height:0; display:flex; flex-direction:column;
   background:linear-gradient(160deg,#1B3B3E,#0C2A2C); border-radius:10px 10px 0 0; padding:5px 5px 0}
 .pf-home .af-bar {flex-shrink:0; display:flex; align-items:center; gap:5px;
@@ -327,15 +328,21 @@
   background:linear-gradient(#1B3B3E,#0C2A2C); box-shadow:inset 0 1px 2px rgba(255,255,255,.09)}
 .pf-home .af-body {flex:1; min-height:0; position:relative;
   background:linear-gradient(#1B3B3E,#0C2A2C)}
+.pf-home .af-tab .af-body, .pf-home .af-pho .af-body {
+  display:flex; box-sizing:border-box; flex:none; height:100%}
 .pf-home .af-tab .af-body {border-radius:16px}
 .pf-home .af-pho .af-body {border-radius:20px}
 .pf-home .af-cam {position:absolute; top:3px; left:50%; transform:translateX(-50%);
   width:4px; height:4px; border-radius:50%; background:#08191A; z-index:2}
 .pf-home .af-notch {position:absolute; top:3px; left:50%; transform:translateX(-50%);
   width:34px; height:7px; border-radius:99px; background:#08191A; z-index:2}
-.pf-home .af-screen {flex:1; min-height:0; position:relative; overflow:hidden; background:#fff}
-.pf-home .af-tab .af-screen {position:absolute; inset:7px; border-radius:9px}
-.pf-home .af-pho .af-screen {position:absolute; inset:5px; border-radius:15px}
+.pf-home .af-screen {flex:1; min-height:0; position:relative; overflow:hidden; background:#08191A}
+.pf-home .af-tab .af-body {padding:7px}
+.pf-home .af-tab .af-screen, .pf-home .af-pho .af-screen {position:relative; flex:none; height:100%; width:auto;
+  aspect-ratio:var(--shot-ar, .75)}
+.pf-home .af-tab .af-screen {border-radius:9px}
+.pf-home .af-pho .af-body {padding:5px}
+.pf-home .af-pho .af-screen {border-radius:15px}
 .pf-home .af-screen img {position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:top center}
 @media (min-width:560px) {

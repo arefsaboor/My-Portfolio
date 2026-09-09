@@ -46,7 +46,7 @@
     min-height: 100svh;
     overflow-x: hidden;
     overflow-y: auto;
-    font-family: Epilogue, 'Helvetica Neue', Arial, sans-serif;
+    font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
     color: var(--portfolio-body);
     background: var(--portfolio-paper);
     -webkit-font-smoothing: antialiased;
