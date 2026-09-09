@@ -15,7 +15,7 @@
 :root {
   /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
-  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
   /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
@@ -23,8 +23,8 @@
      bands. Every long passage of text sits on a clean filled card, so nothing
      is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
-         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
 
   --sh-sm:0 1px 2px rgba(12,42,44,.05);
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
@@ -83,7 +83,7 @@
 .pf-contact .bullets {display:flex; flex-direction:column; gap:10px}
 .pf-contact .bullets div {display:flex; gap:12px; font-size:14px; line-height:1.55; color:var(--body)}
 .pf-contact .bullets span {color:var(--accent)}
-.pf-contact .demo-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:#8B9A9C}
+.pf-contact .demo-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:#647779}
 .pf-contact .disc .tech {align-self:end; text-align:right}
 @media (prefers-reduced-motion: reduce) {
   .pf-contact * {
@@ -152,7 +152,7 @@
 .pf-contact .ct-aside {display:flex; flex-direction:column; gap:0}
 .pf-contact .ct-method {padding:20px 0; border-top:1px solid var(--rule)}
 .pf-contact .ct-method:first-child {border-top:0; padding-top:0}
-.pf-contact .ct-kick {margin:0 0 8px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-contact .ct-kick {margin:0 0 8px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#647779}
 .pf-contact .ct-val {margin:0; font-size:16px; font-weight:500; color:var(--ink); word-break:break-word}
 .pf-contact a.ct-val {text-decoration:none}
 .pf-contact a.ct-val:hover {color:var(--accent)}
@@ -167,7 +167,7 @@
 .pf-contact .ct-form-title {margin:0; font-size:clamp(1.35rem,2.6vw,1.9rem); font-weight:300; letter-spacing:-.025em; color:var(--ink)}
 .pf-contact .ct-req {font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted)}
 .pf-contact .ct-fields {display:flex; flex-direction:column; gap:24px; margin-top:24px}
-.pf-contact .ct-label {display:block; margin:0 0 8px; font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#8B9A9C}
+.pf-contact .ct-label {display:block; margin:0 0 8px; font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:#647779}
 .pf-contact .ct-input {
   width:100%; display:block; box-sizing:border-box;
   border:0; border-bottom:1px solid var(--rule); background:transparent;

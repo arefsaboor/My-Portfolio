@@ -16,7 +16,7 @@
 :root {
   /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
-  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
   /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
@@ -24,8 +24,8 @@
      bands. Every long passage of text sits on a clean filled card, so nothing
      is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
-         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
 
   --sh-sm:0 1px 2px rgba(12,42,44,.05);
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
@@ -74,7 +74,7 @@
 .pf-about .bullets {display:flex; flex-direction:column; gap:10px}
 .pf-about .bullets div {display:flex; gap:12px; font-size:14px; line-height:1.55; color:var(--body)}
 .pf-about .bullets span {color:var(--accent)}
-.pf-about .demo-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .demo-label {margin:0; font-size:11px; font-weight:700; letter-spacing:.17em; text-transform:uppercase; color:#647779}
 .pf-about .disc .tech {align-self:end; text-align:right}
 .pf-about .ext-i {width:12px; height:12px; flex-shrink:0; opacity:.85}
 .pf-about .f-col a {display:inline-flex; align-items:center; gap:7px; width:fit-content}
@@ -91,7 +91,7 @@
 .pf-about .f-nm {margin:0; font-weight:300; letter-spacing:-.032em; line-height:1; color:var(--ink); font-size:clamp(2rem,5.4vw,3.25rem)}
 .pf-about .f-nm b {font-weight:700}
 .pf-about .f-say {margin:0; max-width:42ch; font-size:15px; font-weight:300; line-height:1.85; color:var(--soft)}
-.pf-about .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#647779}
 .pf-about .f-lk {display:flex; flex-direction:column; gap:15px; font-size:15px}
 .pf-about .f-lk a, .pf-about .f-inl a {color:var(--body)}
 .pf-about .f-lk a:hover, .pf-about .f-inl a:hover {color:var(--accent)}
@@ -143,7 +143,7 @@
 .pf-about .ab-site .ext-i {width:12px; height:12px; flex-shrink:0; align-self:center; opacity:.9}
 .pf-about .ab-facts {margin-top:24px; display:grid; grid-template-columns:1fr; gap:1px; background:var(--rule); border:1px solid var(--rule)}
 .pf-about .ab-fact {background:var(--card); padding:16px 18px}
-.pf-about .ab-fact p:first-child {margin:0 0 7px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-about .ab-fact p:first-child {margin:0 0 7px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#647779}
 .pf-about .ab-fact p:last-child {margin:0; font-size:14px; line-height:1.55; color:var(--ink)}
 .pf-about .tl {display:grid; grid-template-columns:1fr; gap:14px; align-items:start; background:var(--card); border:1px solid var(--rule); border-left:3px solid var(--rule); box-shadow:var(--sh-sm); padding:22px 20px; transition:all .2s ease}
 .pf-about .tl:hover {border-left-color:var(--accent); box-shadow:var(--sh-md); transform:translateY(-1px)}

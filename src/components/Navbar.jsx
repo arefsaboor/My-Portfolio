@@ -222,10 +222,65 @@ function Navbar() {
         .sidebar-width {
           width: 100%;
         }
+
+        .sidebar-overlay {
+          width: 100%;
+          max-width: 100%;
+          height: 100vh;
+          height: 100dvh;
+          overflow: hidden;
+          overscroll-behavior: none;
+        }
+
+        .sidebar-panel {
+          height: 100vh;
+          height: 100dvh;
+          max-height: 100dvh;
+          max-width: 100%;
+          overflow: hidden;
+          overscroll-behavior: contain;
+        }
+
+        .sidebar-content-shell {
+          width: 100%;
+          min-width: 0;
+          box-sizing: border-box;
+          padding-top: max(5rem, calc(3.5rem + env(safe-area-inset-top, 0px)));
+          padding-right: 1.75rem;
+          padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+          padding-left: 1.75rem;
+        }
+
+        .sidebar-scroll-region {
+          width: 100%;
+          min-width: 0;
+          overflow-x: hidden;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+        }
+
+        .sidebar-socials {
+          min-width: 0;
+          flex-wrap: nowrap;
+          gap: clamp(.2rem, 1.6vw, .5rem);
+        }
+
+        .sidebar-socials > a {
+          width: clamp(2rem, 9vw, 2.25rem);
+          min-width: 2rem;
+          height: clamp(2rem, 9vw, 2.25rem);
+        }
         
         @media (min-width: 768px) {
           .sidebar-width {
             width: clamp(20rem, 90vw, 30rem);
+          }
+        }
+
+        @media (min-width: 640px) {
+          .sidebar-content-shell {
+            padding-right: 2rem;
+            padding-left: 2rem;
           }
         }
         
@@ -235,7 +290,7 @@ function Navbar() {
         }
         
         .close-button {
-          top: 20px;
+          top: max(20px, env(safe-area-inset-top, 0px));
           right: 20px;
           width: 40px;
           height: 40px;
@@ -423,7 +478,7 @@ function Navbar() {
 
       {/* Sidebar Overlay */}
       <div
-        className={`fixed inset-0 transition-opacity duration-200 ${
+        className={`sidebar-overlay fixed inset-0 transition-opacity duration-200 ${
           (isOpen || isClosing) ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         style={{ zIndex: zIndex.sidebarOverlay }}
@@ -443,7 +498,7 @@ function Navbar() {
         {/* Sidebar Container */}
         <aside
           ref={sidebarRef}
-          className={`sidebar-width absolute top-0 right-0 h-screen bg-gradient-to-br from-[#08191A] via-[#0C2A2C] to-[#123B3D] shadow-2xl overflow-hidden will-change-transform transition-transform duration-[260ms] ease-[cubic-bezier(.32,.72,0,1)] ${
+          className={`sidebar-panel sidebar-width absolute top-0 right-0 bg-gradient-to-br from-[#08191A] via-[#0C2A2C] to-[#123B3D] shadow-2xl will-change-transform transition-transform duration-[260ms] ease-[cubic-bezier(.32,.72,0,1)] ${
             isOpen && !isClosing ? 'translate-x-0' : 'translate-x-full'
           }`}
           style={{ zIndex: zIndex.sidebar }}
@@ -492,9 +547,9 @@ function Navbar() {
             </button>
 
             {/* Menu Content */}
-            <div className="flex flex-col h-full gap-8 pt-20 pb-8 px-7 sm:px-8">
+            <div className="sidebar-content-shell flex flex-col h-full gap-8">
               {/* Scrolls on its own so opening Projects can never move the footer. */}
-              <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain pl-4 -ml-4 pr-1">
+              <div className="sidebar-scroll-region flex-1 min-h-0">
                 {/* Brand */}
                 <div 
                   className={`transition-opacity duration-200 mb-8 ${
@@ -505,7 +560,6 @@ function Navbar() {
                     <span className="font-bold">Aref </span>
                     <span className="font-thin">Saboor</span>
                   </h2>
-                  <div className="h-1 w-16 bg-gradient-to-r from-teal-400 to-[#2E7A7D] rounded-full" />
                 </div>
 
                 {/* Navigation Links */}
@@ -635,13 +689,13 @@ function Navbar() {
 
               {/* Bottom Section: Footer Info */}
               <div 
-                className={`flex-shrink-0 transition-opacity duration-200 ${
+                className={`w-full min-w-0 flex-shrink-0 transition-opacity duration-200 ${
                   isOpen && !isClosing ? 'opacity-100 delay-100' : 'opacity-0'
                 }`}
               >
                 {/* Social Links — a 64px band whose 1px top rule is part of its
                     own height, so the rule sits on a mesh line. */}
-                <div className="h-16 border-t border-white/15 flex flex-wrap items-center justify-center gap-2">
+                <div className="sidebar-socials h-16 border-t border-white/15 flex items-center justify-center">
                   {/* His own site, first and in the accent — same order and
                       emphasis as the site footer's mark row */}
                   <a
@@ -737,7 +791,7 @@ function Navbar() {
                 </div>
                 
                 {/* Colophon — the matching 64px band */}
-                <div className="h-16 border-t border-white/20 flex flex-col items-center justify-center gap-1">
+                <div className="sidebar-colophon min-h-16 border-t border-white/20 flex flex-col items-center justify-center gap-1 py-2">
                   <p className="m-0 text-[#9FBAB9] text-center text-xs">
                     © {new Date().getFullYear()} Aref Saboor. All rights reserved.
                   </p>

@@ -42,7 +42,7 @@ function Hero() {
       <div 
         className="hero-background absolute inset-0 z-0 w-full h-full"
         style={{
-          backgroundImage: 'url(/IMAGE_002-hero-outpainted.png)',
+          backgroundImage: 'url(/IMAGE_002-hero-outpainted.webp)',
           backgroundSize: 'cover',
           backgroundRepeat: 'no-repeat',
           backgroundAttachment: 'scroll',
@@ -60,6 +60,7 @@ function Hero() {
         #home {
           --hero-side-space: clamp(1.5rem, 3vw, 5rem);
           --hero-content-width: min(340px, calc(100vw - 3rem));
+          --writing-note-space: 0rem;
           --hero-grid: repeating-linear-gradient(to right, rgba(94,234,212,.10) 0 1px, transparent 1px 34px),
                        repeating-linear-gradient(to bottom, rgba(94,234,212,.08) 0 1px, transparent 1px 34px);
           position: relative;
@@ -70,7 +71,7 @@ function Hero() {
           min-height: min(600px, 100svh);
           overflow: hidden;
           background-color: #081516;
-          padding-bottom: clamp(2.5rem, 5vh, 4rem);
+          padding-bottom: calc(clamp(2.5rem, 5vh, 4rem) + var(--writing-note-space) + env(safe-area-inset-bottom));
         }
         /* a phone held sideways is shorter than 600px — let the hero be the
            viewport there instead of pushing its own content off-screen */
@@ -133,25 +134,48 @@ function Hero() {
         /* a wrapping flex row: each role stays whole and the line breaks
            between them, never through "Full Stack Developer" */
         .h-role {
-          margin: 12px 0 0; font-weight: 300; color: #5eead4;
+          margin: 8px 0 0; font-weight: 300; color: #5eead4;
           font-size: clamp(0.8125rem, 2vw, 1.5rem);
-          display: flex; flex-wrap: wrap; align-items: baseline; column-gap: .5rem;
+          display: flex; flex-wrap: nowrap; align-items: baseline; column-gap: clamp(.65rem, 2.5vw, .9rem);
         }
         .h-role > span { white-space: nowrap; }
-        .h-role-sep { line-height: 0; font-size: 1.2em; }
+        .h-role-sep {
+          display: inline-block;
+          width: 1px;
+          height: .9em;
+          flex: 0 0 1px;
+          align-self: center;
+          background: rgba(94, 234, 212, .55);
+        }
         .h-say { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.5; max-width: 25ch; }
         .h-loc { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.62; }
         .r-say { margin-top: 16px; } .r-loc { margin-top: 10px; }
         /* one row, always: the two buttons share the column and shrink
            together rather than stacking */
-        .hero-acts { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 18px; grid-column: 2; }
+        .hero-acts { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 18px; margin-bottom: 0; grid-column: 2; }
         .hero-acts > * { flex: 0 1 auto; min-width: 0; white-space: nowrap; }
 
         .hero-animated-box {
-          background: transparent !important;
-          min-width: 8rem; max-width: 100%; min-height: 22px;
+          margin-left: -.4rem;
+          padding-left: .4rem;
+          width: min(12rem, 100%);
+          min-width: 0;
+          max-width: 100%;
+          min-height: 2rem;
+          justify-self: start;
+          background: linear-gradient(
+            90deg,
+            rgba(2, 17, 19, .88) 0%,
+            rgba(2, 17, 19, .68) 46%,
+            rgba(2, 17, 19, .28) 76%,
+            transparent 100%
+          ) !important;
         }
-        .hero-animated-text { font-size: 0.8rem; text-overflow: ellipsis; }
+        .hero-animated-text {
+          font-size: 0.7rem;
+          font-style: italic;
+          text-overflow: ellipsis;
+        }
 
         .hero-main-container {
           display: flex;
@@ -162,8 +186,116 @@ function Hero() {
           max-width: 100vw;
           box-sizing: border-box;
           margin: 0 auto;
-          padding-left: var(--hero-side-space);
-          padding-right: var(--hero-side-space);
+          padding-left: calc(var(--hero-side-space) + env(safe-area-inset-left));
+          padding-right: calc(var(--hero-side-space) + env(safe-area-inset-right));
+          transform: translateY(.5rem);
+        }
+
+        .hero-writing-promo {
+          position: absolute;
+          left: 50%;
+          bottom: calc(clamp(2.75rem, 5vh, 4.25rem) + env(safe-area-inset-bottom));
+          z-index: 20;
+          display: none;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(2rem, 3vw, 3.75rem);
+          width: max-content;
+          max-width: calc(100% - 3rem);
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          transform: translateX(-50%);
+          isolation: isolate;
+          pointer-events: none;
+        }
+        .hero-writing-promo::before {
+          content: "";
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          z-index: 0;
+          width: calc(100% + clamp(13rem, 28vw, 30rem));
+          height: calc(100% + 1.5rem);
+          transform: translate(-50%, -50%);
+          background: linear-gradient(
+            90deg,
+            transparent 0%,
+            rgba(2, 17, 19, .4) 16%,
+            rgba(2, 17, 19, .85) 50%,
+            rgba(2, 17, 19, .4) 84%,
+            transparent 100%
+          );
+          opacity: .94;
+          pointer-events: none;
+        }
+        .hero-writing-lead {
+          position: relative;
+          z-index: 11;
+          display: flex;
+          align-items: center;
+          gap: .65rem;
+        }
+        .hero-writing-feather {
+          width: 1.35rem;
+          height: 1.35rem;
+          flex: 0 0 auto;
+        }
+        .hero-writing-intro {
+          position: relative;
+          z-index: 11;
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          color: #ffe0aa;
+          text-align: center;
+          -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, .82) 88%, transparent 100%);
+          mask-image: linear-gradient(to bottom, #000 0%, #000 72%, rgba(0, 0, 0, .82) 88%, transparent 100%);
+        }
+        .hero-writing-kicker {
+          position: relative;
+          z-index: 13;
+          font-family: "Epilogue", sans-serif;
+          font-size: clamp(1.75rem, 2.35vw, 2.3rem);
+          font-style: italic;
+          font-weight: 200;
+          line-height: 1.1;
+          letter-spacing: .015em;
+          white-space: nowrap;
+        }
+        .hero-writing-paper-link {
+          position: relative;
+          z-index: 20;
+          display: inline-flex;
+          flex-shrink: 0;
+          box-sizing: border-box;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          color: #fff;
+          text-align: center;
+          text-decoration: none;
+          pointer-events: auto;
+          transition: color .2s ease, text-shadow .2s ease;
+        }
+        .hero-writing-domain {
+          display: inline-flex;
+          font-family: "Epilogue", sans-serif;
+          font-size: clamp(1rem, 1.15vw, 1.15rem);
+          font-weight: 200;
+          letter-spacing: 0.2em;
+          line-height: 1;
+        }
+        .hero-writing-paper-link:hover,
+        .hero-writing-paper-link:focus-visible {
+          color: #fff;
+          text-shadow: 0 4px 14px rgba(0, 0, 0, .72);
+        }
+        .hero-writing-paper-link:focus-visible {
+          outline: 2px solid rgba(255, 218, 157, .92);
+          outline-offset: 5px;
+          border-radius: 2px;
         }
 
         /* ── scroll indicator ─────────────────────────────────────── */
@@ -177,7 +309,7 @@ function Hero() {
         .scroll-border {
           width: 2.5rem;
           height: 3.75rem;
-          border-width: 1px;
+          border-width: 0.6px;
           border-color: #5eead4;
           box-shadow: 0 0 20px rgba(94, 234, 212, 0.5);
         }
@@ -202,6 +334,7 @@ function Hero() {
           transition: all 0.3s ease;
           background: none;
           border: none;
+          margin-bottom: 0;
           padding: 0;
         }
         .scroll-indicator-wrapper:hover .scroll-border {
@@ -227,19 +360,20 @@ function Hero() {
           padding: 8px 12px;
           font-size: 11px;
           font-weight: 500;
+          line-height: 1;
           border-radius: 4px;
           cursor: pointer;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 32px;
+          min-height: 38px;
           /* colour only — nothing lifts, scales or moves on hover */
           transition: background-color .18s ease, border-color .18s ease, color .18s ease;
         }
         .hero-cta-button { background: #5eead4; color: #0a3d35; border: 1px solid #5eead4; }
         .hero-cta-button:hover { background: #0d9488; border-color: #0d9488; color: #fff; }
         .hero-cta-button-secondary {
-          background: transparent; color: #fff; line-height: 1;
+          background: transparent; color: #fff;
           border: 1px solid rgba(94, 234, 212, .45);
         }
         .hero-cta-button-secondary:hover {
@@ -251,9 +385,9 @@ function Hero() {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(12px); }
         }
-        .scroll-indicator-animate { animation: scrollIndicator 2s ease-in-out infinite; }
+        .scroll-indicator-animate { animation: scrollIndicator 3.2s ease-in-out infinite; }
 
-        /* ── tall screens: the roomier rhythm ─────────────────────── */
+        /* ── tall phones: match the deployed mobile rhythm ────────── */
         @media (min-height: 780px) {
           .h-name { margin-top: 16px; }
           .h-say { line-height: 1.62; }
@@ -269,10 +403,11 @@ function Hero() {
         /* ── 376px and up ─────────────────────────────────────────── */
         @media (min-width: 376px) {
           .hero-animated-box {
-            min-width: clamp(9rem, 30vw, 18.75rem);
+            width: min(13rem, 100%);
+            min-width: 0;
             min-height: clamp(1.5rem, 4vh, 4rem);
           }
-          .hero-animated-text { font-size: clamp(0.875rem, 1.5vw, 1.25rem); }
+          .hero-animated-text { font-size: clamp(0.72rem, 1.15vw, 0.82rem); }
         }
 
         /* ── 768px and up: the wide treatment ─────────────────────── */
@@ -293,19 +428,58 @@ function Hero() {
             -webkit-mask-image: linear-gradient(90deg, transparent 48%, rgba(0,0,0,.08) 62%, rgba(0,0,0,.32) 76%, rgba(0,0,0,.72) 90%, #000 100%);
             mask-image: linear-gradient(90deg, transparent 48%, rgba(0,0,0,.08) 62%, rgba(0,0,0,.32) 76%, rgba(0,0,0,.72) 90%, #000 100%);
           }
-          .h-name { font-size: clamp(2rem, 5.6vw, 4rem); white-space: normal; }
+          .h-name { margin-top: 30px; font-size: clamp(1.8rem, 4.8vw, 3.35rem); white-space: normal; }
+          .h-role { margin-top: 12px; column-gap: clamp(1rem, 1.4vw, 1.4rem); }
           .h-say { max-width: 48ch; }
-          #home { --hero-content-width: min(560px, clamp(45vw, calc(19.5vw + 255px), 62vw)); }
-          .hero-wrap { grid-template-columns: 30px 1fr; column-gap: 16px; }
+          .r-say { margin-top: 30px; }
+          #home {
+            --hero-content-width: min(560px, clamp(45vw, calc(19.5vw + 255px), 62vw));
+          }
+          .hero-wrap {
+            grid-template-columns: 30px 1fr;
+            column-gap: 16px;
+            transform: translateY(-1.5rem);
+          }
           .hero-wrap > .ico { width: 30px; height: 22px; }
           .hero-wrap > .ico img, .hero-wrap > .ico svg { width: 20px; height: 20px; }
-          .hero-acts { flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-          .hero-acts > * { flex: 0 0 auto; }
-          .hero-cta-button, .hero-cta-button-secondary {
-            padding: 12px 20px;
-            font-size: 16px;
-            min-height: 42px;
+          .hero-animated-box {
+            margin-left: -.4rem;
+            padding-left: .4rem;
+            width: clamp(11rem, 22vw, 16rem);
+            min-width: 0;
+            min-height: clamp(2.25rem, 4.5vh, 3rem);
+            justify-self: start;
+            background: linear-gradient(
+              90deg,
+              rgba(2, 17, 19, .88) 0%,
+              rgba(2, 17, 19, .68) 46%,
+              rgba(2, 17, 19, .28) 76%,
+              transparent 100%
+            ) !important;
           }
+          .hero-animated-text {
+            font-size: clamp(0.75rem, 1.15vw, 1rem);
+            font-style: italic;
+          }
+          .hero-main-container { transform: translateY(1.25rem); }
+          .hero-acts { flex-wrap: wrap; gap: 12px; margin-top: 26px; margin-bottom: 0; }
+          .hero-acts > * { flex: 0 0 auto; }
+          .scroll-indicator-wrapper { margin-bottom: calc(44px + clamp(1.75rem, 2.35vw, 2.3rem)); }
+          .scroll-indicator-animate { animation-duration: 2s; }
+          .scroll-border { border-width: 1px; }
+          .hero-cta-button, .hero-cta-button-secondary {
+            padding: 10px 17px;
+            font-size: 14px;
+            min-height: 44px;
+          }
+        }
+
+        /* ── tall desktop/tablet screens: the roomier rhythm ──────── */
+        @media (min-width: 768px) and (min-height: 780px) {
+          .h-name { margin-top: 34px; }
+          .h-say { line-height: 1.62; }
+          .r-say { margin-top: 34px; } .r-loc { margin-top: 14px; }
+          .hero-acts { margin-top: 24px; }
         }
 
         /* ── 769px and up: the indicator at full size ─────────────── */
@@ -332,6 +506,99 @@ function Hero() {
 
         @media (min-width: 1536px) {
           #home { height: 100vh; padding-top: 14vh; }
+        }
+
+        /* ── keeping the face centred on tablets ────────────────────────────
+           background-size: cover scales by WIDTH when the viewport is wider
+           than the photo (1.2517:1) — the whole frame shows and the subject
+           sits at its natural 62%, which is the desktop composition.
+
+           When the viewport is NARROWER than that, cover scales by HEIGHT and
+           the browser picks a horizontal slice. Centring the position centres
+           the IMAGE, but the face lives at 62% of it, so on every portrait
+           tablet the face drifted right (measured 70-72.5%) and the outpainted
+           dark half filled the left.
+
+           The image is 1.2517 wide per unit of height, so the face sits
+           0.62 x 125.17 = 77.6% of the hero height from the image left edge.
+           The hero is 100svh tall and full-bleed, so the offset that puts the
+           face on the centre line is 50vw - 77.6svh — exact at ANY
+           height-driven size, no per-device breakpoints.
+
+           Both terms must be LENGTHS. A percentage here would not mean "half
+           the container": in background-position a percentage resolves against
+           (container - image), so calc(50% - 77.6svh) pushed the face off the
+           right edge instead. Phones are excluded: that composition was
+           already approved. */
+        /* ── the writing note needs vertical room ──────────────────────────
+           It sits below the hero block, so on a short screen it crowds the
+           content: measured only 13px of clearance on a 1024x600 display
+           against 84-124px on a normal desktop. Show it only from 700px of
+           height, and only reserve its 5rem of padding when it is shown. */
+        @media (min-width: 768px) and (min-height: 700px) {
+          #home { --writing-note-space: 5rem; }
+          .hero-writing-promo { display: flex; }
+        }
+
+        @media (min-width: 768px) and (max-aspect-ratio: 2700/2157) {
+          .hero-background {
+            background-position-x: calc(50vw - 77.6svh) !important;
+          }
+
+          /* The wide treatment washes the LEFT of the frame dark, because on a
+             desktop the subject sits far right. Once the face is centred that
+             wash falls straight across it — the mask over the face. Portrait
+             tablets therefore take the phone's vertical treatment: dark at the
+             foot for the text, clear where the face is. */
+          .hero-visual-overlay {
+            background: linear-gradient(180deg,
+              rgba(2,17,19,.62) 0%, rgba(2,17,19,.16) 14%, rgba(2,17,19,.06) 32%,
+              rgba(2,17,19,.06) 48%, rgba(2,17,19,.52) 62%, rgba(2,17,19,.86) 78%,
+              rgba(2,17,19,.94) 100%);
+          }
+          .hero-visual-overlay::before {
+            opacity: .5;
+            -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 28%, transparent 54%, #000 76%);
+            mask-image: linear-gradient(180deg, rgba(0,0,0,.5) 0%, transparent 28%, transparent 54%, #000 76%);
+          }
+          .hero-visual-overlay::after {
+            opacity: .24;
+            -webkit-mask-image: linear-gradient(180deg, transparent 52%, rgba(0,0,0,.3) 74%, rgba(0,0,0,.6) 100%);
+            mask-image: linear-gradient(180deg, transparent 52%, rgba(0,0,0,.3) 74%, rgba(0,0,0,.6) 100%);
+          }
+
+          /* A tablet is a big screen held close: vw-derived type that suits a
+             1440px desktop reads far too small at 820px. Scale it to the width
+             so a 12.9in iPad gets genuinely larger text than a Mini. */
+          #home {
+            --hero-content-width: min(760px, 84vw);
+            align-items: flex-end;
+            padding-top: 0;
+          }
+          .h-name { font-size: clamp(2.5rem, 6.4vw, 4.25rem); margin-top: 34px; }
+          .h-role { font-size: clamp(1.05rem, 2.5vw, 1.75rem); margin-top: 16px; }
+          .h-say, .h-loc { font-size: clamp(1rem, 1.9vw, 1.3rem); }
+          .h-say { max-width: 34ch; }
+          .r-say { margin-top: 34px; }
+          .hero-animated-text { font-size: clamp(.85rem, 1.5vw, 1.05rem); }
+          .hero-animated-box { min-height: clamp(2rem, 4.5vh, 3.25rem); }
+        }
+
+        /* The band needs far more room on a portrait tablet than on a desktop,
+           because the hero block above it is itself tall. Below this height it
+           is hidden and its reserved space released, so small tablets and the
+           iPad Mini simply do not show it. */
+        @media (min-width: 768px) and (max-aspect-ratio: 2700/2157) and (max-height: 1099px) {
+          #home { --writing-note-space: 0rem; }
+          .hero-writing-promo { display: none; }
+        }
+
+        /* Where it IS shown on a portrait tablet, give it real separation from
+           the hero block rather than letting it sit right underneath. */
+        @media (min-width: 768px) and (max-aspect-ratio: 2700/2157) and (min-height: 1100px) {
+          #home { --writing-note-space: 8.5rem; padding-bottom: calc(clamp(2.5rem, 5vh, 4rem) + var(--writing-note-space) + env(safe-area-inset-bottom)); }
+          .hero-writing-kicker { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
+          .hero-writing-domain { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
         }
 
         /* Respect the user's motion preferences */
@@ -379,31 +646,31 @@ function Hero() {
             </h2>
             <p className="h-role">
               <span>UX/UI Designer</span>
-              <span className="h-role-sep">&middot;</span>
+              <span className="h-role-sep" aria-hidden="true" />
               <span>Full Stack Developer</span>
             </p>
           </div>
 
           <span className="ico r-say">
-            <img src={bulbIcon} alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
-          </span>
-          <p className="txt h-say r-say">
-            Crafting designs that visually speak on screens.
-          </p>
+                <img src={bulbIcon} alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
+              </span>
+              <p className="txt h-say r-say">
+                Crafting designs that visually speak on screens.
+              </p>
 
-          <span className="ico r-loc">
-            <img src="/globe.svg" alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
-          </span>
-          <p className="txt h-loc r-loc">Based in Berlin</p>
+              <span className="ico r-loc">
+                <img src="/globe.svg" alt="" aria-hidden="true" style={{ filter: 'brightness(0) invert(1)' }} />
+              </span>
+              <p className="txt h-loc r-loc">Based in Berlin</p>
 
-          <div className="hero-acts">
-            <button onClick={() => smoothScrollToId('projects')} className="hero-cta-button" aria-label="View my projects">
-              Recent Works
-            </button>
-            <button onClick={handleCVClick} className="hero-cta-button-secondary" aria-label="Preview CV">
-              View Resume
-            </button>
-          </div>
+              <div className="hero-acts">
+                  <button onClick={() => smoothScrollToId('projects')} className="hero-cta-button" aria-label="View my projects">
+                    Recent Works
+                  </button>
+                  <button onClick={handleCVClick} className="hero-cta-button-secondary" aria-label="Preview CV">
+                    View Resume
+                  </button>
+              </div>
 
         </div>
 
@@ -423,6 +690,23 @@ function Hero() {
             </svg>
           </div>
         </button>
+      </div>
+
+      <div className="hero-writing-promo">
+        <div className="hero-writing-lead">
+          <img className="hero-writing-feather" src="/arefsaboor-feather.svg" alt="" aria-hidden="true" />
+          <div className="hero-writing-intro">
+            <span className="hero-writing-kicker">I also write.</span>
+          </div>
+        </div>
+
+        <a
+          className="hero-writing-paper-link"
+          href="https://arefsaboor.com/"
+          aria-label="Read Aref Saboor's writing at arefsaboor.com"
+        >
+          <span className="hero-writing-domain">AREFSABOOR.COM</span>
+        </a>
       </div>
 
       {/* CV Preview Modal */}

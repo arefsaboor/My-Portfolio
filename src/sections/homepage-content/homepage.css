@@ -18,7 +18,7 @@
 :root {
   /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
-  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#93A2A4;
+  --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
   /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
@@ -26,8 +26,8 @@
      bands. Every long passage of text sits on a clean filled card, so nothing
      is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 34px),
-         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 34px);
+  --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
+         repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
 
   --sh-sm:0 1px 2px rgba(12,42,44,.05);
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
@@ -89,7 +89,7 @@
 .pf-footer .f-nm {margin:0; font-weight:300; letter-spacing:-.032em; line-height:1; color:var(--ink); font-size:clamp(2rem,5.4vw,3.25rem)}
 .pf-footer .f-nm b {font-weight:700}
 .pf-footer .f-say {margin:0; max-width:42ch; font-size:15px; font-weight:300; line-height:1.85; color:var(--soft)}
-.pf-footer .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-footer .f-lbl {margin:0 0 22px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#647779}
 .pf-footer .f-lk {display:flex; flex-direction:column; gap:13px; font-size:15px}
 .pf-footer .f-lk a, .pf-footer .f-inl a, .pf-footer .f-btn {color:var(--body)}
 .pf-footer .f-lk a:hover, .pf-footer .f-inl a:hover, .pf-footer .f-btn:hover {color:var(--accent)}
@@ -186,7 +186,7 @@
   padding-bottom:clamp(40px,5.5vw,72px); border-bottom:1px solid var(--rule)}
 .pf-home .wb-intro {display:flex; flex-direction:column; gap:24px}
 .pf-home .wb-cols {display:grid; grid-template-columns:1fr; gap:24px}
-.pf-home .wb-cols p {margin:0; font-size:16px; font-weight:300; line-height:1.75; color:var(--soft)}
+.pf-home .wb-cols p {margin:0; font-size:16px; font-weight:300; line-height:1.75; color:var(--body)}
 
 .pf-home .wb-plate {display:block; margin-top:clamp(32px,4vw,56px); text-decoration:none; color:inherit}
 .pf-home .wb-plate figure {margin:0; background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg)}
@@ -272,7 +272,7 @@
 .pf-home .pj-lead {margin:0; font-size:15.5px; font-weight:300; line-height:1.75; color:var(--body)}
 .pf-home .pj-qa {display:grid; grid-template-columns:1fr; gap:20px; padding-top:20px; border-top:1px solid var(--rule)}
 .pf-home .pj-qa p:not(.pj-k) {margin:0; font-size:13.5px; font-weight:300; line-height:1.7; color:var(--soft)}
-.pf-home .pj-k {margin:0 0 9px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#8B9A9C}
+.pf-home .pj-k {margin:0 0 9px; font-size:10px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:#647779}
 .pf-home .pj-row-foot {display:grid; grid-template-columns:1fr; gap:24px; margin-top:24px; padding-top:24px; border-top:1px solid var(--rule)}
 .pf-home .pj-hl {list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:11px}
 .pf-home .pj-hl li {display:grid; grid-template-columns:auto 1fr; gap:13px; font-size:13.5px; font-weight:300;
