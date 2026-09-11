@@ -24,8 +24,6 @@ const heroScreenshotsById = {
   5: { desktop: arefsaboorComDesktop, tablet: arefsaboorComTablet, mobile: arefsaboorComMobile },
 };
 
-// Display order, shared by the carousel and the archive so a project carries
-// the same number in both: arefsaboor.com leads, then Bestsellers, then by id.
 const FEATURED = ['arefsaboor.com', 'Bestsellers'];
 const rank = (p) => {
   const i = FEATURED.indexOf(p.name);
@@ -39,8 +37,6 @@ export const heroProjects = [...projectsData.projects]
     const screenshots = heroScreenshotsById[project.id];
     if (!screenshots) return null;
 
-    // The approved carousel panel shows every link a project has, matching the
-    // archive rows below — not just the two live deployments.
     const links = [
       project.liveUrl && { label: 'Visit Live', href: project.liveUrl },
       project.vercelUrl && { label: 'Live Vercel', href: project.vercelUrl },

@@ -5,17 +5,6 @@ import { Link } from 'react-router-dom';
 import { featuredProjects } from './sharedData';
 import './homepage.css';
 
-/* A literal transcription of the four page sections in
- * arefsaboor.com/public/design-concepts/portfolio-homepage.html.
- *
- * Same class names, same inline styles, same numbers. Nothing here goes
- * through tailwind.config.js — the styling lives in homepage.css, moved
- * across byte-for-byte. Where the concept hardcoded four project cards this
- * maps over featuredProjects; the markup it emits per card is identical.
- *
- * To change the design: change the concept page first, then move it again.
- */
-
 const disciplines = [
   {
     mark: '01',
@@ -37,14 +26,6 @@ const disciplines = [
   },
 ];
 
-/* The archive's device plate, ported from ProjectsListContent so the homepage
-   cards read the same: real browser chrome on desktop, a camera dot on tablet,
-   a notch on phone. The plate keeps its box whatever is inside it and the image
-   is object-fit:contain, so switching view never crops or reflows the row. */
-/* The laptop's screen slot takes the screenshot's own aspect ratio, so no
-   capture is ever letterboxed or cropped. A ref callback rather than onLoad:
-   the shots are preloaded, so by the time React attaches a handler the image
-   is already complete and onLoad would never fire. */
 function setShotRatio(img) {
   if (!img) return;
   const apply = () => {
@@ -136,12 +117,9 @@ export default function HomepageContent() {
   return (
     <main className="pf-home">
 
-      {/* ══ STATEMENT ══ */}
       <section id="about" className="textured sec" style={{ background: 'var(--paper)' }}>
         <div className="shell">
           <div className="card-lg stmt op-head">
-            {/* the opener label: a tinted plate with its own hairline, then a
-                deliberate drop before the two columns begin */}
             <p className="eyebrow">A design-first developer</p>
 
             <div className="op-cols">
@@ -172,7 +150,6 @@ export default function HomepageContent() {
         </div>
       </section>
 
-      {/* ══ RECENT WORKS ══ */}
       <section id="projects" className="textured sec" style={{ background: 'var(--band)', borderTop: '1px solid var(--rule)' }}>
         <div className="shell-wide">
           <div className="op-head sec-gap">
@@ -252,10 +229,8 @@ export default function HomepageContent() {
         </div>
       </section>
 
-      {/* ══ ANOTHER PRACTICE — the writing site ══ */}
       <WritingSiteBridge />
 
-      {/* ══ HOW I CONTRIBUTE ══ */}
       <section className="textured sec" style={{ background: 'var(--paper)', borderTop: '1px solid var(--rule)' }}>
         <div className="shell">
           <div className="op-head sec-gap-sm">
@@ -291,7 +266,6 @@ export default function HomepageContent() {
         </div>
       </section>
 
-      {/* ══ OPEN TO OPPORTUNITIES ══ */}
       <section className="textured sec" style={{ background: 'var(--wash)', borderTop: '1px solid var(--rule)' }}>
         <div className="shell">
           <div className="card-lg cta">

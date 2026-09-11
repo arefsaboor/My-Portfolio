@@ -17,8 +17,6 @@ import vscode from '../assets/svg-icons/17-VsCode.svg';
 import illustrator from '../assets/svg-icons/20-Illustrator.svg';
 import photoshop from '../assets/svg-icons/21-Photoshop.svg';
 
-/* The marks are monochrome black, so they invert to a single white weight on a
-   dark ground — no clashing brand colours, one consistent wall of logos. */
 export const techStack = [
   { name: 'React', src: react }, { name: 'Next.js', src: next },
   { name: 'TypeScript', src: ts }, { name: 'JavaScript', src: js },

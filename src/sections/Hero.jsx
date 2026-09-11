@@ -13,12 +13,11 @@ function Hero() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
-    }, 3000); // Faster rotation - 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, [titles.length]);
 
-  // Handle CV button click - now shows modal on all devices
   const handleCVClick = () => {
     setIsCVModalOpen(true);
   };
@@ -30,15 +29,12 @@ function Hero() {
       aria-label="Hero section"
       style={{ height: '100svh' }}
     >
-      {/* SEO: Main heading for search engines */}
       <h1 className="sr-only">Aref Saboor - UX/UI Designer and Full Stack Developer based in Berlin</h1>
       
-      {/* Screen reader live region for animated text */}
       <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
         Currently highlighting: {titles[currentIndex]?.title}
       </div>
 
-      {/* Single outpainted hero photograph; no masks or duplicate layers. */}
       <div 
         className="hero-background absolute inset-0 z-0 w-full h-full"
         style={{
@@ -53,10 +49,6 @@ function Hero() {
       <div className="hero-visual-overlay" aria-hidden="true" />
       
       <style>{`
-        /* ── MOBILE FIRST ─────────────────────────────────────────────
-           Base is the phone. Every min-width block below adds to it.
-           This block used to be inverted: desktop values sat in the base
-           and eight max-width queries clawed them back for phones. */
         #home {
           --hero-side-space: clamp(1.5rem, 3vw, 5rem);
           --hero-content-width: min(340px, calc(100vw - 3rem));
@@ -73,8 +65,6 @@ function Hero() {
           background-color: #081516;
           padding-bottom: calc(clamp(2.5rem, 5vh, 4rem) + var(--writing-note-space) + env(safe-area-inset-bottom));
         }
-        /* a phone held sideways is shorter than 600px — let the hero be the
-           viewport there instead of pushing its own content off-screen */
         @media (orientation: landscape) and (max-height: 620px) {
           #home { min-height: 0; }
         }
@@ -113,12 +103,6 @@ function Hero() {
           mask-image: linear-gradient(90deg, transparent 66%, rgba(0,0,0,.25) 86%, rgba(0,0,0,.5) 100%);
         }
 
-        /* ── hero content ───────────────────────────────────────────
-           A two-column grid: icons in a fixed 30px gutter, every piece of text
-           in the second column. That is what makes the arrow, bulb and globe
-           share one edge while the rotating line, the name, the role, the
-           tagline and the location share another. Rows with no icon leave the
-           gutter empty. Actions come last, below everything. */
         .hero-wrap {
           display: grid; grid-template-columns: 22px 1fr; column-gap: 12px;
           align-items: start; width: 100%; max-width: var(--hero-content-width);
@@ -131,8 +115,6 @@ function Hero() {
           margin: 10px 0 0; line-height: 1; letter-spacing: .02em; color: #fff;
           font-size: clamp(1.55rem, 7.2vw, 2rem); white-space: nowrap;
         }
-        /* a wrapping flex row: each role stays whole and the line breaks
-           between them, never through "Full Stack Developer" */
         .h-role {
           margin: 8px 0 0; font-weight: 300; color: #5eead4;
           font-size: clamp(0.8125rem, 2vw, 1.5rem);
@@ -150,8 +132,6 @@ function Hero() {
         .h-say { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.5; max-width: 25ch; }
         .h-loc { margin: 0; color: rgba(255,255,255,.9); font-weight: 300; font-size: 14.5px; line-height: 1.62; }
         .r-say { margin-top: 16px; } .r-loc { margin-top: 10px; }
-        /* one row, always: the two buttons share the column and shrink
-           together rather than stacking */
         .hero-acts { display: flex; flex-wrap: nowrap; gap: 10px; margin-top: 18px; margin-bottom: 0; grid-column: 2; }
         .hero-acts > * { flex: 0 1 auto; min-width: 0; white-space: nowrap; }
 
@@ -298,7 +278,6 @@ function Hero() {
           border-radius: 2px;
         }
 
-        /* ── scroll indicator ─────────────────────────────────────── */
         .scroll-text {
           font-size: 0.625rem;
           text-transform: uppercase;
@@ -355,7 +334,6 @@ function Hero() {
         }
         .scroll-indicator-wrapper:active { transform: scale(0.95); }
 
-        /* ── buttons ──────────────────────────────────────────────── */
         .hero-cta-button, .hero-cta-button-secondary {
           padding: 8px 12px;
           font-size: 11px;
@@ -367,7 +345,6 @@ function Hero() {
           align-items: center;
           justify-content: center;
           min-height: 38px;
-          /* colour only — nothing lifts, scales or moves on hover */
           transition: background-color .18s ease, border-color .18s ease, color .18s ease;
         }
         .hero-cta-button { background: #5eead4; color: #0a3d35; border: 1px solid #5eead4; }
@@ -387,7 +364,6 @@ function Hero() {
         }
         .scroll-indicator-animate { animation: scrollIndicator 3.2s ease-in-out infinite; }
 
-        /* ── tall phones: match the deployed mobile rhythm ────────── */
         @media (min-height: 780px) {
           .h-name { margin-top: 16px; }
           .h-say { line-height: 1.62; }
@@ -395,12 +371,10 @@ function Hero() {
           .hero-acts { margin-top: 24px; }
         }
 
-        /* ── 360px and up: room for the indicator beside the buttons ── */
         @media (min-width: 360px) {
           .scroll-indicator-wrapper { display: flex; }
         }
 
-        /* ── 376px and up ─────────────────────────────────────────── */
         @media (min-width: 376px) {
           .hero-animated-box {
             width: min(13rem, 100%);
@@ -410,7 +384,6 @@ function Hero() {
           .hero-animated-text { font-size: clamp(0.72rem, 1.15vw, 0.82rem); }
         }
 
-        /* ── 768px and up: the wide treatment ─────────────────────── */
         @media (min-width: 768px) {
           .hero-background {
             background-position: center clamp(-52px, calc(76px - 10vh), -20px) !important;
@@ -474,7 +447,6 @@ function Hero() {
           }
         }
 
-        /* ── tall desktop/tablet screens: the roomier rhythm ──────── */
         @media (min-width: 768px) and (min-height: 780px) {
           .h-name { margin-top: 34px; }
           .h-say { line-height: 1.62; }
@@ -482,7 +454,6 @@ function Hero() {
           .hero-acts { margin-top: 24px; }
         }
 
-        /* ── 769px and up: the indicator at full size ─────────────── */
         @media (min-width: 769px) {
           .scroll-text { font-size: 0.875rem; }
           .scroll-border { width: 3.5rem; height: 5rem; }
@@ -491,7 +462,6 @@ function Hero() {
           .scroll-gap { gap: 0.5rem; }
         }
 
-        /* ── 1024px and up: content lifts off the bottom edge ─────── */
         @media (min-width: 1024px) {
           .hero-background {
             background-position: center clamp(-38px, calc(-22px - 8vw + 10.8vh), -22px) !important;
@@ -508,33 +478,6 @@ function Hero() {
           #home { height: 100vh; padding-top: 14vh; }
         }
 
-        /* ── keeping the face centred on tablets ────────────────────────────
-           background-size: cover scales by WIDTH when the viewport is wider
-           than the photo (1.2517:1) — the whole frame shows and the subject
-           sits at its natural 62%, which is the desktop composition.
-
-           When the viewport is NARROWER than that, cover scales by HEIGHT and
-           the browser picks a horizontal slice. Centring the position centres
-           the IMAGE, but the face lives at 62% of it, so on every portrait
-           tablet the face drifted right (measured 70-72.5%) and the outpainted
-           dark half filled the left.
-
-           The image is 1.2517 wide per unit of height, so the face sits
-           0.62 x 125.17 = 77.6% of the hero height from the image left edge.
-           The hero is 100svh tall and full-bleed, so the offset that puts the
-           face on the centre line is 50vw - 77.6svh — exact at ANY
-           height-driven size, no per-device breakpoints.
-
-           Both terms must be LENGTHS. A percentage here would not mean "half
-           the container": in background-position a percentage resolves against
-           (container - image), so calc(50% - 77.6svh) pushed the face off the
-           right edge instead. Phones are excluded: that composition was
-           already approved. */
-        /* ── the writing note needs vertical room ──────────────────────────
-           It sits below the hero block, so on a short screen it crowds the
-           content: measured only 13px of clearance on a 1024x600 display
-           against 84-124px on a normal desktop. Show it only from 700px of
-           height, and only reserve its 5rem of padding when it is shown. */
         @media (min-width: 768px) and (min-height: 700px) {
           #home { --writing-note-space: 5rem; }
           .hero-writing-promo { display: flex; }
@@ -545,11 +488,6 @@ function Hero() {
             background-position-x: calc(50vw - 77.6svh) !important;
           }
 
-          /* The wide treatment washes the LEFT of the frame dark, because on a
-             desktop the subject sits far right. Once the face is centred that
-             wash falls straight across it — the mask over the face. Portrait
-             tablets therefore take the phone's vertical treatment: dark at the
-             foot for the text, clear where the face is. */
           .hero-visual-overlay {
             background: linear-gradient(180deg,
               rgba(2,17,19,.62) 0%, rgba(2,17,19,.16) 14%, rgba(2,17,19,.06) 32%,
@@ -567,9 +505,6 @@ function Hero() {
             mask-image: linear-gradient(180deg, transparent 52%, rgba(0,0,0,.3) 74%, rgba(0,0,0,.6) 100%);
           }
 
-          /* A tablet is a big screen held close: vw-derived type that suits a
-             1440px desktop reads far too small at 820px. Scale it to the width
-             so a 12.9in iPad gets genuinely larger text than a Mini. */
           #home {
             --hero-content-width: min(760px, 84vw);
             align-items: flex-end;
@@ -584,24 +519,17 @@ function Hero() {
           .hero-animated-box { min-height: clamp(2rem, 4.5vh, 3.25rem); }
         }
 
-        /* The band needs far more room on a portrait tablet than on a desktop,
-           because the hero block above it is itself tall. Below this height it
-           is hidden and its reserved space released, so small tablets and the
-           iPad Mini simply do not show it. */
         @media (min-width: 768px) and (max-aspect-ratio: 2700/2157) and (max-height: 1099px) {
           #home { --writing-note-space: 0rem; }
           .hero-writing-promo { display: none; }
         }
 
-        /* Where it IS shown on a portrait tablet, give it real separation from
-           the hero block rather than letting it sit right underneath. */
         @media (min-width: 768px) and (max-aspect-ratio: 2700/2157) and (min-height: 1100px) {
           #home { --writing-note-space: 8.5rem; padding-bottom: calc(clamp(2.5rem, 5vh, 4rem) + var(--writing-note-space) + env(safe-area-inset-bottom)); }
           .hero-writing-kicker { font-size: clamp(1.9rem, 3.4vw, 2.6rem); }
           .hero-writing-domain { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
         }
 
-        /* Respect the user's motion preferences */
         @media (prefers-reduced-motion: reduce) {
           .scroll-indicator-animate { animation: none; }
           * {
@@ -612,7 +540,6 @@ function Hero() {
         }
       `}</style>
 
-      {/* Main Container with Content and Scroll Indicator */}
       <div className="hero-main-container relative z-10">
         <div className="hero-wrap">
 
@@ -674,9 +601,6 @@ function Hero() {
 
         </div>
 
-        {/* Scroll indicator — one button; it used to be duplicated as a
-            "mobile" and a "desktop" copy with identical markup, each hidden
-            by CSS at the other's widths. */}
         <button
           onClick={() => smoothScrollToId('about')}
           className="scroll-indicator-wrapper flex flex-col items-center self-end scroll-indicator-animate scroll-gap"
@@ -709,7 +633,6 @@ function Hero() {
         </a>
       </div>
 
-      {/* CV Preview Modal */}
       <CVPreviewModal 
         isOpen={isCVModalOpen} 
         onClose={() => setIsCVModalOpen(false)}

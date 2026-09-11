@@ -1,8 +1,5 @@
 import { techStack } from '../data/techStack';
 
-/* A slow, continuous pan of the toolset. The track holds the list twice so the
-   -50% keyframe loops seamlessly; both edges are masked so marks fade rather
-   than pop; it pauses on hover and stops entirely under prefers-reduced-motion. */
 export default function TechMarquee() {
   const run = [...techStack, ...techStack];
   return (

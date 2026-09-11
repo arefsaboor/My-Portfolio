@@ -15,41 +15,33 @@ function Loader({ onComplete }) {
 
   useEffect(() => {
     if (currentIndex === -1) {
-      // Initial delay before first word appears
       const timer = setTimeout(() => {
         setCurrentIndex(0);
       }, 150);
       return () => clearTimeout(timer);
     } else if (currentIndex === 0) {
-      // First word (Hello): 600ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
       }, 600);
       return () => clearTimeout(timer);
     } else if (currentIndex === 1) {
-      // Second word (سلام): 600ms - same as first to be visible
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
       }, 600);
       return () => clearTimeout(timer);
     } else if (currentIndex > 1 && currentIndex < greetings.length - 1) {
-      // Middle words: long enough to actually read - 400ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
       }, 400);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length - 1) {
-      // Last word (Hallo): 600ms
       const timer = setTimeout(() => {
         setCurrentIndex(currentIndex + 1);
       }, 600);
       return () => clearTimeout(timer);
     } else if (currentIndex === greetings.length) {
-      // All text animations complete, last text swiping up
-      // Then fade out entire screen
       const waitTimer = setTimeout(() => {
         setFadeOut(true);
-        // After screen fade animation, hide and call onComplete
         const hideTimer = setTimeout(() => {
           setIsVisible(false);
           onComplete();
@@ -95,7 +87,7 @@ function Loader({ onComplete }) {
           position: fixed;
           inset: 0;
           z-index: 9999;
-          overflow: hidden;   /* the blurred blobs are wider than the viewport */
+          overflow: hidden;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -107,7 +99,6 @@ function Loader({ onComplete }) {
           animation: fadeOutUp 0.6s ease-out forwards;
         }
 
-        /* Animated Background Pattern */
         .loader-bg-pattern {
           position: absolute;
           inset: 0;
@@ -190,7 +181,6 @@ function Loader({ onComplete }) {
           gap: clamp(0.75rem, 1.5vw, 1rem);
         }
 
-        /* White dot before text - larger */
         .loader-text::before {
           content: '';
           width: 0.75rem;
@@ -200,24 +190,20 @@ function Loader({ onComplete }) {
           flex-shrink: 0;
         }
 
-        /* Default transition for middle words - super fast */
         .loader-text {
           transition: all 0.1s ease-in-out;
         }
 
-        /* First word animation - faster */
         .loader-text.first.current,
         .loader-text.first.previous {
           transition: all 0.4s ease-in-out;
         }
 
-        /* Last word animation - faster, same as first */
         .loader-text.last.current,
         .loader-text.last.previous {
           transition: all 0.4s ease-in-out;
         }
 
-        /* First text states - swipe from bottom */
         .loader-text.first.current {
           opacity: 1;
           transform: translateY(0);
@@ -233,7 +219,6 @@ function Loader({ onComplete }) {
           transform: translateY(100%);
         }
 
-        /* Last text states - swipe from bottom */
         .loader-text.last.current {
           opacity: 1;
           transform: translateY(0);
@@ -249,7 +234,6 @@ function Loader({ onComplete }) {
           transform: translateY(100%);
         }
 
-        /* Middle texts - fade in place (no swipe movement) */
         .loader-text:not(.first):not(.last).current {
           opacity: 1;
           transform: translateY(0);
@@ -265,44 +249,35 @@ function Loader({ onComplete }) {
           transform: translateY(0);
         }
 
-        /* Make texts appear independently - delay appearance to avoid overlap */
-        /* First word appears immediately, no delay */
         .loader-text.first.current {
           transition-delay: 0s;
         }
 
-        /* Second word delays 0.4s (waiting for first word's exit) - fade in place */
         .loader-text.second.current {
           transition-delay: 0.4s;
         }
 
-        /* Middle texts fade in place - no delay needed */
         .loader-text:not(.first):not(.second):not(.last).current {
           transition-delay: 0s;
         }
 
-        /* Last word delays for smooth sequence */
         .loader-text.last.current {
           transition-delay: 0s;
         }
 
-        /* No delay for exit animations */
         .loader-text.previous {
           transition-delay: 0s !important;
         }
       `}</style>
 
       <div className={`loader-overlay ${fadeOut ? 'fade-out' : ''}`}>
-        {/* Animated Background Pattern */}
         <div className="loader-bg-pattern">
           <div className="loader-blob loader-blob-1"></div>
           <div className="loader-blob loader-blob-2"></div>
           <div className="loader-blob loader-blob-3"></div>
         </div>
 
-        {/* Gradient Overlay */}
         <div className="loader-gradient-overlay"></div>
-
 
         <div className="loader-text-container">
           {greetings.map((greeting, index) => (

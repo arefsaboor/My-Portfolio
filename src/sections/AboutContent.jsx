@@ -1,13 +1,8 @@
 import { timelineItems, credentials } from './aboutContentData';
 
-/* A literal transcription of the two middle sections in the About concept —
- * the professional path and what he brings to a team. Styling lives in
- * src/pages/about.css. To change the design: change the concept, then move it. */
-
 export default function AboutContent() {
   return (
     <>
-      {/* ══ THE PATH ══ */}
       <section
         className="textured"
         style={{ background: 'var(--band)', borderTop: '1px solid var(--rule)', padding: 'clamp(56px,9vw,128px) 0' }}
@@ -50,7 +45,6 @@ export default function AboutContent() {
         </div>
       </section>
 
-      {/* ══ WHAT I BRING ══ */}
       <section
         className="textured"
         style={{ background: 'var(--paper)', borderTop: '1px solid var(--rule)', padding: 'clamp(56px,9vw,128px) 0' }}

@@ -3,11 +3,6 @@ import { Link } from 'react-router-dom';
 import { usePageMeta } from '../utils/usePageMeta';
 import './utility.css';
 
-/* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-utility.html). Every word of the German
-   legal text is unchanged from the previous version of this file — it is a
-   statutory notice, so nothing in it was reworded. */
-
 const BackArrow = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9"
        strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

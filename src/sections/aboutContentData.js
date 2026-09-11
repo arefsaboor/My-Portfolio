@@ -1,10 +1,3 @@
-export const journeyIntro = {
-  badge: 'Professional path',
-  heading: 'From visual storytelling to ',
-  headingHighlight: 'product building',
-  lead: 'My path into technology was not conventional. It gave me a trained eye for communication, composition and clarity—skills I now apply to every interface and product decision.',
-};
-
 export const timelineItems = [
   {
     era: 'Bundeswehr',
@@ -52,13 +45,6 @@ export const timelineItems = [
     current: true,
   },
 ];
-
-export const differentIntro = {
-  badge: 'What I bring to a team',
-  heading: 'More than a ',
-  headingHighlight: 'technical checklist',
-  lead: 'A professional background that makes design and engineering work better together.',
-};
 
 export const credentials = [
   {

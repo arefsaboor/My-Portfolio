@@ -2,11 +2,6 @@ import { useState } from 'react';
 import { projects } from './sharedData';
 import ExternalIcon from '../../components/ExternalIcon';
 
-/* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-projects.html). Content is unchanged —
-   every field still comes from Projects.json via sharedData.js, in the same
-   Bestsellers-first order, with the same slug anchors. */
-
 const LINKS = [
   ['liveUrl', 'Visit Live'],
   ['vercelUrl', 'Live Vercel'],
@@ -26,10 +21,6 @@ function LinkRow({ project, className = 'pj-links' }) {
   );
 }
 
-/* The laptop's screen slot takes the screenshot's own aspect ratio, so no
-   capture is ever letterboxed or cropped. A ref callback rather than onLoad:
-   the shots are preloaded, so by the time React attaches a handler the image
-   is already complete and onLoad would never fire. */
 function setShotRatio(img) {
   if (!img) return;
   const apply = () => {
@@ -42,10 +33,6 @@ function setShotRatio(img) {
 
 const VIEWS = [['desktop', 'Desktop'], ['tablet', 'Tablet'], ['mobile', 'Mobile']];
 
-/* Each project was shot on all three devices; the row lets you switch between
-   them. The plate keeps its box whatever is inside it and the image is
-   `object-fit: contain`, so switching never crops the shot and never reflows
-   the row. */
 function DevicePlate({ project }) {
   const [view, setView] = useState('desktop');
   const url = (project.liveUrl || project.vercelUrl || '').replace(/^https?:\/\//, '').replace(/\/$/, '');

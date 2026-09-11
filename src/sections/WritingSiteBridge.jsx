@@ -2,10 +2,6 @@ import ExternalIcon from '../components/ExternalIcon';
 import writingSiteDesktop from '../assets/arefsaboor-com-screenshots/arefsaboor-com-desktop.webp';
 import writingSiteMobile from '../assets/arefsaboor-com-screenshots/arefsaboor-com-mobile.webp';
 
-/* The writing site, argued as a practice rather than as a fifth project card.
-   Copy is Aref's own, carried over from the earlier version of this section;
-   only the styling was rebuilt on the current design system. */
-
 export default function WritingSiteBridge() {
   return (
     <section className="sec textured" style={{ background: 'var(--wash)', borderTop: '1px solid var(--rule)' }}>

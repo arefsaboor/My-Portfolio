@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import { usePageMeta } from '../utils/usePageMeta';
 import './utility.css';
 
-/* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-utility.html). */
-
 function NotFound() {
   usePageMeta(
     'Page Not Found | Aref Saboor',

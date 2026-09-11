@@ -5,23 +5,15 @@
 @layer base {
   :root {
     color-scheme: light;
-    /* Sampled from the hero portrait and lifted for a light ground — the same
-       values the design concept runs on, so the site and the concept cannot
-       drift apart. */
-    --portfolio-ink: #0C2A2C;    /* headings                    */
-    --portfolio-body: #40575A;   /* base text colour            */
-    --portfolio-paper: #FCFCFD;  /* page ground                 */
-    --portfolio-mist: #EFF2F2;   /* alternating band            */
-    --portfolio-teal: #1C464B;   /* accent — links, marks       */
-    --portfolio-lav: #928EA5;    /* the window light            */
+    --portfolio-ink: #0C2A2C;
+    --portfolio-body: #40575A;
+    --portfolio-paper: #FCFCFD;
+    --portfolio-mist: #EFF2F2;
+    --portfolio-teal: #1C464B;
+    --portfolio-lav: #928EA5;
 
-    /* Texture. arefsaboor.com uses warm ruled paper (feTurbulence grain plus
-       horizontal rules); this is its cold counterpart — fine grain over a 32px
-       drafting grid. It lives ONLY on page grounds and bands, never under a
-       reading surface: every long passage sits on a filled card, so nothing is
-       read through it. Grain 5%, grid 4% — body copy stays at 7.9:1. */
     --pf-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
-    --cell: 32px;   /* the drafting mesh, and the layout grid's cell */
+    --cell: 32px;
     --pf-grid: repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
                repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
   }
@@ -74,7 +66,6 @@
 }
 
 @layer components {
-  /* Put this on a section, not on a card. */
   .textured { position: relative; isolation: isolate; }
   .textured::before,
   .textured::after {
@@ -92,7 +83,6 @@
 }
 
 @layer utilities {
-  /* Screen reader only - hides visually but accessible to screen readers */
   .sr-only {
     position: absolute;
     width: 1px;
@@ -104,65 +94,6 @@
     white-space: nowrap;
     border-width: 0;
   }
-  
-  .animate-sidebar-bloom {
-    animation: sidebarBloom 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-  }
-
-  .animate-sidebar-bloom-close {
-    animation: sidebarBloomClose 0.7s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
-  }
 }
 
-@keyframes sidebarBloom {
-  0% {
-    height: 96px;
-    border-radius: 0 0 0 50px;
-    opacity: 1;
-  }
-  100% {
-    height: 100vh;
-    border-radius: 0;
-    opacity: 1;
-  }
-}
-
-@keyframes sidebarBloomClose {
-  0% {
-    height: 100vh;
-    border-radius: 0;
-    opacity: 1;
-  }
-  100% {
-    height: 96px;
-    border-radius: 0 0 0 50px;
-    opacity: 1;
-  }
-}
-
-@keyframes v2MarqueeScroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.v2-marquee-track {
-  animation: v2MarqueeScroll 55s linear infinite;
-  width: max-content;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .v2-marquee-track {
-    animation: none;
-  }
-}
-
-/* ─────────────────────────────────────────────────────────────────────────
-   Fixed-Navbar clearance.
-   <Navbar /> is `position: fixed`, so it sits over every page and is not part
-   of the document flow. Measured settled height: a constant 102px at every
-   width from 360px to 1920px (the burger button's circle sets the lower edge
-   on small screens; the nav bar itself sets it on large). 128px gives 26px of
-   air beneath it. Unlayered on purpose, so a page stylesheet can read it
-   regardless of @layer order.
-   ───────────────────────────────────────────────────────────────────────── */
 :root { --nav-clear: 128px; }

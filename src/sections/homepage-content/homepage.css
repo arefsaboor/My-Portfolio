@@ -1,9 +1,3 @@
-/* MOVED, not rebuilt — lifted byte-for-byte from
-   arefsaboor.com/public/design-concepts/portfolio-homepage.html. Only edit is
-   a scope prefix (.pf-home page / .pf-footer footer / both for shared bits).
-   MOBILE FIRST: base = one column; min-width queries add the rest.
-   Excluded: the hero (Aref's own CSS, in Hero.jsx) and concept-page chrome.
-   To change the design: edit the concept, then re-run the move. */
 .pf-home {
   color: var(--body);
   font-family: "Epilogue", "Helvetica Neue", Arial, sans-serif;
@@ -16,15 +10,10 @@
   line-height: 1.65;
 }
 :root {
-  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
   --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
-  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
-     fine grain over a drafting grid. Both live ONLY on the page grounds and
-     bands. Every long passage of text sits on a clean filled card, so nothing
-     is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
          repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
@@ -33,7 +22,7 @@
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
   --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
 
-  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+  --shell:1184px; --shell-wide:1376px;
 }
 .pf-home * {box-sizing:border-box}
 .pf-home .textured {position:relative; isolation:isolate}
@@ -49,9 +38,6 @@
 .pf-home .shell, .pf-footer .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
 .pf-home .shell-wide, .pf-footer .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
 .pf-home .mono, .pf-footer .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
-/* Section label — a tinted plate rather than a bare tracked line, so every
-   section on every page opens the same way. The old 26px accent dash is
-   gone; the plate is the mark now. */
 .pf-home .eyebrow {
   display:inline-block; margin:0; padding:7px 12px 6px;
   background:var(--inset); border:1px solid var(--rule-2);
@@ -71,16 +57,12 @@
 .pf-home .linkline {display:inline-flex; align-items:center; gap:11px; font-size:14px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:7px}
 .pf-home .disc .tech {align-self:end; text-align:right}
 .pf-home .ext-i, .pf-footer .ext-i {width:12px; height:12px; flex-shrink:0; opacity:.85}
-.pf-footer .f-col a {display:inline-flex; align-items:center; gap:7px; width:fit-content}
-.pf-footer .f-chip.is-link .ext-i {width:11px; height:11px}
 .pf-footer {background:var(--paper); border-top:1px solid var(--rule); padding:clamp(56px,8vw,104px) 0 clamp(40px,5vw,56px)}
 .pf-footer a {text-decoration:none}
 .pf-footer .f-pages {display:grid; grid-template-columns:1fr; gap:48px; align-items:stretch}
 .pf-footer .f-left {display:flex; flex-direction:column; gap:32px}
 .pf-footer .f-right {display:flex; flex-direction:column; gap:0}
 .pf-footer .f-cols {display:grid; grid-template-columns:repeat(2,1fr); gap:30px 20px}
-/* three groups in a two-column grid leaves the third one hanging alone with a
-   dead half-row beside it — so on phones it spans and splits in two instead */
 .pf-footer .f-cols > :nth-child(3) {grid-column:1 / -1}
 .pf-footer .f-cols > :nth-child(3) .f-lk {display:grid; grid-template-columns:repeat(2,1fr); gap:13px 20px}
 .pf-footer .f-beyond {margin-top:auto; padding-top:clamp(32px,4vw,40px); border-top:1px solid var(--rule)}
@@ -93,7 +75,6 @@
 .pf-footer .f-lk {display:flex; flex-direction:column; gap:13px; font-size:15px}
 .pf-footer .f-lk a, .pf-footer .f-inl a, .pf-footer .f-btn {color:var(--body)}
 .pf-footer .f-lk a:hover, .pf-footer .f-inl a:hover, .pf-footer .f-btn:hover {color:var(--accent)}
-/* Resume is a button (it opens the preview) but has to read as a link */
 .pf-footer .f-btn {appearance:none; background:none; border:0; padding:0; margin:0;
   font:inherit; line-height:inherit; text-align:left; width:fit-content; cursor:pointer}
 .pf-footer .f-ex {color:var(--accent)}
@@ -114,10 +95,6 @@
 .pf-home h3.d {font-size:clamp(1.6rem, 5.6vw, 3rem)}
 .pf-home .stmt {padding:24px 20px; display:block}
 
-/* ── Section opener, proposed identity ────────────────────────────────
-   The label becomes a tinted plate with its own hairline rather than a bare
-   line of tracked caps, then a deliberate drop before the columns start.
-   MOBILE FIRST: one column; the two-column split arrives at 900px. */
 .pf-home .op-link {align-self:flex-start; margin-top:8px; border-bottom-color:var(--accent)}
 .pf-home .cta {padding:24px 20px; display:flex; flex-direction:column; align-items:flex-start; gap:24px}
 .pf-home .cta .btn {width:100%}
@@ -128,7 +105,6 @@
 }
 .pf-home .disc:hover {border-left-color:var(--accent); box-shadow:var(--sh-md); transform:translateY(-1px)}
 .pf-home .disc .tech {text-align:left; align-self:auto}
-.pf-footer .f-social {flex-wrap:wrap}
 @media (prefers-reduced-motion: reduce) {
   .pf-home * {
             animation-duration: 0.01ms !important;
@@ -169,22 +145,13 @@
   .pf-home .disc {gap:32px; padding:32px 32px}
 }
 
-/* Interest marks in the footer. The source files mix filled and stroke-only
-   paths, so `mask-image` renders the stroke-only ones as solid blocks;
-   brightness(0) flattens both to black and opacity tints it to sit with the
-   muted label text beside it. */
 .pf-footer .f-inl {gap:24px 64px}
 .pf-footer .f-inl > * {display:inline-flex; align-items:center; gap:12px}
 .pf-footer .f-ico {width:28px; height:28px; flex-shrink:0; filter:brightness(0); opacity:.42}
 .pf-footer .f-inl a:hover .f-ico {opacity:.7}
 
-/* ── "Another practice" — the writing-site bridge ──────────────────────────
-   Built on the page's own vocabulary: eyebrow + .d heading in the same
-   asymmetric header the Contact and Projects pages use, then one raised card
-   holding the screenshot with a caption rail beneath it. Mobile first. */
 .pf-home .wb-head {display:block;
   padding-bottom:clamp(40px,5.5vw,72px); border-bottom:1px solid var(--rule)}
-.pf-home .wb-intro {display:flex; flex-direction:column; gap:24px}
 .pf-home .wb-cols {display:grid; grid-template-columns:1fr; gap:24px}
 .pf-home .wb-cols p {margin:0; font-size:16px; font-weight:300; line-height:1.75; color:var(--body)}
 
@@ -201,25 +168,12 @@
   .pf-home .wb-cols {grid-template-columns:repeat(2,1fr); gap:40px}
   .pf-home .wb-cap {grid-template-columns:1fr auto; align-items:center; padding:24px 32px}
 }
-@media(min-width:1040px) {
 
-}
-
-/* ── fluid spacing + type, lifted out of inline styles ──────────────────
-   These were literal pixel values on the elements themselves, so no media
-   query could reach them: a 390px phone was rendering 128px section padding
-   and a 48px heading. Base (phone) is the clamp floor; it grows with the
-   viewport up to the original desktop value. */
 .pf-home .sec-gap, .pf-home .sec-gap-sm {padding-bottom:clamp(40px,5.5vw,72px);
   border-bottom:1px solid var(--rule); margin-bottom:clamp(40px,5.5vw,72px)}
-/* the standing intro paragraph under a section heading */
-.pf-home .sec-lead {margin:0; max-width:62ch; font-size:clamp(1rem,1.7vw,1.12rem);
-  font-weight:300; line-height:1.8; color:var(--soft)}
 
 .pf-home .sec-gap-top {margin-top:clamp(32px,6vw,64px)}
 .pf-home .proj-stack {display:flex; flex-direction:column; gap:clamp(32px,6vw,56px)}
-.pf-home .t-lead {font-size:clamp(1rem,3.2vw,1.125rem)}
-.pf-home .t-sub {font-size:clamp(1.0625rem,3.4vw,1.1875rem)}
 .pf-home .t-body {font-size:clamp(.9375rem,3vw,1rem)}
 .pf-home h3.disc-t {margin:0; font-weight:300; letter-spacing:-.02em; color:var(--ink);
   font-size:clamp(1.375rem,4.8vw,1.875rem); line-height:1.15}
@@ -230,9 +184,6 @@
   .pf-home h2.cta-t {line-height:.96}
 }
 
-/* Touch targets. The icon links were 18-20px squares — fine for a cursor,
-   under half the 44px a finger needs. The padding grows the hit area without
-   moving the icons, so the row looks identical. */
 @media (hover: none) and (pointer: coarse) {
   .pf-footer .f-socs {gap:6px; margin:-13px}
   .pf-footer .f-socs a {padding:13px}
@@ -240,16 +191,6 @@
   .pf-footer .f-colo a, .pf-footer .f-inl a {display:inline-block; padding:4px 0}
 }
 
-/* ══ SELECTED WORK cards ══════════════════════════════════════════════
-   The archive card treatment from /projects, ported onto the homepage so both
-   surfaces read the same: role/year meta, the device chrome (browser bar,
-   tablet camera, phone notch) and the question/response narrative.
-
-   Copies of the `.pf-projects` rules in src/pages/projects.css, rescoped to
-   `.pf-home`. The duplication matches how this codebase is already organised —
-   eyebrow, h2.d, numchip, shell, mono and the colour tokens are each defined
-   separately in homepage.css, projects.css, about.css and contact.css.
-   Editing one card style means editing both files. */
 .pf-home .pj-tech {margin:16px 0 0; padding-top:15px; border-top:1px solid var(--rule);
   font-size:11px; line-height:1.9; color:var(--muted); letter-spacing:.01em}
 .pf-home .pj-links {display:flex; flex-wrap:wrap; gap:22px; margin-top:16px}
@@ -280,9 +221,6 @@
   line-height:1.65; color:var(--body)}
 .pf-home .pj-hl li span[aria-hidden] {color:var(--accent)}
 .pf-home .pj-links.foot {margin-top:20px}
-/* ── per-row device switcher ───────────────────────────────────────────────
-   Added after the concept: each project has Desktop, Tablet and Mobile shots, and the archive was only showing the desktop one. Same control vocabulary
-   as the carousel's numbered nav (.pj-dotbtn) so it reads as one system. */
 .pf-home .pj-shots {display:flex; flex-direction:column; min-width:0}
 .pf-home .pj-views {display:flex; align-items:center; gap:24px;
   padding-bottom:8px; margin-bottom:16px; border-bottom:1px solid var(--rule)}
@@ -294,22 +232,9 @@
 .pf-home .pj-view.on::after {content:''; position:absolute; left:0; right:0; bottom:-9px;
   height:1px; background:var(--accent)}
 .pf-home .pj-shots .pj-plate {align-self:stretch}
-/* The image is taken out of flow so its intrinsic height cannot drive the
-   plate: a portrait phone shot is 780x1688 and was stretching the row from
-   932px to 1864px. The plate now keeps the box the row gives it, and every
-   shot is contained inside it — so switching device never reflows anything. */
-/* 4:3 rather than 16:10 — a portrait tablet or phone shot in a 16:10 box was
-   reduced to a narrow strip. At 4:3 the desktop shot still reads large and the
-   portrait ones gain ~20% height, while the box stays constant across views. */
 .pf-home .pj-plate-in {position:relative; width:100%; min-width:0; aspect-ratio:4/3}
 .pf-home .pj-plate-in img {position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain; object-position:center}
-/* ── archive device frames ─────────────────────────────────────────────────
-   The archive showed bare screenshots on a mat; they now sit in the same
-   laptop / tablet / phone shells as the carousel so they read as devices.
-   Each shell has a fixed aspect and `max-width/max-height:100%`, so it scales
-   to fit the plate box whatever the orientation — the plate never changes
-   size, and the shot inside is `contain`, so nothing is ever cropped. */
 .pf-home .pj-dev-wrap {position:absolute; inset:0; display:flex}
 .pf-home .af {margin:auto; max-width:100%; max-height:100%; display:flex; flex-direction:column}
 .pf-home .af-lap {width:100%}
@@ -357,9 +282,6 @@
   .pf-home .pj-qa {padding-top:22px}
 }
 
-/* Section opener — the full-bleed hairline borrowed from arefsaboor.com.
-   The heading and its lead stay inside the shell; only the rule runs edge to
-   edge. Contained by the app's overflow-x guard, so it adds no page scroll. */
 .pf-home .sec-gap, .pf-home .sec-gap-sm, .pf-home .wb-head {
   position:relative; border-bottom:0;
 }
@@ -369,9 +291,6 @@
   background:color-mix(in srgb, var(--ink) 13%, transparent); pointer-events:none;
 }
 
-/* ── Section opener ───────────────────────────────────────────────────
-   label plate → hairline → drop → two columns (title left, lead right).
-   MOBILE FIRST: one column; the split arrives at 900px. */
 .pf-home .op-head {display:block}
 .pf-home .op-head > .eyebrow + * {
   margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);

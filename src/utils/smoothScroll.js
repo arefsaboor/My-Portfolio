@@ -1,6 +1,3 @@
-// Reusable smooth scroll helper with easing
-// Usage: smoothScrollToId('target-id')
-
 export function smoothScrollToId(targetId, { duration = 800, offset = 0 } = {}) {
   const target = document.getElementById(targetId);
   if (!target) return;

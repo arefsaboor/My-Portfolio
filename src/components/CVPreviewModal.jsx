@@ -9,7 +9,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const [shouldRender, setShouldRender] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   
-  // Image zoom/pan states
   const [scale, setScale] = useState(1);
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [lastDistance, setLastDistance] = useState(0);
@@ -17,10 +16,8 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
   const imageContainerRef = useRef(null);
   const closeButtonRef = useRef(null);
 
-  // Detect if device is mobile on mount
   useEffect(() => {
     const checkMobile = () => {
-      // Check if it's a real mobile device (not just small screen)
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase());
       const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
@@ -30,26 +27,19 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     checkMobile();
   }, []);
 
-  // Handle modal animation states
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
-      // Reset zoom/pan when opening
       setScale(1);
       setPosition({ x: 0, y: 0 });
-      // Delay animation to trigger transition
       setTimeout(() => setIsAnimating(true), 10);
     } else {
       setIsAnimating(false);
-      // Wait for animation to finish before unmounting
       const timer = setTimeout(() => setShouldRender(false), 300);
       return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
-  // Prevent body scroll while the modal is open, then put back whatever the
-  // page had before — hard-coding 'unset' here used to release the nav
-  // drawer's own scroll lock as a side effect.
   useEffect(() => {
     if (!isOpen) return;
     const previous = document.body.style.overflow;
@@ -57,7 +47,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     return () => { document.body.style.overflow = previous; };
   }, [isOpen]);
 
-  // Move focus into the dialog on open and hand it back on close.
   useEffect(() => {
     if (!isOpen) return;
     const restoreTo = document.activeElement;
@@ -68,7 +57,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
     };
   }, [isOpen]);
 
-  // Close modal on escape key
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -87,7 +75,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
 
   if (!shouldRender) return null;
 
-  // Touch event handlers for zoom/pan on mobile
   const getDistance = (touch1, touch2) => {
     const dx = touch2.clientX - touch1.clientX;
     const dy = touch2.clientY - touch1.clientY;
@@ -118,12 +105,10 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
       const center = getCenter(e.touches[0], e.touches[1]);
 
       if (lastDistance > 0) {
-        // Zoom
         const scaleChange = distance / lastDistance;
         const newScale = Math.min(Math.max(scale * scaleChange, 1), 4);
         setScale(newScale);
 
-        // Pan
         if (newScale > 1) {
           const dx = center.x - lastCenter.x;
           const dy = center.y - lastCenter.y;
@@ -147,12 +132,10 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
 
   const handleDownload = async () => {
     try {
-      // Fetch the PDF as a blob to force the correct filename
       const response = await fetch(pdfUrl);
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       
-      // Create a temporary link with the correct filename
       const link = document.createElement('a');
       link.href = blobUrl;
       link.download = "Aref Saboor's Resume.pdf";
@@ -160,19 +143,12 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
       link.click();
       document.body.removeChild(link);
       
-      // Clean up the blob URL
       window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.error('Download failed:', error);
     }
   };
 
-  /* Rendered through a portal into <body>. The modal used to live inside
-     <section id="home">, which sets `isolation: isolate` and so opens its own
-     stacking context — that trapped the overlay's z-index inside the hero and
-     let the fixed navbar (z 50, a sibling of the hero's whole subtree) paint
-     straight over the dialog. No z-index on the dialog itself could win that;
-     it had to leave the hero. */
   return createPortal(
     <div 
       className={`fixed inset-0 flex items-center justify-center p-4 transition-all duration-300 ${
@@ -190,9 +166,7 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-6 bg-[#0C2A2C] text-[#F2F7F6]">
-          {/* Download Button */}
           <button
             onClick={handleDownload}
             className="inline-flex items-center gap-2 px-4 sm:px-6 py-2 sm:py-3 bg-[#F2F7F6] text-[#0C2A2C] font-semibold rounded-md hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 text-sm sm:text-base"
@@ -204,7 +178,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
             <span>Download</span>
           </button>
           
-          {/* Close Button */}
           <button
             ref={closeButtonRef}
             onClick={onClose}
@@ -217,10 +190,8 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
           </button>
         </div>
 
-        {/* CV Viewer - Image for mobile, iframe for desktop */}
         <div className="flex-1 overflow-auto bg-[#E6EDED]">
           {isMobile ? (
-            // Mobile: Show zoomable image
             <div 
               ref={imageContainerRef}
               className="w-full h-full flex items-center justify-center overflow-hidden touch-none"
@@ -241,7 +212,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
               />
             </div>
           ) : (
-            // Desktop: Show PDF iframe
             <iframe
               src={`${pdfUrl}#view=FitH&toolbar=0`}
               className="w-full h-full border-0"
@@ -251,7 +221,6 @@ function CVPreviewModal({ isOpen, onClose, pdfUrl = cvPdf }) {
           )}
         </div>
 
-        {/* Footer Hint */}
         <div className="p-3 bg-[#F5F8F8] text-center text-sm text-[#40575A] border-t border-[#E9EEEE]">
           {isMobile ? (
             <p className="text-xs">

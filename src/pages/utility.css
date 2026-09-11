@@ -1,24 +1,8 @@
-/* ─────────────────────────────────────────────────────────────────────────
-   Utility pages — Impressum and 404.
-
-   Lifted byte-for-byte out of the approved design concept
-   (public/design-concepts/portfolio-utility.html) by the same CSS extractor
-   used for homepage.css, about.css, contact.css and projects.css. The ONLY
-   edit made to any declaration block is the `.pf-utility` scope prefix.
-
-   Zero dependency on tailwind.config.js. Mobile-first.
-   ───────────────────────────────────────────────────────────────────────── */
-
 :root {
-  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
   --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
-  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
-     fine grain over a drafting grid. Both live ONLY on the page grounds and
-     bands. Every long passage of text sits on a clean filled card, so nothing
-     is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
          repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
@@ -27,7 +11,7 @@
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
   --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
 
-  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+  --shell:1184px; --shell-wide:1376px;
 }
 .pf-utility * {box-sizing:border-box}
 .pf-utility {scroll-behavior:smooth}
@@ -52,9 +36,6 @@
 .pf-utility .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
 .pf-utility .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
 .pf-utility .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
-/* Section label — a tinted plate rather than a bare tracked line, so every
-   section on every page opens the same way. The old 26px accent dash is
-   gone; the plate is the mark now. */
 .pf-utility .eyebrow {
   display:inline-block; margin:0; padding:7px 12px 6px;
   background:var(--inset); border:1px solid var(--rule-2);
@@ -95,7 +76,7 @@
 @media(min-width:1200px) {
   .pf-utility .shell, .pf-utility .shell-wide {padding:0 48px}
 }
-:root {--nav-clear:128px}  /* measured: the fixed Navbar is a constant 102px tall */
+:root {--nav-clear:128px}
 .pf-utility .ut-page {background:var(--paper); padding:var(--nav-clear) 0 clamp(56px,8vw,112px)}
 .pf-utility .ut-shell {width:100%; max-width:760px; margin:0 auto; padding:0 clamp(20px,5vw,32px)}
 .pf-utility .ut-back {margin-bottom:clamp(24px,4vw,40px)}
@@ -135,15 +116,8 @@
 .pf-utility .nf-btn svg {width:16px; height:16px; transition:transform .2s ease}
 .pf-utility .nf-btn:hover svg {transform:translateX(-3px)}
 
-/* ── environment compat (not a design change) ──────────────────────────────
-   Tailwind preflight sets `line-height: inherit` on buttons; the concept page
-   has no preflight and leaves them at the UA default. Buttons only — anchors
-   inherit in both, so they are deliberately not listed here. */
 .pf-utility button.linkline { line-height: normal; }
 
-/* Section opener — the full-bleed hairline borrowed from arefsaboor.com.
-   The heading and its lead stay inside the shell; only the rule runs edge to
-   edge. Contained by the app's overflow-x guard, so it adds no page scroll. */
 .pf-utility .ut-head {
   position:relative; border-bottom:0;
 }
@@ -153,9 +127,6 @@
   background:color-mix(in srgb, var(--ink) 13%, transparent); pointer-events:none;
 }
 
-/* ── Section opener ───────────────────────────────────────────────────
-   label plate → hairline → drop → two columns (title left, lead right).
-   MOBILE FIRST: one column; the split arrives at 900px. */
 .pf-utility .op-head {display:block}
 .pf-utility .op-head > .eyebrow + * {
   margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);

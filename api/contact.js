@@ -1,5 +1,4 @@
 /* global process */
-// Serverless function to handle contact form submissions using Gmail SMTP
 import nodemailer from 'nodemailer';
 
 const MAX_NAME_LENGTH = 200;
@@ -49,15 +48,12 @@ function escapeHtml(value) {
 }
 
 export default async function handler(req, res) {
-  // Only allow POST requests
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const { name, email, message, website } = req.body;
 
-  // Honeypot field: real users never see or fill this input.
-  // Pretend success so bots don't learn they were caught.
   if (website) {
     return res.status(200).json({ success: true, message: 'Email sent successfully!' });
   }
@@ -68,7 +64,6 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: 'Too many messages. Please try again later.' });
   }
 
-  // Validate input
   if (!name || !email || !message) {
     return res.status(400).json({ error: 'All fields are required' });
   }
@@ -77,7 +72,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Name or message is too long' });
   }
 
-  // Basic email validation
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' });

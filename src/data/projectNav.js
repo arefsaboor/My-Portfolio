@@ -1,8 +1,5 @@
 import projectsData from './Projects.json';
 
-/* Light nav-only view of the projects: names + anchors, no screenshot imports,
-   so pulling this into the Navbar does not drag the image bundle onto every
-   page. Slugs and order match the Projects page. */
 const slugById = {
   1: 'books2shelf',
   2: 'portfolio',

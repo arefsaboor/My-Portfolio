@@ -10,24 +10,17 @@ This is Aref Saboor's personal portfolio site built with React and Vite, styled 
 
 ## Environment Variables
 
-Environment variables must be prefixed with `VITE_` to be exposed to the client.
-
-Provided variable:
+The contact form is handled by a Vercel serverless function (`api/contact.js`) that sends mail through Gmail SMTP. It needs two server-side variables:
 
 ```bash
-VITE_SITE_TITLE="Your Portfolio Title"
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASSWORD=your-gmail-app-password
 ```
 
 Setup:
-1. Copy `.env.example` to `.env`
-2. Adjust values
-3. Do not commit `.env` (already in `.gitignore`)
-
-Access in code:
-
-```js
-const siteTitle = import.meta.env.VITE_SITE_TITLE;
-```
+1. Copy `.env.example` to `.env` and fill in the values (use a Gmail App Password, not the account password).
+2. Add the same two variables in the Vercel project settings for production.
+3. `.env` is git-ignored — never commit it.
 
 ## Scripts
 
@@ -69,8 +62,3 @@ During first run you can set Build Command `npm run build` and Output Directory 
 - Tailwind CSS
 - ESLint
 - Deployment: Vercel
-
-## Possible Future Work
-- Add dark mode toggle
-- Optional: move project data to a headless CMS
-

@@ -5,12 +5,6 @@ import { contactMethods, socialLinks } from '../data/contactData';
 import { usePageMeta } from '../utils/usePageMeta';
 import './contact.css';
 
-/* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-contact.html) — same elements, same class
-   names, same order. The form's submit, honeypot and status handling are the
-   page's existing logic, untouched. */
-
-// A real sequence, so the numbering carries information.
 const NEXT_STEPS = [
   { n: '01', title: 'You write', note: 'A few lines about the role or the work. No cover letter needed.' },
   { n: '02', title: 'I reply',   note: 'Usually within 24 hours, in English or German.' },
@@ -23,7 +17,7 @@ const Contact = () => {
     name: '',
     email: '',
     message: '',
-    website: '' // honeypot: left empty by real users, hidden from view
+    website: ''
   });
   const [status, setStatus] = useState({
     submitting: false,
@@ -95,10 +89,6 @@ const Contact = () => {
       >
         <div className="shell">
 
-          {/* Three direct grid children. Stacked on phones; from 1040px the
-              headline takes the left column (over the contact details) and the
-              paragraph the right (over the form), so both sit on the same
-              vertical grid lines as the columns beneath them. */}
           <header className="ct-head op-head">
             <p className="eyebrow">Contact / Berlin</p>
             <div className="op-cols">

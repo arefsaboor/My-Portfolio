@@ -1,7 +1,3 @@
-/* The standard "opens in a new tab" mark — a box with an arrow leaving it.
- * Replaces the bare ↗ glyph the site used everywhere: an arrow is a direction,
- * not a convention for external links, and as a text character it sits on the
- * baseline and never aligns with its label. */
 export default function ExternalIcon({ className = 'ext-i' }) {
   return (
     <svg

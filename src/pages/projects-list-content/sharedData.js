@@ -32,8 +32,6 @@ const slugById = {
   5: 'arefsaboor-com',
 };
 
-// Display order, shared by the carousel and the archive so a project carries
-// the same number in both: arefsaboor.com leads, then Bestsellers, then by id.
 const FEATURED = ['arefsaboor.com', 'Bestsellers'];
 const rank = (p) => {
   const i = FEATURED.indexOf(p.name);

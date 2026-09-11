@@ -10,7 +10,6 @@ import Contact from './pages/Contact'
 import Impressum from './pages/Impressum'
 import NotFound from './pages/NotFound'
 import Footer from './components/Footer'
-import './grid-system.css'
 
 function AppContent() {
   const [showMainLoader, setShowMainLoader] = useState(() => window.location.pathname === '/');

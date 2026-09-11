@@ -3,32 +3,22 @@ import { heroProjects } from './projectsHeroData';
 import { smoothScrollToId } from '../utils/smoothScroll';
 import ExternalIcon from '../components/ExternalIcon';
 
-/* Markup transcribed literally from the approved concept
-   (public/design-concepts/portfolio-projects.html). The carousel uses a
-   clone-based infinite track, 5500ms auto-advance while it is onscreen,
-   hover-to-hold on the nav strip, full preload before reveal, and a guarded
-   snap from each clone to its matching real slide. */
-
 const AUTO_MS = 5500;
 const SNAP_FALLBACK_MS = 1400;
 
 export default function ProjectsHero({ isVisible = true }) {
-  // Clone-based infinite track: [last, 0, 1, 2, 3, first]
   const SLIDE_COUNT = heroProjects.length;
   const extendedSlides = [heroProjects[SLIDE_COUNT - 1], ...heroProjects, heroProjects[0]];
 
-  const [trackPos, setTrackPos] = useState(1); // 1 = real first slide
+  const [trackPos, setTrackPos] = useState(1);
   const [hasTransition, setHasTransition] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [isInViewport, setIsInViewport] = useState(true);
   const heroRef = useRef(null);
 
-  // Which real slide is active (for the numbered nav)
   const activeSlide = ((trackPos - 1) % SLIDE_COUNT + SLIDE_COUNT) % SLIDE_COUNT;
 
-  // Preload every screenshot before the carousel is revealed so images never
-  // pop in mid-slide (browsers skip off-screen images even with loading=eager)
   useEffect(() => {
     const srcs = heroProjects.flatMap(p => [p.desktop, p.tablet, p.mobile]);
     let done = 0;
@@ -42,7 +32,6 @@ export default function ProjectsHero({ isVisible = true }) {
     });
   }, []);
 
-  // Re-enable the CSS transition after an instant clone-snap (one paint cycle)
   useEffect(() => {
     if (!hasTransition) {
       const t = setTimeout(() => setHasTransition(true), 30);
@@ -50,10 +39,6 @@ export default function ProjectsHero({ isVisible = true }) {
     }
   }, [hasTransition]);
 
-  // Do not spend carousel state changes while the hero is offscreen. Browsers
-  // may throttle an offscreen CSS transition and omit transitionend entirely,
-  // which previously let the track advance beyond its final clone into white
-  // space. The rendered slide itself remains visible when returning.
   useEffect(() => {
     const hero = heroRef.current;
     if (!hero || !('IntersectionObserver' in window)) return undefined;
@@ -66,8 +51,6 @@ export default function ProjectsHero({ isVisible = true }) {
     return () => observer.disconnect();
   }, []);
 
-  // Auto-advance only when the carousel can actually be seen. A timeout is
-  // restarted after each completed move, preventing queued interval ticks.
   useEffect(() => {
     if (isPaused || !isVisible || !isInViewport || !imagesLoaded) return undefined;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
@@ -78,9 +61,6 @@ export default function ProjectsHero({ isVisible = true }) {
     return () => window.clearTimeout(id);
   }, [SLIDE_COUNT, imagesLoaded, isInViewport, isPaused, isVisible, trackPos]);
 
-  // transitionend is the fast path; this is the guarantee. If the browser
-  // suppresses that event while scrolling, snap the clone back before another
-  // auto-advance can run.
   useEffect(() => {
     if (trackPos !== 0 && trackPos !== SLIDE_COUNT + 1) return undefined;
     const id = window.setTimeout(() => {
@@ -90,7 +70,6 @@ export default function ProjectsHero({ isVisible = true }) {
     return () => window.clearTimeout(id);
   }, [SLIDE_COUNT, trackPos]);
 
-  // Snap from clone positions to real positions without visible animation
   const handleTransitionEnd = (e) => {
     if (e.propertyName !== 'transform') return;
     if (trackPos === 0) {

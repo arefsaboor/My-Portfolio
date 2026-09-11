@@ -1,15 +1,6 @@
 import AboutPhoto from '../assets/AboutHero-Portrait.jpg';
 import ExternalIcon from '../components/ExternalIcon';
 
-/* A literal transcription of the hero in the About design concept.
- * Class names, values and copy are the concept's; the styling lives in
- * src/pages/about.css, moved across byte-for-byte.
- *
- * The layout: from 1040px this is a two-row grid — the name takes row 1 in the
- * right column, the portrait spans rows 1–3 in the left column and stretches,
- * so the image is exactly as tall as the whole content block, name included.
- * Below that it stacks: name, portrait, copy, cards.
- */
 export default function AboutHero() {
   return (
     <section className="ab-hero textured" style={{ background: 'var(--paper)' }}>

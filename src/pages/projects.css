@@ -1,26 +1,8 @@
-/* ─────────────────────────────────────────────────────────────────────────
-   Projects page styles.
-
-   Lifted byte-for-byte out of the approved design concept
-   (public/design-concepts/portfolio-projects.html) by the same CSS extractor
-   used for homepage.css, about.css and contact.css. The ONLY edit made to any
-   declaration block is the `.pf-projects` scope prefix added to each selector.
-
-   Deliberately plain CSS: zero dependency on tailwind.config.js.
-   Mobile-first — every media query is min-width (plus one max-height rule for
-   short laptop screens, carried over from the concept).
-   ───────────────────────────────────────────────────────────────────────── */
-
 :root {
-  /* Sampled from public/IMAGE_002.webp, lifted for a light ground */
   --paper:#FCFCFD; --band:#EFF2F2; --wash:#E6EDED; --card:#FFFFFF; --inset:#F5F8F8;
   --ink:#0C2A2C; --body:#40575A; --soft:#5C7275; --muted:#647779;
   --rule:#DEE5E5; --rule-2:#E9EEEE; --accent:#1C464B; --lav:#928EA5;
 
-  /* Texture. arefsaboor.com uses warm ruled paper; this is its cold cousin —
-     fine grain over a drafting grid. Both live ONLY on the page grounds and
-     bands. Every long passage of text sits on a clean filled card, so nothing
-     is ever read through the texture. */
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.05 0 0 0 0 0.16 0 0 0 0 0.17 0 0 0 0.30 -0.14'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --grid:repeating-linear-gradient(to right, rgba(28,70,75,.040) 0 1px, transparent 1px 32px),
          repeating-linear-gradient(to bottom, rgba(28,70,75,.032) 0 1px, transparent 1px 32px);
@@ -29,7 +11,7 @@
   --sh-md:0 2px 5px rgba(12,42,44,.045), 0 14px 32px -12px rgba(12,42,44,.14);
   --sh-lg:0 4px 10px rgba(12,42,44,.05), 0 30px 64px -20px rgba(12,42,44,.20);
 
-  --shell:1184px; --shell-wide:1376px;  /* content 1088 = 34 cells / 1280 = 40 cells */
+  --shell:1184px; --shell-wide:1376px;
 }
 .pf-projects * {box-sizing:border-box}
 .pf-projects {scroll-behavior:smooth}
@@ -54,9 +36,6 @@
 .pf-projects .shell {max-width:var(--shell); margin:0 auto; padding:0 48px}
 .pf-projects .shell-wide {max-width:var(--shell-wide); margin:0 auto; padding:0 48px}
 .pf-projects .mono {font-family:"DM Mono",ui-monospace,Menlo,monospace}
-/* Section label — a tinted plate rather than a bare tracked line, so every
-   section on every page opens the same way. The old 26px accent dash is
-   gone; the plate is the mark now. */
 .pf-projects .eyebrow {
   display:inline-block; margin:0; padding:7px 12px 6px;
   background:var(--inset); border:1px solid var(--rule-2);
@@ -74,7 +53,6 @@
   display:inline-flex; align-items:center; justify-content:center; min-width:34px; height:26px;
   padding:0 9px; background:var(--accent); color:#fff; font-size:12px; letter-spacing:.04em;
 }
-.pf-projects .screenframe {background:var(--inset); border:1px solid var(--rule-2); padding:10px; box-shadow:inset 0 1px 3px rgba(12,42,44,.07)}
 .pf-projects .linkline {display:inline-flex; align-items:center; gap:11px; font-size:14px; font-weight:500; color:var(--ink); border-bottom:1px solid var(--ink); padding-bottom:7px}
 @media (prefers-reduced-motion: reduce) {
   .pf-projects * {
@@ -89,20 +67,16 @@
 .pf-projects .sec {padding:clamp(56px, 9vw, 128px) 0}
 .pf-projects h2.d {font-size:clamp(1.75rem, 6.4vw, 3.75rem)}
 .pf-projects h3.d {font-size:clamp(1.6rem, 5.6vw, 3rem)}
-.pf-projects .screenframe img {height:190px !important}
 @media(min-width:600px) {
   .pf-projects .shell, .pf-projects .shell-wide {padding:0 32px}
-  .pf-projects .screenframe img {height:250px !important}
 }
 @media(min-width:900px) {
   .pf-projects .shell, .pf-projects .shell-wide {padding:0 40px}
-  .pf-projects .screenframe img {height:320px !important}
 }
 @media(min-width:1200px) {
   .pf-projects .shell, .pf-projects .shell-wide {padding:0 48px}
-  .pf-projects .screenframe img {height:380px !important}
 }
-:root {--nav-clear:128px}  /* measured: the fixed Navbar is a constant 102px tall */
+:root {--nav-clear:128px}
 .pf-projects .pj-hero {position:relative; display:flex; flex-direction:column;
   overflow:hidden; background:var(--paper); padding-top:var(--nav-clear)}
 .pf-projects .pj-hero > .shell {width:100%}
@@ -110,17 +84,11 @@
   gap:10px; padding-bottom:clamp(16px,2.4vw,32px)}
 .pf-projects .pj-viewport {overflow:hidden; position:relative}
 .pf-projects .pj-track {display:flex; will-change:transform}
-/* the description repeats in full in the archive below, so the carousel panel
-   drops it on phones and stays a glance rather than a wall */
 .pf-projects .pj-desc {display:none}
 .pf-projects .pj-slidewrap {flex:0 0 100%; display:flex; align-items:center; min-width:0}
 .pf-projects .pj-slidewrap > .shell {width:100%}
 .pf-projects .pj-slide {display:grid; grid-template-columns:1fr; gap:clamp(20px,3vw,32px); align-items:center;
   width:100%; max-width:1180px}
-/* The three devices used to overlap (negative margins), which hid 12% of the
-   laptop behind the tablet and 20% of the tablet behind the phone — screenshots
-   sliced mid-sentence. They now sit side by side: 58 + 24 + 13 + two 2.5% gaps
-   = 100% of the column, so every shot is fully visible and nothing is cropped. */
 .pf-projects .pj-devices {display:flex; align-items:flex-end; justify-content:flex-start;
   gap:2.5%; width:100%; min-width:0}
 .pf-projects .pj-laptop {width:58%; flex-shrink:0; position:relative}
@@ -176,8 +144,6 @@
   padding-bottom:clamp(40px,5.5vw,72px); border-bottom:1px solid var(--rule)}
 .pf-projects .pj-htitle {margin:0; font-size:clamp(2rem,6vw,4rem); font-weight:300; letter-spacing:-.035em;
   line-height:1; color:var(--ink); text-wrap:balance}
-.pf-projects .pj-hlead {margin:0; max-width:62ch; font-size:clamp(1rem,1.7vw,1.12rem); font-weight:300;
-  line-height:1.75; color:var(--soft)}
 .pf-projects .pj-row {background:var(--card); border:1px solid var(--rule); box-shadow:var(--sh-lg);
   padding:clamp(22px,3.2vw,40px); margin-top:clamp(32px,4.4vw,64px); scroll-margin-top:144px}
 .pf-projects .pj-row-head {display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px;
@@ -222,8 +188,6 @@
   .pf-projects .pj-row.flip .pj-plate {order:2}
   .pf-projects .pj-qa {padding-top:22px}
 }
-/* Full-height showcase only when the window can actually hold a whole slide.
-   Below this the hero is content-height and nothing is ever cropped. */
 @media (min-width:1040px) and (min-height:820px) {
   .pf-projects .pj-hero {min-height:100svh}
   .pf-projects .pj-viewport {flex:1 1 auto}
@@ -234,21 +198,10 @@
   .pf-projects .pj-title {font-size:clamp(1.7rem,2.5vw,2.5rem)}
 }
 
-/* ── environment compat (not a design change) ──────────────────────────────
-   The concept page carries no Tailwind preflight. Preflight sets
-   `line-height: inherit` on form controls; the concept leaves them at the UA
-   default. This covers BUTTONS only — anchor .linkline's inherit in both, so
-   scoping this to `button.linkline` is what actually matches the concept.
-   No colour, spacing, size or breakpoint from the design is altered here. */
 .pf-projects .pj-arrow,
 .pf-projects .pj-dotbtn,
 .pf-projects button.linkline { line-height: normal; }
 
-
-/* ── per-row device switcher ───────────────────────────────────────────────
-   Added after the concept: each project has Desktop, Tablet and Mobile shots,
-   and the archive was only showing the desktop one. Same control vocabulary
-   as the carousel's numbered nav (.pj-dotbtn) so it reads as one system. */
 .pf-projects .pj-shots {display:flex; flex-direction:column; min-width:0}
 .pf-projects .pj-views {display:flex; align-items:center; gap:24px;
   padding-bottom:8px; margin-bottom:16px; border-bottom:1px solid var(--rule)}
@@ -260,24 +213,10 @@
 .pf-projects .pj-view.on::after {content:''; position:absolute; left:0; right:0; bottom:-9px;
   height:1px; background:var(--accent)}
 .pf-projects .pj-shots .pj-plate {align-self:stretch}
-/* The image is taken out of flow so its intrinsic height cannot drive the
-   plate: a portrait phone shot is 780x1688 and was stretching the row from
-   932px to 1864px. The plate now keeps the box the row gives it, and every
-   shot is contained inside it — so switching device never reflows anything. */
-/* 4:3 rather than 16:10 — a portrait tablet or phone shot in a 16:10 box was
-   reduced to a narrow strip. At 4:3 the desktop shot still reads large and the
-   portrait ones gain ~20% height, while the box stays constant across views. */
 .pf-projects .pj-plate-in {position:relative; width:100%; min-width:0; aspect-ratio:4/3}
 .pf-projects .pj-plate-in img {position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain; object-position:center}
 
-
-/* ── archive device frames ─────────────────────────────────────────────────
-   The archive showed bare screenshots on a mat; they now sit in the same
-   laptop / tablet / phone shells as the carousel so they read as devices.
-   Each shell has a fixed aspect and `max-width/max-height:100%`, so it scales
-   to fit the plate box whatever the orientation — the plate never changes
-   size, and the shot inside is `contain`, so nothing is ever cropped. */
 .pf-projects .pj-dev-wrap {position:absolute; inset:0; display:flex}
 .pf-projects .af {margin:auto; max-width:100%; max-height:100%; display:flex; flex-direction:column}
 .pf-projects .af-lap {width:100%}
@@ -314,16 +253,9 @@
 .pf-projects .af-tab .af-screen {border-radius:9px}
 .pf-projects .af-pho .af-body {padding:5px}
 .pf-projects .af-pho .af-screen {border-radius:15px}
-/* `contain`, not `cover`: cover crops whatever does not match the frame's
-   aspect, which is how Nirvan's 16:9 shot lost its buttons. The desktop assets
-   are all 16:10 and the screen area is close to it, so letterboxing is
-   negligible — and no future screenshot can ever be silently cut. */
 .pf-projects .af-screen img {position:absolute; inset:0; width:100%; height:100%;
   object-fit:contain; object-position:center}
 
-/* Section opener — the full-bleed hairline borrowed from arefsaboor.com.
-   The heading and its lead stay inside the shell; only the rule runs edge to
-   edge. Contained by the app's overflow-x guard, so it adds no page scroll. */
 .pf-projects .pj-head {
   position:relative; border-bottom:0;
 }
@@ -333,9 +265,6 @@
   background:color-mix(in srgb, var(--ink) 13%, transparent); pointer-events:none;
 }
 
-/* ── Section opener ───────────────────────────────────────────────────
-   label plate → hairline → drop → two columns (title left, lead right).
-   MOBILE FIRST: one column; the split arrives at 900px. */
 .pf-projects .op-head {display:block}
 .pf-projects .op-head > .eyebrow + * {
   margin-top:clamp(28px,4vw,44px); padding-top:clamp(28px,4vw,44px);

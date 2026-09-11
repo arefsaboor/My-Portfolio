@@ -8,11 +8,6 @@ import { usePageMeta } from '../utils/usePageMeta';
 import './about.css';
 import TechMarquee from '../components/TechMarquee';
 
-/* A literal transcription of the About design concept. Every padding, gap,
- * size, weight and colour lives in about.css, moved across byte-for-byte and
- * scoped under .pf-about. To change the design: change the concept, re-run the
- * move. Nothing here depends on tailwind.config.js. */
-
 const About = () => {
   const [isCVModalOpen, setIsCVModalOpen] = useState(false);
 
@@ -30,7 +25,6 @@ const About = () => {
         <AboutContent />
       </div>
 
-      {/* ══ SKILLS ══ */}
       <section
         className="sk-band textured"
         style={{ padding: 'clamp(56px,9vw,128px) 0' }}
@@ -55,7 +49,6 @@ const About = () => {
         </div>
       </section>
 
-      {/* ══ CTA ══ */}
       <section
         className="textured"
         style={{ background: 'var(--wash)', borderTop: '1px solid var(--rule)', padding: 'clamp(52px,8vw,112px) 0 clamp(56px,9vw,128px)' }}
