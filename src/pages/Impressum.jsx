@@ -42,7 +42,7 @@ function Impressum() {
             <section className="ut-sec">
               <h2 className="ut-h">Kontakt</h2>
               <p><span className="ut-lbl">Telefon:</span> <a href="tel:+4917478176611">+49 (0) 174 781 76 11</a></p>
-              <p><span className="ut-lbl">E-Mail:</span> <a href="mailto:arefsaboor.m@gmail.com">arefsaboor.m@gmail.com</a></p>
+              <p><span className="ut-lbl">E-Mail:</span> <a href="mailto:write@arefsaboor.com">write@arefsaboor.com</a></p>
               <p><span className="ut-lbl">Website:</span> <a href="https://arefsaboor.de" target="_blank" rel="noopener noreferrer">arefsaboor.de</a></p>
             </section>
 

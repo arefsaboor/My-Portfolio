@@ -61,7 +61,7 @@ function Footer() {
               </div>
               <div>
                 <div className="f-lk">
-                  <a href="mailto:arefsaboor.m@gmail.com">Email</a>
+                  <a href="mailto:write@arefsaboor.com">Email</a>
                   <a href="https://linkedin.com/in/arefsaboor" target="_blank" rel="noreferrer">LinkedIn</a>
                   <a href="https://github.com/arefsaboor" target="_blank" rel="noreferrer">GitHub</a>
                   <a className="f-ex" href="https://arefsaboor.com" target="_blank" rel="noreferrer">arefsaboor.com</a>

@@ -171,8 +171,8 @@ export default function ProjectsListContent() {
                 Tell me what needs to be understood, designed, or built.
               </h2>
             </div>
-            <a className="linkline" href="mailto:arefsaboor.m@gmail.com">
-              arefsaboor.m@gmail.com<ExternalIcon />
+            <a className="linkline" href="mailto:write@arefsaboor.com">
+              write@arefsaboor.com<ExternalIcon />
             </a>
           </div>
         </div>

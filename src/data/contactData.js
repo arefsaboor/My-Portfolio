@@ -35,8 +35,8 @@ export const contactMethods = [
   {
     label: 'Email',
     kicker: 'Drop me a line',
-    value: 'arefsaboor.m@gmail.com',
-    href: 'mailto:arefsaboor.m@gmail.com',
+    value: 'write@arefsaboor.com',
+    href: 'mailto:write@arefsaboor.com',
     note: 'You can also drop me direct emails',
   },
   {
