@@ -10,16 +10,22 @@ This is Aref Saboor's personal portfolio site built with React and Vite, styled 
 
 ## Environment Variables
 
-The contact form is handled by a Vercel serverless function (`api/contact.js`) that sends mail through Gmail SMTP. It needs two server-side variables:
+The contact form is handled by a Vercel serverless function (`api/contact.js`) that sends mail through the site owner's own mailbox (write@arefsaboor.com on Hostinger), as `noreply@arefsaboor.com`, and delivers it to that mailbox with the sender as Reply-To:
 
 ```bash
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-gmail-app-password
+SMTP_HOST=smtp.hostinger.com
+SMTP_PORT=465
+SMTP_USER=write@arefsaboor.com
+SMTP_PASSWORD=the-mailbox-password
+MAIL_FROM=noreply@arefsaboor.com
+MAIL_TO=write@arefsaboor.com
 ```
 
+`EMAIL_USER` / `EMAIL_PASSWORD` (a Gmail address and app password) are still honoured as a fallback when the `SMTP_*` variables are absent.
+
 Setup:
-1. Copy `.env.example` to `.env` and fill in the values (use a Gmail App Password, not the account password).
-2. Add the same two variables in the Vercel project settings for production.
+1. Copy `.env.example` to `.env` and fill in the values.
+2. Add the same variables in the Vercel project settings for production.
 3. `.env` is git-ignored — never commit it.
 
 ## Scripts

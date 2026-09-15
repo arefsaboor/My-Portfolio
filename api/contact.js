@@ -77,21 +77,34 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Invalid email address' });
   }
 
-  const { EMAIL_USER, EMAIL_PASSWORD } = process.env;
+  // One mailbox for both sites: the letter goes out through
+  // write@arefsaboor.com on Hostinger (SMTP_*), sent as MAIL_FROM
+  // (noreply@) and delivered to MAIL_TO (write@), with the sender as
+  // Reply-To. The Gmail pair remains as the fallback until it is retired.
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, MAIL_FROM, MAIL_TO, EMAIL_USER, EMAIL_PASSWORD } = process.env;
+  const useSmtp = Boolean(SMTP_HOST && SMTP_USER && SMTP_PASSWORD);
 
-  if (!EMAIL_USER || !EMAIL_PASSWORD) {
-    console.error('Missing Gmail configuration: EMAIL_USER or EMAIL_PASSWORD');
+  if (!useSmtp && !(EMAIL_USER && EMAIL_PASSWORD)) {
+    console.error('Missing mail configuration: set SMTP_HOST/SMTP_USER/SMTP_PASSWORD (or EMAIL_USER/EMAIL_PASSWORD)');
     return res.status(500).json({ error: 'Email service not configured. Please try again later.' });
   }
 
+  const fromAddress = useSmtp ? (MAIL_FROM || SMTP_USER) : EMAIL_USER;
+  const toAddress = MAIL_TO || (useSmtp ? SMTP_USER : EMAIL_USER);
+
   try {
-    const transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: EMAIL_USER,
-        pass: EMAIL_PASSWORD,
-      },
-    });
+    const port = Number(SMTP_PORT || 465);
+    const transporter = useSmtp
+      ? nodemailer.createTransport({
+          host: SMTP_HOST,
+          port,
+          secure: port === 465,
+          auth: { user: SMTP_USER, pass: SMTP_PASSWORD },
+        })
+      : nodemailer.createTransport({
+          service: 'gmail',
+          auth: { user: EMAIL_USER, pass: EMAIL_PASSWORD },
+        });
 
     const safeName = escapeHtml(name);
     const safeMessage = escapeHtml(message);
@@ -125,8 +138,8 @@ ${message}
       `;
 
     await transporter.sendMail({
-      from: EMAIL_USER,
-      to: EMAIL_USER,
+      from: { name: 'arefsaboor.de', address: fromAddress },
+      to: toAddress,
       replyTo: email,
       subject,
       html,
